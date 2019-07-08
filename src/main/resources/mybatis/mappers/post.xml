@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+<mapper namespace="post">
+	
+	<!-- 새로운 피드 작성  -->
+	<insert id="insertPost" parameterType="PostVo">
+		<![CDATA[
+			INSERT INTO POSTS 
+						(postNo, 
+						 userNo, 
+						 postRegDate, 
+						 postTitle, 
+						 postContent, 
+						 postHit, 
+						 postImg)
+			VALUES(seq_post_no.nextval, 
+					#{userNo}, 
+					SYSDATE, 
+					#{postTitle}, 
+					#{postContent}, 
+					0, 
+					#{postImg})
+		]]>
+	</insert>
+	
+	<!-- 모든 피드 출력 -->
+	<select id="selectPost" resultType="PostVo">
+		<![CDATA[
+			SELECT postNo,
+				   userNo,
+				   postTitle,
+			   	   postContent,
+			   	   postRegDate,
+			   	   postHit,
+			   	   postImg
+			FROM posts
+		]]>
+	</select>
+	
+	<!-- 내가 팔로우 하는 사람들의 피드 출력 -->
+	<select id="selectMyPost" parameterType="UserVo" resultType="PostVo">
+		<![CDATA[
+			SELECT p.postNo,
+				   p.userNo,
+				   u.userName,
+				   p.postTitle,
+			   	   p.postContent,
+			   	   p.postRegDate,
+			   	   p.postHit,
+			   	   p.postImg
+			FROM posts p join users u
+			ON p.userNo = u.userNo
+			WHERE p.userno IN (SELECT relationTo
+							 FROM userrelation
+							 WHERE relationFrom=#{userNo} AND relationType=0)
+			ORDER BY p.postRegDate DESC
+		]]>
+	</select>
+	
+</mapper>

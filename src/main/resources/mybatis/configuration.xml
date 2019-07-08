@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- Mybatis/configuration.xml -->
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN" "http://mybatis.org/dtd/mybatis-3-config.dtd">
+ 
+<configuration>
+    <typeAliases>
+    	<typeAlias alias="UserVo" type="com.timeline.vo.UserVo" />
+    	<typeAlias alias="PostVo" type="com.timeline.vo.PostVo"/>
+    	<typeAlias alias="UserRelationVo" type="com.timeline.vo.UserRelationVo"/>
+    	<typeAlias alias="UserfileVo" type="com.timeline.vo.UserfileVo"/>
+    	<typeAlias alias="DatafileVo" type="com.timeline.vo.DatafileVo"/>
+    	<typeAlias alias="ReplyVo" type="com.timeline.vo.ReplyVo"/>
+    	<typeAlias alias="PostfileVo" type="com.timeline.vo.PostfileVo"/>
+    </typeAliases>
+ 
+    <mappers>
+        <mapper resource="mybatis/mappers/user.xml" />
+        <mapper resource="mybatis/mappers/post.xml" />
+    </mappers>
+</configuration>
+ 

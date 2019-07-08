@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+<mapper namespace="user">
+	
+	<!-- 유저 검색(로그인) -->
+	<select id="selectUser" parameterType="UserVo" resultType="UserVo">
+		<![CDATA[
+			SELECT userNo,
+				   userId,
+				   userPwd,
+			   	   userName
+			FROM users
+			WHERE userId = #{userId} AND userPwd = #{userPwd}
+		]]>
+	</select>
+	
+	<!-- 유저 생성(회원가입) -->
+	<insert id="insertUser" parameterType="UserVo">
+		<![CDATA[
+			INSERT INTO users
+				(userNo,
+                 userId,
+                 userPwd,
+                 userName)		
+			VALUES
+				(seq_user_no.nextval,
+                 #{userId}, 
+                 #{userPwd}, 
+                 #{userName})
+		]]>
+	</insert>
+	
+	<!-- 아이디로 유저 검색(아이디 중복 검사) -->
+	<select id="selectUserId" parameterType="UserVo" resultType="UserVo">
+		<![CDATA[
+			SELECT userNo
+			FROM users
+			WHERE userId = #{userId}
+		]]>
+	</select>
+	
+	<!-- 유저 팔로우 -->
+	<insert id="insertUserRelation" parameterType="UserRelationVo">
+		<![CDATA[
+			INSERT INTO USERRELATION 
+				(relationNo, 
+				 relationType, 
+				 relationFrom, 
+				 relationTo, 
+				 relationRegDate)
+			VALUES
+				  (seq_userrelation_no.nextval, 
+			       0, 
+			       #{relationFrom}, 
+			       #{relationTo}, 
+			       SYSDATE)
+		]]>
+	</insert>
+	
+</mapper>
