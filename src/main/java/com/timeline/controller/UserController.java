@@ -100,7 +100,7 @@ public class UserController {
 	
 	//유저 페이지 로드
 	//URL 수정 해야함 + url뒤에 userno 추가
-	@RequestMapping(value="/userpageform")
+	@RequestMapping(value="/user/${userno}")
 	public String userPageForm() {
 		System.out.println("load user page");
 		
