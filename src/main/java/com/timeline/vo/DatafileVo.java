@@ -8,7 +8,7 @@ public class DatafileVo {
 	private String filePath;
 	private String fileName;
 	private String saveName;
-	private String fileSize;
+	private long fileSize;
 	
 
 	//Additional Field
@@ -18,7 +18,7 @@ public class DatafileVo {
 		
 	}
 	
-	public DatafileVo(int fileNo, String regDate, String filePath, String fileName, String saveName, String fileSize) {
+	public DatafileVo(int fileNo, String regDate, String filePath, String fileName, String saveName, long fileSize) {
 		super();
 		this.fileNo = fileNo;
 		RegDate = regDate;
@@ -68,11 +68,11 @@ public class DatafileVo {
 		this.saveName = saveName;
 	}
 
-	public String getFileSize() {
+	public long getFileSize() {
 		return fileSize;
 	}
 
-	public void setFileSize(String fileSize) {
+	public void setFileSize(long fileSize) {
 		this.fileSize = fileSize;
 	}
 
