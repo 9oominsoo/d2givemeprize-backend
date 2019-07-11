@@ -35,7 +35,6 @@
 
 		$.ajax({
 			url : "${pageContext.request.contextPath }/post/loadMyPheed",
-			type : "post",
 			contentType : "application/json",
 
 			dataType : "json",

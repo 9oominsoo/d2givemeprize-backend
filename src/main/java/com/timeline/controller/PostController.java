@@ -51,7 +51,7 @@ public class PostController {
 	
 	//유저별 게시글 로드(나의 게시글 + 친구 게시글 로드)
 	@ResponseBody
-	@RequestMapping(value="/loadMyPheed", method=RequestMethod.POST)
+	@RequestMapping(value="/loadMyPheed", method=RequestMethod.GET)
 	public List<PostVo> loadMyPheed(HttpSession session){
 		System.out.println("load my pheed...");
 		

@@ -4,6 +4,8 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -99,20 +101,23 @@ public class UserController {
 	}
 	
 	//유저 페이지 로드
-	//URL 수정 해야함 + url뒤에 userno 추가
-	@RequestMapping(value="/user/${userno}")
-	public String userPageForm() {
+	@RequestMapping(value="/{userno}")
+	public String userPageForm(@PathVariable("userno") int userNo, Model model) {
 		System.out.println("load user page");
+		
+		UserVo vo = service.findUser(userNo);
+		model.addAttribute("selectedUser", vo);
 		
 		return "/WEB-INF/views/users/userpage.jsp";
 	}
 	
 	//유저 관계 확인
-	@RequestMapping(value="/checkuserrelation")
-	public int checkUserRelation(HttpSession session) {
+	@ResponseBody
+	@RequestMapping(value="/{userno}/checkuserrelation", method=RequestMethod.POST)
+	public UserRelationVo checkUserRelation(HttpSession session, @PathVariable("userno") int userNo) {
 		System.out.println("check user relationship...");
 		
-		return 1;
+		return service.checkUserRelation((UserVo)(session.getAttribute("authUser")), userNo);
 	}
 	
 	//팔로우 

@@ -33,6 +33,23 @@ public class UserService {
 		}
 	}
 	
+	public UserVo findUser(int userNo) {
+		return dao.findUser(userNo);
+	}
+	
+	public UserRelationVo checkUserRelation(UserVo authUser, int userNo) {
+		UserRelationVo vo = new UserRelationVo();
+		
+		vo.setRelationTo(userNo);
+		vo.setRelationFrom(authUser.getUserNo());
+		
+		UserRelationVo result = new UserRelationVo();
+		
+		result = dao.checkUserRelation(vo); 
+		
+		return result;
+	}
+	
 	public int follow(UserRelationVo vo) {
 		return dao.follow(vo);
 	}

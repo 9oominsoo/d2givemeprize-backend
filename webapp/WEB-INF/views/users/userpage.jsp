@@ -8,31 +8,41 @@
 <script type="text/javascript" src="${pageContext.request.contextPath }/assets/jquery/jquery-1.12.4.js"></script>  
 </head>
 <body>
-	<button class="btn btn-primary btn-lg btn-block" id="follow" data-jeky="5">Follow jeky</button>
-	<button class="btn btn-primary btn-lg btn-block" id="unfollow" data-jeky="5">UnFollow jeky</button>
+	<input type="hidden" id="selected-user" data-userno="${selectedUser.userNo }" data-userName="${selectedUser.userName }"></input>
+	<div id="button"></div>
 </body>
 
 <script type="text/javascript">
+	$("document").ready(function(){
+		var userNo = $("#selected-user").data("userno");
+		console.log(userNo +" page!")
+		
+		$.ajax({
+			url : "${pageContext.request.contextPath }/user/"+userNo+"/checkuserrelation",
+			type : "post",
+			
+			dataType : "json",
+			success : function(userrelationvo) {
+				if(userrelationvo == "" || userrelationvo=="undefined"||userrelationvo==null){
+					$("#button").append('<button class="btn btn-primary btn-lg btn-block" id="follow" >Follow ${selectedUser.userName }</button>');
+				}else{
+					$("#button").append('<button class="btn btn-primary btn-lg btn-block" id="unfollow" >UnFollow ${selectedUser.userName }</button>')
+				}
+			},
+			error : function(XHR, status, error) {
+				console.error(status + " : " + error);
+			}
+		});
+	})
+	
 	$("#follow").on("click",function(){
 		console.log("follow");
 		
-		var userrelationvo = {
-			relationFrom: ${authUser.userNo},
-			relationTo: $("#follow").data("jeky")
-		}
-		
-		console.log(userrelationvo)
-	})
+	});
 	
 	$("#unfollow").on("click",function(){
 		console.log("unfollow");
 		
-		var userrelationvo = {
-				relationFrom: ${authUser.userNo},
-				relationTo: $("#follow").data("jeky")
-		}
-		
-		console.log(userrelationvo);
-	})
+	}); 
 </script>
 </html>
