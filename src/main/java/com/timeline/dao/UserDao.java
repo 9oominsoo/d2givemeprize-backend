@@ -14,7 +14,7 @@ public class UserDao {
 	private SqlSession sqlSession;
 	
 	public UserVo logIn(UserVo vo) {
-		return sqlSession.selectOne("user.selectUser", vo);
+		return sqlSession.selectOne("user.selectLoginUser", vo);
 	}
 	
 	public int signUp(UserVo vo) {
@@ -23,6 +23,14 @@ public class UserDao {
 	
 	public UserVo checkDupId(UserVo vo) {
 		return sqlSession.selectOne("user.selectUserId", vo);
+	}
+	
+	public UserVo findUser(int userNo) {
+		return sqlSession.selectOne("user.selectUser", userNo);
+	}
+	
+	public UserRelationVo checkUserRelation(UserRelationVo vo) {
+		return sqlSession.selectOne("user.selectUserRelation", vo);
 	}
 	
 	public int follow(UserRelationVo vo) {

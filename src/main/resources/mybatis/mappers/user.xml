@@ -5,7 +5,7 @@
 <mapper namespace="user">
 	
 	<!-- 유저 검색(로그인) -->
-	<select id="selectUser" parameterType="UserVo" resultType="UserVo">
+	<select id="selectLoginUser" parameterType="UserVo" resultType="UserVo">
 		<![CDATA[
 			SELECT userNo,
 				   userId,
@@ -38,6 +38,28 @@
 			SELECT userNo
 			FROM users
 			WHERE userId = #{userId}
+		]]>
+	</select>
+	
+	<!-- 유저 넘버로 유저 검색 -->
+	<select id="selectUser" parameterType="int" resultType="UserVo">
+		<![CDATA[
+			SELECT userNo,
+				   userName,
+				   userId,
+				   userImg
+			FROM users
+			WHERE userNo = #{userNo}
+		]]>
+	</select>
+	
+	<!-- 유저 사이의 관계 확인 -->
+	<select id="selectUserRelation" parameterType="UserRelationVo" resultType="UserRelationVo">
+		<![CDATA[
+			SELECT relationNo,
+				   relationType
+			FROM userRelation
+			WHERE relationFrom = #{relationFrom} AND relationTo= #{relationTo}
 		]]>
 	</select>
 	
