@@ -81,4 +81,13 @@
 		]]>
 	</insert>
 	
+	<!-- 유저 언팔로우 -->
+	<delete id="deleteUserRelation" parameterType="UserRelationVo">
+		<![CDATA[
+			DELETE FROM userrelation
+			WHERE relationTo = #{relationTo}
+			AND relationFrom = #{relationFrom} 
+		]]>
+	</delete>
+	
 </mapper>

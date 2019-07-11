@@ -113,7 +113,7 @@ public class UserController {
 	
 	//유저 관계 확인
 	@ResponseBody
-	@RequestMapping(value="/{userno}/checkuserrelation", method=RequestMethod.POST)
+	@RequestMapping(value="/{userno}/checkuserrelation", method=RequestMethod.GET)
 	public UserRelationVo checkUserRelation(HttpSession session, @PathVariable("userno") int userNo) {
 		System.out.println("check user relationship...");
 		
@@ -122,16 +122,20 @@ public class UserController {
 	
 	//팔로우 
 	@ResponseBody
-	@RequestMapping(value="/follow")
-	public int follow(@RequestBody UserRelationVo vo) {
-		System.out.println("following " + vo.getRelationTo() + "...");
+	@RequestMapping(value="/{userno}/follow", method=RequestMethod.GET)
+	public int follow(HttpSession session, @PathVariable("userno") int userNo) {
+		System.out.println("following " + userNo + " users...");
 		
-		return service.follow(vo);
+		return service.follow((UserVo)(session.getAttribute("authUser")), userNo);
 	}
 	
 	//언팔로우
-	public int unfollow() {
-		return 1;
+	@ResponseBody
+	@RequestMapping(value="/{userno}/unfollow", method=RequestMethod.GET)
+	public int unfollow(HttpSession session, @PathVariable("userno") int userNo) {
+		System.out.println("unfollowing " + userNo + " users...");
+		
+		return service.unfollow((UserVo)(session.getAttribute("authUser")), userNo);
 	}
 
 }
