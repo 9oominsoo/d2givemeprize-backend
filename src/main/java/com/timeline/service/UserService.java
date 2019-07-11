@@ -50,7 +50,21 @@ public class UserService {
 		return result;
 	}
 	
-	public int follow(UserRelationVo vo) {
+	public int follow(UserVo authUser, int userNo) {
+		UserRelationVo vo = new UserRelationVo();
+		
+		vo.setRelationTo(userNo);
+		vo.setRelationFrom(authUser.getUserNo());
+		
 		return dao.follow(vo);
+	}
+	
+	public int unfollow(UserVo authUser, int userNo) {
+		UserRelationVo vo = new UserRelationVo();
+		
+		vo.setRelationTo(userNo);
+		vo.setRelationFrom(authUser.getUserNo());
+		
+		return dao.unfollow(vo);
 	}
 }

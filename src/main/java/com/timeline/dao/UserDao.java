@@ -36,4 +36,8 @@ public class UserDao {
 	public int follow(UserRelationVo vo) {
 		return sqlSession.insert("user.insertUserRelation", vo);
 	}
+	
+	public int unfollow(UserRelationVo vo) {
+		return sqlSession.delete("user.deleteUserRelation", vo);
+	}
 }

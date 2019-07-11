@@ -19,7 +19,6 @@
 		
 		$.ajax({
 			url : "${pageContext.request.contextPath }/user/"+userNo+"/checkuserrelation",
-			type : "post",
 			
 			dataType : "json",
 			success : function(userrelationvo) {
