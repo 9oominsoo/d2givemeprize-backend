@@ -147,9 +147,9 @@ public class S3Util {
 	}
 
 	// 파일 URL
-	public String getFileURL(String bucketName, String fileName) {
+	public String getFileURL(String bucketName, String folderName, String fileName) {
 		// https://s3.ap-northeast-2.amazonaws.com/mybucket/puppy.jpg
-		String url = "https://s3.ap-northeast-2.amazonaws.com/" + bucketName + "/" + fileName;
+		String url = "https://s3.ap-northeast-2.amazonaws.com/" + bucketName + "/" + folderName +"/" + fileName;
 		return url;
 	}
 
