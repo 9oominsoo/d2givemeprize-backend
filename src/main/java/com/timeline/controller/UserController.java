@@ -137,5 +137,5 @@ public class UserController {
 		
 		return service.unfollow((UserVo)(session.getAttribute("authUser")), userNo);
 	}
-
+	
 }

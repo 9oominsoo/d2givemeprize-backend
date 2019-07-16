@@ -21,7 +21,7 @@ public class FileController {
 	@Autowired
 	private S3Util s3Util;
 
-	private String bucketName = "d2-resources";
+	private String bucketName = "d2givemeprize-upload-images";
 	
 	//테스트용 function
 	@RequestMapping(value="/testuploaduser")
@@ -37,9 +37,10 @@ public class FileController {
 	
 	// 버킷 생성
 	@RequestMapping(value = "/init", method = RequestMethod.GET)
-	public void userInit() {
+	public void Init() {
 		// 버킷생성
 		System.out.println("create bucket...");
+		System.out.println("bucketName: " + bucketName);
 		s3Util.createBucket(bucketName);
 
 		// 버킷리스트
@@ -80,28 +81,25 @@ public class FileController {
 				System.out.println("saveName: " + saveName);
 				
 		//파일패스
-				//String filePath = s3Util.getFileURL(bucketName, saveName);
+				String filePath =  bucketName + "/" + folderName;
 				
-				//s3Util.getFileURL(bucketName, saveName);
-				String filePath = bucketName + "/" + folderName;
 				System.out.println("filePath: " + filePath);
-				
-				//s3Util.fileUpload(bucketName, file, exName, saveName);
 				
 				s3Util.fileUpload(filePath, file, exName, saveName);
 				
 				
-				
-				String url = s3Util.getFileURL(filePath, saveName);
+				String url = s3Util.getFileURL(bucketName, folderName, saveName);
 				model.addAttribute("url", url);
-				
+		
 		DatafileVo vo = new DatafileVo();
 		vo.setFileName(fileName);
-		vo.setFilePath(filePath);
+		vo.setFilePath(url);
 		vo.setFileSize(fileSize);
 		vo.setSaveName(saveName);
 		System.out.println(vo.toString());
 		return vo;
 	}
-	
 }
+
+
+

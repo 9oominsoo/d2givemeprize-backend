@@ -45,21 +45,25 @@
 					<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
 					<h4 class="modal-title">이미지등록</h4>
 				</div>
-				<form id="ImgAdd" enctype="multipart/form-data">
+				<form id="ImgAdd" enctype="multipart/form-data" method="post" action="${pageContext.request.contextPath }/file/upload">
 					<div class="modal-body">
 						<div class="formgroup">
 							<label>코멘트작성</label><br>
-							<input type="hidden" name="userNo" id="userNo" value="${authUser.no }">
-							<input type="text" name="comment" id="comment"><br>	
+						<%-- 	<input type="hidden" name="userNo" id="userNo" value="${authUser.no }">
+							<input type="text" name="comment" id="comment"><br>	 --%>
 						</div>
 						<div class="formgroup">
 							<label>이미지선택</label><br>	
 							<input type="file" name="file" value="" id="file"> <br>	
 						</div>
+						<div class="formgroup">
+							<label>aws 폴더 이름</label><br/>
+							<input type="text" name="folderName" value="userimg_folder" id="folder"><br>
+						</div>
 					</div>
 					<div class="modal-footer">
 						<button type="button" class="btn btn-default" data-dismiss="modal">취소</button>
-						<button type="button" class="btn btn-primary" id="btnImgAdd">등록</button>
+						<button type="submit" class="btn btn-primary" id="btnImgAdd">등록</button>
 					</div>
 				</form>
 			</div><!-- /.modal-content -->
@@ -155,7 +159,7 @@ $(".view").on("click", "#viewFile", function() {
 	})
 });
 
-/* 이미지 업로드 */
+/*
 $("#btnImgAdd").on("click", function(){
 	console.log("이미지 등록 버튼 클릭");
 	var comment = $("#comment").val();
@@ -166,12 +170,9 @@ $("#btnImgAdd").on("click", function(){
 	formData.append("comment", comment);
 	formData.append("userNo", userNo);
 	formData.append("file", file);
-	
-	if($("#userNo").val() == ""){
-		alert("로그인을 해주세요");
-	}else{
+
 		$.ajax({
-			url : "${pageContext.request.contextPath }/gallery/upload",
+			url : "${pageContext.request.contextPath }/file/upload",
 			type: "post",
 			data : formData,
 			processData : false,
@@ -179,7 +180,6 @@ $("#btnImgAdd").on("click", function(){
 			
 			dataType: "json",
 			success : function(galleryDto) {
-				/*성공시 처리해야될 코드 작성*/		
 				$("#delPop").modal("hide");
 				showGallery(galleryDto);
 			},
@@ -187,9 +187,8 @@ $("#btnImgAdd").on("click", function(){
 				console.error(status + " : " + error);
 			}
 		})
-	}
 });
-
+*/
 /* 이미지 삭제 */
 $("#btnDel").on("click", function(){
 	console.log("삭제 버튼을 클릭: " + $(this).val());
