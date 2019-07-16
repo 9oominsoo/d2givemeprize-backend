@@ -12,6 +12,7 @@
     	<typeAlias alias="DatafileVo" type="com.timeline.vo.DatafileVo"/>
     	<typeAlias alias="ReplyVo" type="com.timeline.vo.ReplyVo"/>
     	<typeAlias alias="PostfileVo" type="com.timeline.vo.PostfileVo"/>
+    	<typeAlias alias="PostlikedVo" type="com.timeline.vo.PostlikedVo"/>
     </typeAliases>
  
     <mappers>

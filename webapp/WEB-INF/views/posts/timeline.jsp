@@ -27,6 +27,10 @@
 		</div>
 		<button class="btn btn-primary btn-lg btn-block" id="writePheed-button">write pheed</button>
 	</div>
+	
+	<div class="likeTest">
+		<button class="btn btn-primary btn-lg btn-block" id="likePost" data-postno="7">like Post</button>
+	</div>
 </body>
 
 <script type="text/javascript">
@@ -72,6 +76,31 @@
 			}
 		});
 	})
+	
+	$("#likePost").on("click",function(){
+		postvo = {
+			postNo: $("#likePost").data("postno")
+		}
+		console.log(postvo);
+		
+		$.ajax({
+			url : "${pageContext.request.contextPath }/post/likePheed",
+			type : "post",
+			contentType : "application/json",
+			data : JSON.stringify(postvo),
+
+			dataType : "json",
+			success : function(result) {
+				if(result == 1)
+					alert("success");
+			},
+			error : function(XHR, status, error) {
+				console.error(status + " : " + error);
+			}
+		});
+		
+	})
+
 </script>
 
 </html>
