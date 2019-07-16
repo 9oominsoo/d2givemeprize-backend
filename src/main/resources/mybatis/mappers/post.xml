@@ -59,4 +59,30 @@
 		]]>
 	</select>
 	
+	<select id="selectLike" parameterType="map" resultType="int">
+		<![CDATA[
+			SELECT count(postlikedNo)
+			FROM postliked
+			WHERE postNo = #{postNo} AND userNo = #{userNo}
+		]]>
+	</select>
+	
+	<insert id="insertLike" parameterType="map">
+		<![CDATA[
+			INSERT INTO postliked 
+						(postLikedNo,
+						 postNo,
+						 userNo)
+			VALUES(seq_liked_no.nextval,
+				   #{postNo},
+				   #{userNo})
+		]]>
+	</insert>
+	
+	<delete id="deleteLike" parameterType="map">
+		<![CDATA[
+			DELETE FROM postliked 
+			WHERE postNo = #{postNo} AND userNo = #{userNo}
+		]]>
+	</delete>
 </mapper>

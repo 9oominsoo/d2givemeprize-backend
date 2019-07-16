@@ -2,6 +2,7 @@ package com.timeline.dao;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,5 +29,17 @@ public class PostDao {
 	
 	public List<PostVo> loadMyPheed(UserVo vo){
 		return sqlSession.selectList("post.selectMyPost", vo);
+	}
+	
+	public int findLiked(Map<String, Object> map) {
+		return sqlSession.selectOne("post.selectLike", map);
+	}
+	
+	public int likePheed(Map<String, Object> map) {
+		return sqlSession.insert("post.insertLike", map);
+	}
+	
+	public int unlikePheed(Map<String, Object> map) {
+		return sqlSession.delete("post.deleteLike", map);
 	}
 }

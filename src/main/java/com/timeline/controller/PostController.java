@@ -60,4 +60,15 @@ public class PostController {
 		return service.loadMyPheed(me);
 	}
 	
+	//게시글 좋아요
+	@ResponseBody
+	@RequestMapping(value="/likePheed", method=RequestMethod.POST)
+	public int likeTogglePheed(HttpSession session, @RequestBody PostVo vo) {
+		System.out.println("like/unlike pheed No " + vo.getPostNo() + "...");
+		
+		UserVo me = (UserVo)(session.getAttribute("authUser"));
+		
+		return service.likeTogglePheed(me, vo);
+	}
+	
 }
