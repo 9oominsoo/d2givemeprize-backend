@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="tag">
+	
+	<!-- 친구들 목록 로드 -->
+	<select id="selectFriends" parameterType="UserVo" resultType="UserVo">
+		<![CDATA[
+			SELECT userName, userNo
+			FROM users
+			WHERE userNo IN 
+            			(SELECT relationTo
+             			 FROM userrelation
+             			 WHERE relationFrom=#{userNo} AND relationType=0)
+		]]>
+	</select>
+	
+	<!-- 게시글 공유 태그 저장 -->
+	<insert id="insertPosttag" parameterType="PosttagVo">
+		<![CDATA[
+			INSERT into postTag
+				(postTagNo,
+                 postNo,
+                 userNo)		
+			VALUES
+				(seq_posttag_no.nextval,
+                 #{postNo}, 
+                 #{userNo})
+		]]>
+	</insert>
+	
+	<!-- 댓글 공유 태그 저장 -->
+	<insert id="insertReplytag" parameterType="ReplytagVo">
+		<![CDATA[
+			INSERT into replyTag
+				(replyTagNo,
+                 replyNo,
+                 userNo)		
+			VALUES
+				(seq_replytag_no.nextval,
+                 #{replyNo}, 
+                 #{userNo})
+		]]>
+	</insert>
+	
+</mapper>

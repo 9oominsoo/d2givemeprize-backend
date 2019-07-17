@@ -30,6 +30,10 @@
 	<hr/>
 	
 	<div class="replyinfo">
+		<input type="text" id="rpostno" placeholder="게시글 넘버">
+		<input type="text" id="replyContent" placeholder="댓글 내용">
+		<button id="insertReply">댓글만 달기</button>
+		<button id="insertReplyTag">댓글 달고 공유하기</button>
 	</div>
 	
 </body>
@@ -165,6 +169,70 @@ $("#sharePost").on("click",function(){
 	
 	$.ajax({
 			url : "${pageContext.request.contextPath}/tag/sharePost",
+			type: "post",
+			contentType : "application/json",
+			data : JSON.stringify(multiParam),
+
+			dataType : "json",
+			success : function(result) {
+			},
+			error : function(XHR, status, error) {
+				console.error(status + " : " + error);
+			}
+		})
+});
+
+$("#insertReply").on("click",function(){
+	
+	var multiParam = Array();
+	
+	var tagList = [];
+	
+	var replyvo = {
+		postNo : $("#rpostno").val(),
+		replyContent: $("#replyContent").val()
+	};	
+	
+	multiParam.push(tagList);
+	multiParam.push(replyvo);
+	console.log(multiParam)
+
+	
+	$.ajax({
+			url : "${pageContext.request.contextPath}/reply/writeReply",
+			type: "post",
+			contentType : "application/json",
+			data : JSON.stringify(multiParam),
+
+			dataType : "json",
+			success : function(result) {
+			},
+			error : function(XHR, status, error) {
+				console.error(status + " : " + error);
+			}
+		})
+});
+
+$("#insertReplyTag").on("click",function(){
+	
+	var multiParam = Array();
+	
+	var tagList = [];
+	tagList.push(3);
+	tagList.push(4);
+	
+	var replyvo = {
+		postNo : $("#rpostno").val(),
+		replyContent: $("#replyContent").val()
+	};	
+	
+	multiParam.push(tagList);
+	multiParam.push(replyvo);
+	console.log(multiParam)
+
+	
+	$.ajax({
+			url : "${pageContext.request.contextPath}/reply/writeReply",
 			type: "post",
 			contentType : "application/json",
 			data : JSON.stringify(multiParam),

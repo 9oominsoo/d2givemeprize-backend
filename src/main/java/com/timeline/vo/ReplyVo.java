@@ -10,7 +10,6 @@ public class ReplyVo {
 	private int postNo;
 	private int replyGroupNo;
 	private int replyOrderNo;
-	private int replyDepth;
 	
 	//Additional Field
 	
@@ -20,7 +19,7 @@ public class ReplyVo {
 	}
 
 	public ReplyVo(int replyNo, String replyContent, String replyRegDate, int writerNo, int postNo, int replyGroupNo,
-			int replyOrderNo, int replyDepth) {
+			int replyOrderNo) {
 		super();
 		this.replyNo = replyNo;
 		this.replyContent = replyContent;
@@ -29,7 +28,6 @@ public class ReplyVo {
 		this.postNo = postNo;
 		this.replyGroupNo = replyGroupNo;
 		this.replyOrderNo = replyOrderNo;
-		this.replyDepth = replyDepth;
 	}
 
 	public int getReplyNo() {
@@ -88,19 +86,11 @@ public class ReplyVo {
 		this.replyOrderNo = replyOrderNo;
 	}
 
-	public int getReplyDepth() {
-		return replyDepth;
-	}
-
-	public void setReplyDepth(int replyDepth) {
-		this.replyDepth = replyDepth;
-	}
-
 	@Override
 	public String toString() {
 		return "ReplyVo [replyNo=" + replyNo + ", replyContent=" + replyContent + ", replyRegDate=" + replyRegDate
 				+ ", writerNo=" + writerNo + ", postNo=" + postNo + ", replyGroupNo=" + replyGroupNo + ", replyOrderNo="
-				+ replyOrderNo + ", replyDepth=" + replyDepth + "]";
+				+ replyOrderNo + "]";
 	}
 	
 }

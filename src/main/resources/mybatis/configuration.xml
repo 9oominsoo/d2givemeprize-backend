@@ -14,12 +14,14 @@
     	<typeAlias alias="PostfileVo" type="com.timeline.vo.PostfileVo"/>
     	<typeAlias alias="PostlikedVo" type="com.timeline.vo.PostlikedVo"/>
     	<typeAlias alias="PosttagVo" type="com.timeline.vo.PosttagVo"/>
+    	<typeAlias alias="ReplytagVo" type="com.timeline.vo.ReplytagVo"/>
     </typeAliases>
  
     <mappers>
         <mapper resource="mybatis/mappers/user.xml" />
         <mapper resource="mybatis/mappers/post.xml" />
         <mapper resource="mybatis/mappers/tag.xml" />
+        <mapper resource="mybatis/mappers/reply.xml" />
     </mappers>
 </configuration>
  
