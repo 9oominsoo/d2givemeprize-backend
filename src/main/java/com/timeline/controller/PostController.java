@@ -33,11 +33,13 @@ public class PostController {
 	//게시글 작성
 	@ResponseBody
 	@RequestMapping(value="/writePheed", method=RequestMethod.POST)
-	public int writePheed(@RequestBody PostVo vo) {
+	public int writePheed(@RequestBody PostVo vo, HttpSession session) {
 		System.out.println("write pheed...");
 		System.out.println("Pheed Info: " + vo.toString());
 		
-		return service.writePheed(vo);
+		UserVo me = (UserVo)(session.getAttribute("authUser"));
+		
+		return service.writePheed(vo, me);
 	}
 	
 	//모든 게시글 로드

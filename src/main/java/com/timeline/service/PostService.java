@@ -17,8 +17,9 @@ public class PostService {
 	@Autowired
 	private PostDao dao;
 	
-	public int writePheed(PostVo vo){
-		return dao.writePheed(vo);
+	public int writePheed(PostVo pVo, UserVo uVo){
+		pVo.setUserNo(uVo.getUserNo());
+		return dao.writePheed(pVo);
 	}
 	
 	public List<PostVo> loadPheed(){
