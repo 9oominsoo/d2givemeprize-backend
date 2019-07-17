@@ -19,9 +19,6 @@
 		<div class="form-group">
 			<input type="text" class="form-control" id="PostContent" placeholder="PostContent" autofocus>
 		</div>
-		<div class="from-group">
-			<input type="hidden" class="form-control" id="UserNo" data-userno="2" autofocus>
-		</div>
 		<div class="form-group">
 			<input type="password" class="form-control" id="PostImg" placeholder="PostImg">
 		</div>
@@ -30,6 +27,10 @@
 	
 	<div class="likeTest">
 		<button class="btn btn-primary btn-lg btn-block" id="likePost" data-postno="7">like Post</button>
+	</div>
+	
+	<div class="hitTest">
+		<button class="btn btn-primary btn-lg btn-block" id="detailPost" data-postno="7">Detail</button>
 	</div>
 </body>
 
@@ -53,7 +54,6 @@
 	
 	$("#writePheed-button").on("click",function(){
 		postvo = {
-			userNo : $("#UserNo").data("userno"),
 			postTitle: $("#PostTitle").val(),
 			postContent: $("#PostContent").val(),
 			postImg: $("#PostImg").val()
@@ -92,6 +92,30 @@
 			dataType : "json",
 			success : function(result) {
 				if(result == 1)
+					alert("success");
+			},
+			error : function(XHR, status, error) {
+				console.error(status + " : " + error);
+			}
+		});
+		
+	})
+	
+	$("#detailPost").on("click",function(){
+		postvo = {
+			postNo: $("#detailPost").data("postno")
+		}
+		console.log(postvo);
+		
+		$.ajax({
+			url : "${pageContext.request.contextPath }/post/detailPheed",
+			type : "post",
+			contentType : "application/json",
+			data : JSON.stringify(postvo),
+
+			dataType : "json",
+			success : function(postVo) {
+					console.log(postVo)
 					alert("success");
 			},
 			error : function(XHR, status, error) {

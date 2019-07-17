@@ -6,6 +6,7 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.timeline.dao.PostDao;
 import com.timeline.vo.PostVo;
@@ -30,6 +31,16 @@ public class PostService {
 		return dao.loadMyPheed(vo);
 	}
 	
+	public PostVo detailPheed(UserVo uVo, PostVo pVo) {
+		pVo.setUserNo(uVo.getUserNo());
+		
+		PostVo searched = dao.detailPheed(pVo);
+		dao.hitPheed(pVo);
+		
+		return searched;
+	}
+	
+	@Transactional
 	public int likeTogglePheed(UserVo uVo, PostVo pVo) {
 		Map<String, Object> liked = new HashMap<String, Object>();
 		liked.put("userNo", uVo.getUserNo());

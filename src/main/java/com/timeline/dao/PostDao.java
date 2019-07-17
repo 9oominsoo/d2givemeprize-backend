@@ -31,6 +31,14 @@ public class PostDao {
 		return sqlSession.selectList("post.selectMyPost", vo);
 	}
 	
+	public PostVo detailPheed(PostVo vo) {
+		return sqlSession.selectOne("post.selectDistinctPost", vo);
+	}
+	
+	public int hitPheed(PostVo vo) {
+		return sqlSession.update("post.updateHit", vo);
+	}
+	
 	public int findLiked(Map<String, Object> map) {
 		return sqlSession.selectOne("post.selectLike", map);
 	}

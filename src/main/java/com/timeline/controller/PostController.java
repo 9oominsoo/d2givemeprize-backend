@@ -38,7 +38,7 @@ public class PostController {
 		System.out.println("Pheed Info: " + vo.toString());
 		
 		UserVo me = (UserVo)(session.getAttribute("authUser"));
-		
+
 		return service.writePheed(vo, me);
 	}
 	
@@ -62,6 +62,17 @@ public class PostController {
 		return service.loadMyPheed(me);
 	}
 	
+	//게시글 상세보기
+	@ResponseBody
+	@RequestMapping(value="/detailPheed", method=RequestMethod.POST)
+	public PostVo detailPheed(HttpSession session, @RequestBody PostVo vo) {
+		System.out.println("load distinct pheed No " + vo.getPostNo() + "...");
+		
+		UserVo me = (UserVo)(session.getAttribute("authUser"));
+		
+		return service.detailPheed(me, vo);
+	}
+		
 	//게시글 좋아요
 	@ResponseBody
 	@RequestMapping(value="/likePheed", method=RequestMethod.POST)

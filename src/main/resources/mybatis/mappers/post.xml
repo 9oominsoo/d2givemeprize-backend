@@ -28,14 +28,17 @@
 	<!-- 모든 피드 출력 -->
 	<select id="selectPost" resultType="PostVo">
 		<![CDATA[
-			SELECT postNo,
-				   userNo,
-				   postTitle,
-			   	   postContent,
-			   	   postRegDate,
-			   	   postHit,
-			   	   postImg
-			FROM posts
+			SELECT p.postNo,
+				   p.userNo,
+				   p.postTitle,
+			   	   p.postContent,
+			   	   p.postRegDate,
+			   	   p.postHit,
+			   	   p.postImg,
+			   	   (SELECT count(postlikedNo)
+			   	    FROM postliked
+			   	    WHERE postNo = p.postNo) as liked
+			FROM posts p
 		]]>
 	</select>
 	
@@ -49,7 +52,13 @@
 			   	   p.postContent,
 			   	   p.postRegDate,
 			   	   p.postHit,
-			   	   p.postImg
+			   	   p.postImg,
+			   	   (SELECT count(postlikedNo) 
+			   	    FROM postliked 
+			   	    WHERE postNo = p.postNo) AS liked,
+			   	   (SELECT count(postlikedNo) 
+			   	    FROM postliked 
+			   	    WHERE postNo = p.postNo AND userNo=#{userNo}) AS likedByAuth
 			FROM posts p join users u
 			ON p.userNo = u.userNo
 			WHERE p.userno IN (SELECT relationTo
@@ -58,6 +67,37 @@
 			ORDER BY p.postRegDate DESC
 		]]>
 	</select>
+	
+	<!-- 특정 피드 정보 출력 -->
+	<select id="selectDistinctPost" parameterType="PostVo" resultType="PostVo">
+		<![CDATA[
+			SELECT p.postNo,
+				   p.userNo,
+				   u.userName,
+				   p.postTitle,
+			   	   p.postContent,
+			   	   p.postRegDate,
+			   	   p.postHit,
+			   	   p.postImg,
+			   	   (SELECT count(postlikedNo) 
+			   	    FROM postliked 
+			   	    WHERE postNo = p.postNo) AS liked,
+			   	   (SELECT count(postlikedNo) 
+			   	    FROM postliked 
+			   	    WHERE postNo = p.postNo AND userNo=#{userNo}) AS likedByAuth
+			FROM posts p join users u
+			ON p.userNo = u.userNo
+			WHERE p.postNo = #{postNo} 
+		]]>
+	</select>
+	
+	<update id="updateHit" parameterType="PostVo">
+		<![CDATA[
+			UPDATE posts 
+			SET posthit=posthit+1 
+			WHERE postno = #{postNo}
+		]]>
+	</update>
 	
 	<select id="selectLike" parameterType="map" resultType="int">
 		<![CDATA[

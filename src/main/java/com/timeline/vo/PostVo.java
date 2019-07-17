@@ -13,6 +13,8 @@ public class PostVo {
 	
 	//Additional Field
 	private String userName;
+	private int liked;
+	private int likedByAuth;
 	
 	
 	public PostVo() {
@@ -95,11 +97,27 @@ public class PostVo {
 		this.userName = userName;
 	}
 
+	public int getLiked() {
+		return liked;
+	}
+
+	public void setLiked(int liked) {
+		this.liked = liked;
+	}
+
+	public int getLikedByAuth() {
+		return likedByAuth;
+	}
+
+	public void setLikedByAuth(int likedByAuth) {
+		this.likedByAuth = likedByAuth;
+	}
+
 	@Override
 	public String toString() {
 		return "PostVo [postNo=" + postNo + ", userNo=" + userNo + ", postTitle=" + postTitle + ", postContent="
-				+ postContent + ", postRegDate=" + postRegDate + ", postHit=" + postHit + ", postImg=" + postImg + "]";
+				+ postContent + ", postRegDate=" + postRegDate + ", postHit=" + postHit + ", postImg=" + postImg
+				+ ", userName=" + userName + ", liked=" + liked + ", likedByAuth=" + likedByAuth + "]";
 	}
-	
 
 }
