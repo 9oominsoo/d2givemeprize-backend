@@ -11,15 +11,27 @@
 	
 	<script type="text/javascript" src="${pageContext.request.contextPath }/assets/jquery/jquery-1.12.4.js"></script>
 	<script type="text/javascript" src="${pageContext.request.contextPath }/assets/jquery-ui-1.12.1.custom/jquery-ui.js"></script>
-	<script type="text/javascript" src="${pageContext.request.contextPath }/assets/bootstrap/js/bootstrap.min.js"></script>
+	<script type="text/javascript" src="${pageContext.request.contextPath }/assets/bootstrap/bootstrap.min.js"></script>
 </head>
 
 <body>
+	<div class="sharePost">
+		<input type="text" id="postno" placeholder="게시글 넘버">
+		<button id="sharePost">공유</button>
+	</div>
+		
+	<hr/>
 	
-	<div>
+	<div class="searchFunction">
 		<input id="searchbox" type="text" placeholder="유저 검색">
 		<button id="searchbtn">검색</button>
 	</div>
+	
+	<hr/>
+	
+	<div class="replyinfo">
+	</div>
+	
 </body>
 
 <script type="text/javascript">
@@ -90,7 +102,7 @@ $("document").ready(function(){
 			console.log("parameter: " + param); 
 			if(param != null){
 				$.ajax({
-					url : "${pageContext.request.contextPath}/tag/search",
+					url : "${pageContext.request.contextPath}/tag/searchFriends",
 					type : "post",
 					data : {value: param}, 
 					//contentType : "application/json",
@@ -133,6 +145,38 @@ function parsing(text){
 		return null;
 	}
 }
+
+$("#sharePost").on("click",function(){
+	
+	var multiParam = Array();
+	
+	var tagList = [];
+	tagList.push(3);
+	tagList.push(4);
+	
+	var postvo = {
+		postNo : $("#postno").val()
+	};	
+	
+	multiParam.push(tagList);
+	multiParam.push(postvo);
+	console.log(multiParam)
+
+	
+	$.ajax({
+			url : "${pageContext.request.contextPath}/tag/sharePost",
+			type: "post",
+			contentType : "application/json",
+			data : JSON.stringify(multiParam),
+
+			dataType : "json",
+			success : function(result) {
+			},
+			error : function(XHR, status, error) {
+				console.error(status + " : " + error);
+			}
+		})
+});
 
 </script>
 
