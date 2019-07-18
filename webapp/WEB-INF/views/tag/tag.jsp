@@ -35,6 +35,11 @@
 		<button id="insertReply">댓글만 달기</button>
 		<button id="insertReplyTag">댓글 달고 공유하기</button>
 	</div>
+	<hr/>
+	<div class="likeTest">
+		<input type="text" id="replyno" placeholder="댓글 넘버">
+		<button class="btn btn-primary btn-lg btn-block" id="likeReply">like Reply</button>
+	</div>
 	
 </body>
 
@@ -245,6 +250,30 @@ $("#insertReplyTag").on("click",function(){
 			}
 		})
 });
+
+$("#likeReply").on("click",function(){
+	replyvo = {
+		replyNo: $("#replyno").val()
+	}
+	console.log(replyvo);
+	
+	$.ajax({
+		url : "${pageContext.request.contextPath }/reply/likeReply",
+		type : "post",
+		contentType : "application/json",
+		data : JSON.stringify(replyvo),
+
+		dataType : "json",
+		success : function(result) {
+			if(result == 1)
+				alert("success");
+		},
+		error : function(XHR, status, error) {
+			console.error(status + " : " + error);
+		}
+	});
+	
+})
 
 </script>
 

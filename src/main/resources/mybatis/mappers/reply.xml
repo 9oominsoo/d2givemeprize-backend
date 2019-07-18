@@ -28,6 +28,54 @@
 			)
 		]]>
 	</insert>
+	
+	<!-- 게시글 상세보기 시 해당 댓글 출력 -->
+	<select id="selectReply" parameterType="PostVo" resultType="ReplyVo">
+		<![CDATA[
+			SELECT replyNo,
+				   replyContent,
+				   replyRegDate,
+				   writerNo,
+				   (SELECT userName 
+					FROM users
+					WHERE userNo = writerNo) AS writerName,
+				   postNo,
+				   replyGroupNo,
+				   replyOrderNo
+			FROM reply
+			WHERE postNo = #{postNo}
+		]]>	
+	</select>
+	
+	<!-- 좋아요 존재 여부 확인 -->
+	<select id="selectLike" parameterType="map" resultType="int">
+		<![CDATA[
+			SELECT count(replylikedNo)
+			FROM replyliked
+			WHERE replyNo = #{replyNo} AND userNo = #{userNo}
+		]]>
+	</select>
+	
+	<!-- 좋아요 수행 -->
+	<insert id="insertLike" parameterType="map">
+		<![CDATA[
+			INSERT INTO replyliked 
+						(replyLikedNo,
+						 replyNo,
+						 userNo)
+			VALUES(seq_liked_no.nextval,
+				   #{replyNo},
+				   #{userNo})
+		]]>
+	</insert>
+	
+	<!-- 좋아요 취소 -->
+	<delete id="deleteLike" parameterType="map">
+		<![CDATA[
+			DELETE FROM replyliked 
+			WHERE replyNo = #{replyNo} AND userNo = #{userNo}
+		]]>
+	</delete>
 
 </mapper>
 	

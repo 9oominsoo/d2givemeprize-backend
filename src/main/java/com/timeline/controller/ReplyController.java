@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.timeline.service.ReplyService;
+import com.timeline.vo.ReplyVo;
 import com.timeline.vo.UserVo;
 
 @Controller
@@ -44,4 +45,14 @@ public class ReplyController {
 	// 대댓 작성
 	
 	// 댓글 좋아요 
+	@ResponseBody
+	@RequestMapping(value="/likeReply", method=RequestMethod.POST)
+	public int likeTogglePheed(HttpSession session, @RequestBody ReplyVo vo) {
+		System.out.println("like/unlike pheed No " + vo.getPostNo() + "...");
+		
+		UserVo me = (UserVo)(session.getAttribute("authUser"));
+		
+		return service.likeToggleReply(me, vo);
+	}
+	
 }

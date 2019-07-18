@@ -1,6 +1,7 @@
 package com.timeline.controller;
 
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
@@ -44,14 +45,14 @@ public class PostController {
 	
 	//모든 게시글 로드
 	@ResponseBody
-	@RequestMapping(value="/loadPheed", method=RequestMethod.POST)
+	@RequestMapping(value="/loadPheed", method=RequestMethod.GET)
 	public List<PostVo> loadPheed(){
 		System.out.println("load pheed...");
 		
 		return service.loadPheed();
 	}
 	
-	//유저별 게시글 로드(나의 게시글 + 친구 게시글 로드)
+	//유저별 게시글 로드(following 중인 친구 게시글 로드)
 	@ResponseBody
 	@RequestMapping(value="/loadMyPheed", method=RequestMethod.GET)
 	public List<PostVo> loadMyPheed(HttpSession session){
@@ -65,7 +66,7 @@ public class PostController {
 	//게시글 상세보기
 	@ResponseBody
 	@RequestMapping(value="/detailPheed", method=RequestMethod.POST)
-	public PostVo detailPheed(HttpSession session, @RequestBody PostVo vo) {
+	public Map<String, Object> detailPheed(HttpSession session, @RequestBody PostVo vo) {
 		System.out.println("load distinct pheed No " + vo.getPostNo() + "...");
 		
 		UserVo me = (UserVo)(session.getAttribute("authUser"));

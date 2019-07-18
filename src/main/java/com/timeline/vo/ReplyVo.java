@@ -12,7 +12,7 @@ public class ReplyVo {
 	private int replyOrderNo;
 	
 	//Additional Field
-	
+	private String writerName;
 	
 	public ReplyVo() {
 		
@@ -84,6 +84,14 @@ public class ReplyVo {
 
 	public void setReplyOrderNo(int replyOrderNo) {
 		this.replyOrderNo = replyOrderNo;
+	}
+
+	public String getWriterName() {
+		return writerName;
+	}
+
+	public void setWriterName(String writerName) {
+		this.writerName = writerName;
 	}
 
 	@Override
