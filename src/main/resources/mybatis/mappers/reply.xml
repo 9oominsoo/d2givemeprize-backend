@@ -29,6 +29,50 @@
 		]]>
 	</insert>
 	
+	<!-- 대댓글 등록  -->
+	<insert id="insertReReply" parameterType="ReplyVo">
+		<selectKey keyProperty="replyNo" resultType="int" order="BEFORE">
+			select seq_reply_no.nextval from dual
+		</selectKey>
+		<![CDATA[
+			INSERT INTO reply
+				(replyNo,
+				 replyContent,
+				 replyRegDate,
+				 writerNo,
+				 postNo,
+				 replyGroupNo,
+				 replyOrderNo)
+			 VALUES(
+				#{replyNo},
+				#{replyContent},
+				SYSDATE,
+				#{writerNo},
+				#{postNo},
+				#{replyGroupNo},
+				#{replyOrderNo}
+			)
+		]]>
+	</insert>
+	
+	<!-- 댓글 그룹 넘버 찾기 -->
+	<select id="selectGroupNo" parameterType="int" resultType="int">
+		<![CDATA[
+			SELECT replyGroupNo 
+			FROM reply 
+			WHERE replyNo = #{replyNo}
+		]]>
+	</select>
+	
+	<!-- 댓글 순서 넘버 찾기 -->
+	<select id="selectOrderNo" parameterType="int" resultType="int">
+		<![CDATA[
+			SELECT MAX(replyOrderNo) 
+			FROM reply 
+			WHERE replyGroupNo = #{replyGroupNo}
+		]]>
+	</select>
+	
 	<!-- 게시글 상세보기 시 해당 댓글 출력 -->
 	<select id="selectReply" parameterType="PostVo" resultType="ReplyVo">
 		<![CDATA[

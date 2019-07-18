@@ -43,6 +43,16 @@ public class ReplyController {
 	}
 	
 	// 대댓 작성
+	@ResponseBody 
+	@RequestMapping(value="/reReply", method=RequestMethod.POST)
+	public int reReply(@RequestBody List<Object> multiParam, HttpSession session) {
+		System.out.println("write reply on reply...");
+		System.out.println(multiParam);
+		
+		UserVo me = (UserVo)(session.getAttribute("authUser"));
+		
+		return service.reReply(multiParam, me);
+	}
 	
 	// 댓글 좋아요 
 	@ResponseBody

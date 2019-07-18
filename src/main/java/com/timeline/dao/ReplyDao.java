@@ -21,8 +21,20 @@ public class ReplyDao {
 		return sqlSession.insert("reply.insertReply", vo);
 	}
 	
+	public int reReply(ReplyVo vo) {
+		return sqlSession.insert("reply.insertReReply", vo);
+	}
+	
 	public int shareReply(ReplytagVo vo) {
 		return sqlSession.insert("tag.insertReplytag", vo);
+	}
+	
+	public int findGroupNo(int parentReplyNo) {
+		return sqlSession.selectOne("reply.selectGroupNo", parentReplyNo);
+	}
+	
+	public int findOrderNo(int groupNo) {
+		return sqlSession.selectOne("reply.selectOrderNo", groupNo);
 	}
 	
 	public List<ReplyVo> detailReply(PostVo vo){

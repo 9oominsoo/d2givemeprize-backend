@@ -41,6 +41,16 @@
 		<button class="btn btn-primary btn-lg btn-block" id="likeReply">like Reply</button>
 	</div>
 	
+	<hr/>
+	
+	<div class="replyinfo">
+		<input type="text" id="rrpostno" placeholder="게시글 넘버">
+		<input type="text" id="parentreplyno" placeholder="댓글 넘버">
+		<input type="text" id="rreplyContent" placeholder="댓글 내용">
+		<button id="insertreReply">대댓글만 달기</button>
+		<button id="insertreReplyTag">대댓글 달고 공유하기</button>
+	</div>
+	
 </body>
 
 <script type="text/javascript">
@@ -274,6 +284,73 @@ $("#likeReply").on("click",function(){
 	});
 	
 })
+
+$("#insertreReply").on("click",function(){
+	
+	var multiParam = Array();
+	
+	var tagList = [];
+	
+	var replyvo = {
+			replyNo : $("#parentreplyno").val(),
+			postNo : $("#rrpostno").val(),
+			replyContent: $("#rreplyContent").val()
+	};	
+	
+	multiParam.push(tagList);
+	multiParam.push(replyvo);
+	console.log(multiParam)
+
+	
+	$.ajax({
+			url : "${pageContext.request.contextPath}/reply/reReply",
+			type: "post",
+			contentType : "application/json",
+			data : JSON.stringify(multiParam),
+
+			dataType : "json",
+			success : function(result) {
+			},
+			error : function(XHR, status, error) {
+				console.error(status + " : " + error);
+			}
+		})
+});
+
+$("#insertreReplyTag").on("click",function(){
+	
+	var multiParam = Array();
+	
+	var tagList = [];
+	tagList.push(3);
+	tagList.push(4);
+	
+	var replyvo = {
+		replyNo : $("#parentreplyno").val(),
+		postNo : $("#rrpostno").val(),
+		replyContent: $("#rreplyContent").val()
+	};	
+	
+	multiParam.push(tagList);
+	multiParam.push(replyvo);
+	console.log(multiParam)
+
+	
+	$.ajax({
+			url : "${pageContext.request.contextPath}/reply/reReply",
+			type: "post",
+			contentType : "application/json",
+			data : JSON.stringify(multiParam),
+
+			dataType : "json",
+			success : function(result) {
+			},
+			error : function(XHR, status, error) {
+				console.error(status + " : " + error);
+			}
+		})
+});
+
 
 </script>
 

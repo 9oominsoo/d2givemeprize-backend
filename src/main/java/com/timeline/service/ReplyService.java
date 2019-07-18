@@ -9,7 +9,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.timeline.dao.ReplyDao;
-import com.timeline.vo.PostVo;
 import com.timeline.vo.ReplyVo;
 import com.timeline.vo.ReplytagVo;
 import com.timeline.vo.UserVo;
@@ -36,6 +35,44 @@ public class ReplyService {
 		rVo.setPostNo(Integer.parseInt((String)map.get("postNo")));
 		
 		dao.writeReply(rVo);
+		int replyNo = rVo.getReplyNo();
+		
+		for(int i=0; i<tagList.size(); i++) {
+			
+			ReplytagVo tVo = new ReplytagVo();
+			tVo.setReplyNo(replyNo);
+			
+			tVo.setUserNo(Integer.parseInt(""+tagList.get(i)));
+			tagFlag = dao.shareReply(tVo);
+			if(tagFlag == 0) {
+				System.out.println("error");
+				break;
+			}
+		}
+		
+		return tagFlag;
+	}
+	
+	@Transactional
+	public int reReply(List<Object> multiParam, UserVo vo) {
+		HashMap<String, Object> map = (HashMap<String, Object>) multiParam.get(1);
+		
+		List<Integer> tagList = (List<Integer>)(multiParam.get(0));	
+		
+		int tagFlag = 0;
+		int writerNo = vo.getUserNo();
+		int parentReplyNo = Integer.parseInt((String)map.get("replyNo"));
+		int groupNo = dao.findGroupNo(parentReplyNo);
+		int orderNo = dao.findOrderNo(groupNo) + 1;
+		
+		ReplyVo rVo = new ReplyVo();
+		rVo.setReplyContent((String)map.get("replyContent"));
+		rVo.setWriterNo(writerNo);
+		rVo.setPostNo(Integer.parseInt((String)map.get("postNo")));
+		rVo.setReplyGroupNo(groupNo);
+		rVo.setReplyOrderNo(orderNo);
+		
+		dao.reReply(rVo);
 		int replyNo = rVo.getReplyNo();
 		
 		for(int i=0; i<tagList.size(); i++) {
