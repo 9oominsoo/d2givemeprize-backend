@@ -1,9 +1,12 @@
 package com.timeline.dao;
 
+import java.util.List;
+
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.timeline.vo.PostVo;
 import com.timeline.vo.UserRelationVo;
 import com.timeline.vo.UserVo;
 
@@ -27,6 +30,10 @@ public class UserDao {
 	
 	public UserVo findUser(int userNo) {
 		return sqlSession.selectOne("user.selectUser", userNo);
+	}
+	
+	public List<PostVo> findUserPost(int userNo){
+		return sqlSession.selectList("user.selectUserPost", userNo);
 	}
 	
 	public UserRelationVo checkUserRelation(UserRelationVo vo) {

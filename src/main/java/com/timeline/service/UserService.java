@@ -1,9 +1,14 @@
 package com.timeline.service;
 
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.timeline.dao.UserDao;
+import com.timeline.vo.PostVo;
 import com.timeline.vo.UserRelationVo;
 import com.timeline.vo.UserVo;
 
@@ -33,8 +38,16 @@ public class UserService {
 		}
 	}
 	
-	public UserVo findUser(int userNo) {
-		return dao.findUser(userNo);
+	public Map<String, Object> findUserInfo(int userNo) {
+		Map<String, Object> map = new HashMap<String, Object>();
+		
+		UserVo vo = dao.findUser(userNo);
+		List<PostVo> postList = dao.findUserPost(userNo);
+		
+		map.put("selectedUser", vo);
+		map.put("postList", postList);
+		
+		return map;
 	}
 	
 	public UserRelationVo checkUserRelation(UserVo authUser, int userNo) {

@@ -1,5 +1,7 @@
 package com.timeline.controller;
 
+import java.util.Map;
+
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -101,14 +103,12 @@ public class UserController {
 	}
 	
 	//유저 페이지 로드
+	@ResponseBody
 	@RequestMapping(value="/{userno}")
-	public String userPageForm(@PathVariable("userno") int userNo, Model model) {
+	public  Map<String, Object> userPage(@PathVariable("userno") int userNo, Model model) {
 		System.out.println("load user page");
 		
-		UserVo vo = service.findUser(userNo);
-		model.addAttribute("selectedUser", vo);
-		
-		return "/WEB-INF/views/users/userpage.jsp";
+		return service.findUserInfo(userNo);
 	}
 	
 	//유저 관계 확인
