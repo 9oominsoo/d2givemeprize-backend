@@ -38,14 +38,25 @@ public class UserService {
 		}
 	}
 	
-	public Map<String, Object> findUserInfo(int userNo) {
+	public Map<String, Object> findUserInfo(UserVo authUser, int userNo) {
 		Map<String, Object> map = new HashMap<String, Object>();
 		
-		UserVo vo = dao.findUser(userNo);
+		// find userInfo
+		UserVo uVo = dao.findUser(userNo);
+		map.put("selectedUser", uVo);
+		
+		// find userPosts
 		List<PostVo> postList = dao.findUserPost(userNo);
 		
-		map.put("selectedUser", vo);
 		map.put("postList", postList);
+		
+		// find relation
+		UserRelationVo rVo = new UserRelationVo();
+		rVo.setRelationTo(userNo);
+		rVo.setRelationFrom(authUser.getUserNo());
+		
+		UserRelationVo relation = dao.checkUserRelation(rVo);
+		map.put("relation", relation);
 		
 		return map;
 	}

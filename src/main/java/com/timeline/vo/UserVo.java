@@ -10,6 +10,9 @@ public class UserVo {
 	private String userImg;
 	
 	//Additional Field
+	private int followers;
+	private int followings;
+	
 	
 	public UserVo() {
 		
@@ -63,11 +66,27 @@ public class UserVo {
 	public void setUserImg(String userImg) {
 		this.userImg = userImg;
 	}
+	
+	public int getFollowers() {
+		return followers;
+	}
+
+	public void setFollowers(int followers) {
+		this.followers = followers;
+	}
+
+	public int getFollowings() {
+		return followings;
+	}
+
+	public void setFollowings(int followings) {
+		this.followings = followings;
+	}
 
 	@Override
 	public String toString() {
-		return "UserVo [userNo=" + userNo + ", id=" + userId + ", password=" + userPwd + ", userName=" + userName
-				+ ", userImg=" + userImg + "]";
+		return "UserVo [userNo=" + userNo + ", userId=" + userId + ", userPwd=" + userPwd + ", userName=" + userName
+				+ ", userImg=" + userImg + ", followers=" + followers + ", followings=" + followings + "]";
 	}
-	
+
 }

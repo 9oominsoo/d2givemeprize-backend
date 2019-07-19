@@ -47,7 +47,13 @@
 			SELECT userNo,
 				   userName,
 				   userId,
-				   userImg
+				   userImg,
+				   (SELECT COUNT(relationNo) 
+				    FROM userRelation 
+				    WHERE relationFrom = #{userNo}) AS followings,
+				   (SELECT COUNT(relationNo) 
+				    FROM userRelation 
+				    WHERE relationTo = #{userNo}) AS followers
 			FROM users
 			WHERE userNo = #{userNo}
 		]]>

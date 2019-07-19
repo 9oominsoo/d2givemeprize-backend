@@ -105,10 +105,10 @@ public class UserController {
 	//유저 페이지 로드
 	@ResponseBody
 	@RequestMapping(value="/{userno}")
-	public  Map<String, Object> userPage(@PathVariable("userno") int userNo, Model model) {
+	public  Map<String, Object> userPage(@PathVariable("userno") int userNo, HttpSession session) {
 		System.out.println("load user page");
 		
-		return service.findUserInfo(userNo);
+		return service.findUserInfo((UserVo)(session.getAttribute("authUser")), userNo);
 	}
 	
 	//유저 관계 확인
