@@ -45,11 +45,11 @@ public class ReplyDao {
 		return sqlSession.selectOne("reply.selectLike", map);
 	}
 	
-	public int likePheed(Map<String, Object> map) {
+	public int likeReply(Map<String, Object> map) {
 		return sqlSession.insert("reply.insertLike", map);
 	}
 	
-	public int unlikePheed(Map<String, Object> map) {
+	public int unlikeReply(Map<String, Object> map) {
 		return sqlSession.delete("reply.deleteLike", map);
 	}
 

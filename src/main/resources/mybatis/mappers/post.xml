@@ -11,14 +11,12 @@
 						(postNo, 
 						 userNo, 
 						 postRegDate, 
-						 postTitle, 
 						 postContent, 
 						 postHit, 
 						 postImg)
 			VALUES(seq_post_no.nextval, 
 					#{userNo}, 
 					SYSDATE, 
-					#{postTitle}, 
 					#{postContent}, 
 					0, 
 					#{postImg})
@@ -30,9 +28,8 @@
 		<![CDATA[
 			SELECT p.postNo,
 				   p.userNo,
-				   p.postTitle,
 			   	   p.postContent,
-			   	   p.postRegDate,
+			   	   TO_CHAR(p.postRegDate, 'YYYY/MM/DD'),
 			   	   p.postHit,
 			   	   p.postImg,
 			   	   (SELECT count(postlikedNo)
@@ -48,9 +45,8 @@
 			SELECT p.postNo,
 				   p.userNo,
 				   u.userName,
-				   p.postTitle,
 			   	   p.postContent,
-			   	   p.postRegDate,
+			   	   TO_CHAR(p.postRegDate, 'YYYY/MM/DD HH24:MI:SS'),
 			   	   p.postHit,
 			   	   p.postImg,
 			   	   (SELECT count(postlikedNo) 
@@ -58,13 +54,13 @@
 			   	    WHERE postNo = p.postNo) AS liked,
 			   	   (SELECT count(postlikedNo) 
 			   	    FROM postliked 
-			   	    WHERE postNo = p.postNo AND userNo=#{userNo}) AS likedByAuth
-			FROM posts p join users u
-			ON p.userNo = u.userNo
-			WHERE p.userno IN (SELECT relationTo
-							 FROM userrelation
-							 WHERE relationFrom=#{userNo} AND relationType=0)
-			ORDER BY p.postRegDate DESC
+			   	    WHERE postNo = p.postNo AND userNo=#{userNo}) AS likedByAuth 
+			 FROM posts p join users u
+			 ON p.userNo = u.userNo
+			 WHERE p.userno IN (SELECT relationTo
+							  FROM userrelation
+							  WHERE relationFrom=#{userNo} AND relationType=0)
+			 ORDER BY p.postRegDate DESC
 		]]>
 	</select>
 	
@@ -74,9 +70,8 @@
 			SELECT p.postNo,
 				   p.userNo,
 				   u.userName,
-				   p.postTitle,
 			   	   p.postContent,
-			   	   p.postRegDate,
+			   	   TO_CHAR(p.postRegDate, 'YYYY/MM/DD HH24:MI:SS') as p.postRegDate,
 			   	   p.postHit,
 			   	   p.postImg,
 			   	   (SELECT count(postlikedNo) 

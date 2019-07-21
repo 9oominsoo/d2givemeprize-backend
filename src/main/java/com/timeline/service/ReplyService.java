@@ -4,11 +4,15 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.timeline.dao.ReplyDao;
+import com.timeline.dao.UserDao;
 import com.timeline.vo.ReplyVo;
 import com.timeline.vo.ReplytagVo;
 import com.timeline.vo.UserVo;
@@ -20,14 +24,17 @@ public class ReplyService {
 	@Autowired 
 	private ReplyDao dao;
 	
+	@Autowired 
+	private UserDao uDao;
+	
 	@Transactional
-	public int writeReply(List<Object> multiParam, UserVo vo) {
+	public int writeReply(HttpServletRequest request, HttpServletResponse response, List<Object> multiParam) throws Exception {
 		HashMap<String, Object> map = (HashMap<String, Object>) multiParam.get(1);
 		
 		List<Integer> tagList = (List<Integer>)(multiParam.get(0));
 		
 		int tagFlag = 0;
-		int writerNo = vo.getUserNo();
+		int writerNo = uDao.checkAuthUser(request, response);
 		
 		ReplyVo rVo = new ReplyVo();
 		rVo.setReplyContent((String)map.get("replyContent"));
@@ -54,13 +61,13 @@ public class ReplyService {
 	}
 	
 	@Transactional
-	public int reReply(List<Object> multiParam, UserVo vo) {
+	public int reReply(HttpServletRequest request, HttpServletResponse response, List<Object> multiParam) throws Exception {
 		HashMap<String, Object> map = (HashMap<String, Object>) multiParam.get(1);
 		
 		List<Integer> tagList = (List<Integer>)(multiParam.get(0));	
 		
 		int tagFlag = 0;
-		int writerNo = vo.getUserNo();
+		int writerNo = uDao.checkAuthUser(request, response);
 		int parentReplyNo = Integer.parseInt((String)map.get("replyNo"));
 		int groupNo = dao.findGroupNo(parentReplyNo);
 		int orderNo = dao.findOrderNo(groupNo) + 1;
@@ -92,20 +99,22 @@ public class ReplyService {
 	}
 	
 	@Transactional
-	public int likeToggleReply(UserVo uVo, ReplyVo rVo) {
+	public int likeToggleReply(HttpServletRequest request, HttpServletResponse response, int replyNo) throws Exception {
 		Map<String, Object> liked = new HashMap<String, Object>();
-		liked.put("userNo", uVo.getUserNo());
-		liked.put("replyNo", rVo.getReplyNo());
+		int userNo = uDao.checkAuthUser(request, response);
+		
+		liked.put("userNo", userNo);
+		liked.put("replyNo", replyNo);
 		
 		int result;
 		int exist = dao.findLiked(liked);
 		
 		if(exist == 0) {
 			// like function
-			 result = dao.likePheed(liked);
+			 result = dao.likeReply(liked);
 		}else {
 			// unlike function
-			result = dao.unlikePheed(liked);
+			result = dao.unlikeReply(liked);
 		}
 		return result;
 	}

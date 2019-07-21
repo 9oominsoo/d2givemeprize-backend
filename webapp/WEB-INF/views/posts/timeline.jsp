@@ -61,7 +61,7 @@
 		console.log(postvo);
 		
 		$.ajax({
-			url : "${pageContext.request.contextPath }/post/writePheed",
+			url : "${pageContext.request.contextPath }/post",
 			type : "post",
 			contentType : "application/json",
 			data : JSON.stringify(postvo),

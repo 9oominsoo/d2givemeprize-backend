@@ -78,7 +78,7 @@
 		<![CDATA[
 			SELECT replyNo,
 				   replyContent,
-				   replyRegDate,
+				   TO_CHAR(replyRegDate, 'YYYY/MM/DD HH24:MI:SS'),
 				   writerNo,
 				   (SELECT userName 
 					FROM users

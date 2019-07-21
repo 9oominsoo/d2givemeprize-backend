@@ -63,9 +63,8 @@
 	<select id="selectUserPost" parameterType="int" resultType="PostVo">
 		<![CDATA[
 			SELECT postNo,
-				   postTitle,
 				   postContent,
-				   postRegDate,
+				   TO_CHAR(postRegDate, 'YYYY/MM/DD HH24:MI:SS'),
 				   postHit,
 				   postImg
 			FROM posts

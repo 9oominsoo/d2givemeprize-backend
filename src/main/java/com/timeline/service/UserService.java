@@ -4,6 +4,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -18,8 +21,8 @@ public class UserService {
 	@Autowired
 	private UserDao dao;
 	
-	public UserVo logIn(UserVo vo) {
-		return dao.logIn(vo);
+	public UserVo logIn(UserVo vo, HttpServletResponse response) throws Exception {
+		return dao.logIn(vo, response);
 	}
 	
 	public int signUp(UserVo vo) {
@@ -38,7 +41,7 @@ public class UserService {
 		}
 	}
 	
-	public Map<String, Object> findUserInfo(UserVo authUser, int userNo) {
+	public Map<String, Object> findUserInfo(HttpServletRequest request, HttpServletResponse response, int userNo) throws Exception {
 		Map<String, Object> map = new HashMap<String, Object>();
 		
 		// find userInfo
@@ -51,9 +54,10 @@ public class UserService {
 		map.put("postList", postList);
 		
 		// find relation
+		int authUserNo = dao.checkAuthUser(request, response);
 		UserRelationVo rVo = new UserRelationVo();
 		rVo.setRelationTo(userNo);
-		rVo.setRelationFrom(authUser.getUserNo());
+		rVo.setRelationFrom(authUserNo);
 		
 		UserRelationVo relation = dao.checkUserRelation(rVo);
 		map.put("relation", relation);
@@ -61,11 +65,12 @@ public class UserService {
 		return map;
 	}
 	
-	public UserRelationVo checkUserRelation(UserVo authUser, int userNo) {
+	public UserRelationVo checkUserRelation(HttpServletRequest request, HttpServletResponse response, int userNo) throws Exception {
 		UserRelationVo vo = new UserRelationVo();
+		int authUserNo = dao.checkAuthUser(request, response);
 		
 		vo.setRelationTo(userNo);
-		vo.setRelationFrom(authUser.getUserNo());
+		vo.setRelationFrom(authUserNo);
 		
 		UserRelationVo result = new UserRelationVo();
 		
@@ -74,20 +79,22 @@ public class UserService {
 		return result;
 	}
 	
-	public int follow(UserVo authUser, int userNo) {
+	public int follow(HttpServletRequest request, HttpServletResponse response, int userNo) throws Exception {
 		UserRelationVo vo = new UserRelationVo();
+		int authUserNo = dao.checkAuthUser(request, response);
 		
 		vo.setRelationTo(userNo);
-		vo.setRelationFrom(authUser.getUserNo());
+		vo.setRelationFrom(authUserNo);
 		
 		return dao.follow(vo);
 	}
 	
-	public int unfollow(UserVo authUser, int userNo) {
+	public int unfollow(HttpServletRequest request, HttpServletResponse response, int userNo) throws Exception {
 		UserRelationVo vo = new UserRelationVo();
+		int authUserNo = dao.checkAuthUser(request, response);
 		
 		vo.setRelationTo(userNo);
-		vo.setRelationFrom(authUser.getUserNo());
+		vo.setRelationFrom(authUserNo);
 		
 		return dao.unfollow(vo);
 	}

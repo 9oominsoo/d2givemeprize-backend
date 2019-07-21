@@ -3,49 +3,41 @@ package com.timeline.controller;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
 
 import com.timeline.service.PostService;
 import com.timeline.vo.PostVo;
 import com.timeline.vo.UserVo;
 
-@Controller
+@RestController
+@CrossOrigin
 @RequestMapping(value="/post")
 public class PostController {
 	
 	@Autowired
 	private PostService service;
 	
-	//타임라인 페이지 로드
-	@RequestMapping(value="/timelineform")
-	public String timelineForm() {
-		System.out.println("load timeline page");
-		
-		return "/WEB-INF/views/posts/timeline.jsp";
-	}
-	
 	//게시글 작성
-	@ResponseBody
-	@RequestMapping(value="/writePheed", method=RequestMethod.POST)
-	public int writePheed(@RequestBody PostVo vo, HttpSession session) {
+	@RequestMapping(method=RequestMethod.POST)
+	public int writePheed(@RequestBody PostVo vo, HttpServletRequest request, HttpServletResponse response) throws Exception {
 		System.out.println("write pheed...");
 		System.out.println("Pheed Info: " + vo.toString());
 		
-		UserVo me = (UserVo)(session.getAttribute("authUser"));
-
-		return service.writePheed(vo, me);
+		return service.writePheed(request, response, vo);
 	}
 	
 	//모든 게시글 로드
-	@ResponseBody
-	@RequestMapping(value="/loadPheed", method=RequestMethod.GET)
+	@RequestMapping(value="/allPheed", method=RequestMethod.GET)
 	public List<PostVo> loadPheed(){
 		System.out.println("load pheed...");
 		
@@ -53,36 +45,27 @@ public class PostController {
 	}
 	
 	//유저별 게시글 로드(following 중인 친구 게시글 로드)
-	@ResponseBody
-	@RequestMapping(value="/loadMyPheed", method=RequestMethod.GET)
-	public List<PostVo> loadMyPheed(HttpSession session){
+	@RequestMapping(method=RequestMethod.GET)
+	public List<PostVo> loadMyPheed(HttpServletRequest request, HttpServletResponse response) throws Exception{
 		System.out.println("load my pheed...");
 		
-		UserVo me = (UserVo)(session.getAttribute("authUser"));
-		
-		return service.loadMyPheed(me);
+		return service.loadMyPheed(request, response);
 	}
 	
 	//게시글 상세보기
-	@ResponseBody
-	@RequestMapping(value="/detailPheed", method=RequestMethod.POST)
-	public Map<String, Object> detailPheed(HttpSession session, @RequestBody PostVo vo) {
-		System.out.println("load distinct pheed No " + vo.getPostNo() + "...");
+	@RequestMapping(value="/{postno}", method=RequestMethod.GET)
+	public Map<String, Object> detailPheed(@PathVariable("postno") int postNo, HttpServletRequest request, HttpServletResponse response) throws Exception {
+		System.out.println("load distinct pheed No " + postNo + "...");
 		
-		UserVo me = (UserVo)(session.getAttribute("authUser"));
-		
-		return service.detailPheed(me, vo);
+		return service.detailPheed(request, response, postNo);
 	}
 		
 	//게시글 좋아요
-	@ResponseBody
-	@RequestMapping(value="/likePheed", method=RequestMethod.POST)
-	public int likeTogglePheed(HttpSession session, @RequestBody PostVo vo) {
-		System.out.println("like/unlike pheed No " + vo.getPostNo() + "...");
+	@RequestMapping(value="/{postno}", method=RequestMethod.PUT)
+	public int likeTogglePheed(@PathVariable("postno") int postNo, HttpServletRequest request, HttpServletResponse response) throws Exception {
+		System.out.println("like/unlike pheed No " + postNo + "...");
 		
-		UserVo me = (UserVo)(session.getAttribute("authUser"));
-		
-		return service.likeTogglePheed(me, vo);
+		return service.likeTogglePheed(request, response, postNo);
 	}
 	
 }

@@ -15,8 +15,8 @@ public class TagDao {
 	@Autowired
 	private SqlSession sqlSession;
 	
-	public List<UserVo> searchFriends(UserVo vo){
-		return sqlSession.selectList("tag.selectFriends", vo);
+	public List<UserVo> searchFriends(int userNo){
+		return sqlSession.selectList("tag.selectFriends", userNo);
 	}
 	
 	public int sharePost(PosttagVo vo) {

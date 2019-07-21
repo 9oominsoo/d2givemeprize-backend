@@ -4,10 +4,14 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.timeline.dao.TagDao;
+import com.timeline.dao.UserDao;
 import com.timeline.vo.PosttagVo;
 import com.timeline.vo.UserVo;
 
@@ -18,9 +22,13 @@ public class TagService {
 	@Autowired 
 	private TagDao dao;
 	
-	public List<UserVo> searchFriends(String name, UserVo me){
+	@Autowired
+	private UserDao uDao;
+	
+	public List<UserVo> searchFriends(HttpServletRequest request, HttpServletResponse response, String name) throws Exception{
+		int userNo = uDao.checkAuthUser(request, response);
 		List<UserVo> result = new ArrayList<UserVo>();
-		List<UserVo> list = dao.searchFriends(me);
+		List<UserVo> list = dao.searchFriends(userNo);
 		
 		for(UserVo vo : list) {
 			String userName = vo.getUserName();
@@ -38,7 +46,6 @@ public class TagService {
 	}
 	
 
-	//register new schedule
 	public int sharePost(List<Object> multiParam) {
 		HashMap<String, Object> map = (HashMap<String, Object>) multiParam.get(1);
 		

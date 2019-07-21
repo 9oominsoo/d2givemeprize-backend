@@ -4,7 +4,7 @@
 <mapper namespace="tag">
 	
 	<!-- 친구들 목록 로드 -->
-	<select id="selectFriends" parameterType="UserVo" resultType="UserVo">
+	<select id="selectFriends" parameterType="int" resultType="UserVo">
 		<![CDATA[
 			SELECT userName, userNo
 			FROM users
