@@ -9,7 +9,9 @@
     <title>Login page</title>
 
     <script type="text/javascript" src="${pageContext.request.contextPath }/assets/jquery/jquery-1.12.4.js"></script>  
-      
+    
+    <!-- sockjs -->
+	<script src="${pageContext.request.contextPath }/assets/sockjs/dist/sockjs.js"></script>
 </head>
 
 <body>
@@ -35,6 +37,10 @@
 		                </div>
 		                <button class="btn btn-primary btn-lg btn-block" id="login-button">Log In</button>
 		            </div>
+		            <div class="message">
+		            	<div id="data">
+		            	</div>
+		            </div>
 		        </div>
 		    </div>
 		</div>
@@ -42,7 +48,19 @@
 </body>
 
 <script type="text/javascript">
+	let webSock;
+	
+	$("document").ready(function(){
+		// 웹소켓을 지정한 url로 연결한다.
+		let sock = new SockJS("${pageContext.request.contextPath }/echo/");
+		var authUserNo = '${authUser.userNo}';
+		
+		webSock = sock;
 
+		webSock.onmessage = onMessage;
+		webSock.onclose = onClose;
+	});
+	
 	$("#login-button").on("click",function(){
 		uservo = {
 			userId: $("#ID").val(),
@@ -60,13 +78,31 @@
 			dataType : "json",
 			success : function(result) {
 				console.log(result);
-				$(location).attr("href", "${pageContext.request.contextPath}/user/loginsuccess")
+				msg = {};
+				msg.target = result.userName + "has log in...";
+				webSock.send(JSON.stringify(msg));
 			},
 			error : function(XHR, status, error) {
 				console.error(status + " : " + error);
 			}
 		});
 	});	
+	
+	// 메시지 전송
+    function sendMessage() {
+           sock.send("하이");
+    }
+
+    // 서버로부터 메시지를 받았을 때
+    function onMessage(msg) {
+           var data = msg.data;
+           $("#data").append(data + "<br/>");
+    }
+
+    // 서버와 연결을 끊었을 때
+    function onClose(evt) {
+           $("#data").append("연결 끊김");
+    }
 	
 </script>
 

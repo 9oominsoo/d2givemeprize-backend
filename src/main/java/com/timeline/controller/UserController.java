@@ -4,7 +4,6 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -13,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.timeline.service.UserService;
 import com.timeline.vo.UserRelationVo;
@@ -25,6 +25,13 @@ public class UserController {
 	
 	@Autowired
 	private UserService service;
+	
+	@RequestMapping(value="/loginform", method=RequestMethod.GET)
+	public ModelAndView loginTestPage() {
+		ModelAndView mav = new ModelAndView("/WEB-INF/views/users/login.jsp");
+		
+		return mav;
+	}
 	
 	//로그인 처리
 	@RequestMapping(value="/login", method=RequestMethod.POST)
