@@ -53,9 +53,9 @@ public class UserService {
 		Map<String, Object> result = new HashMap<String, Object>();
 		
 		if(status == 0)
-			result.put("status", "success");
-		else 
 			result.put("status", "failed");
+		else 
+			result.put("status", "success");
 		
 		return result;
 	}
