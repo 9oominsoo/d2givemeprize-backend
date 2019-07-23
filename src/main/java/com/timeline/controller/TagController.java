@@ -34,9 +34,21 @@ public class TagController {
 		return "/WEB-INF/views/tag/tag.jsp";
 	}
 	
+	@RequestMapping(value="/searchUsers", method=RequestMethod.POST)
+	public List<UserVo> searchUsers(String value) {
+		List<UserVo> list = new ArrayList<UserVo>();
+		
+		try {
+			list = service.searchUsers(value);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return list;
+	}
+	
 	//json.stringify 가 없으므로 @RequestBody로 받을 필요 없다.
-	//@RequestMapping(value="/searchFriends", method=RequestMethod.POST)
-	@RequestMapping(method=RequestMethod.GET)
+	@RequestMapping(value="/searchFriends", method=RequestMethod.POST)
 	public List<UserVo> searchFriends(String value, HttpServletRequest request, HttpServletResponse response) throws UnsupportedEncodingException {
 		System.out.println("search user...");
 		String name = URLDecoder.decode(value, "UTF-8");

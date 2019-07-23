@@ -25,6 +25,22 @@ public class TagService {
 	@Autowired
 	private UserDao uDao;
 	
+	public List<UserVo> searchUsers(String name) {
+		List<UserVo> result = new ArrayList<UserVo>();
+		List<UserVo> list = uDao.loadUser();
+		
+		for(UserVo vo : list) {
+			String userName = vo.getUserName();
+			if(userName.indexOf(name) != -1) {
+				result.add(vo);
+			}else {
+				continue;
+			}
+		}
+		
+		return result;
+	}
+	
 	public List<UserVo> searchFriends(HttpServletRequest request, HttpServletResponse response, String name) throws Exception{
 		int userNo = uDao.checkAuthUser(request, response);
 		List<UserVo> result = new ArrayList<UserVo>();
