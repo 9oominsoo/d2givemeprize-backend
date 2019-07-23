@@ -90,7 +90,7 @@ public class UserController {
 	
 	//회원가입 처리
 	@RequestMapping(method=RequestMethod.POST)
-	public int signUp(@RequestBody UserVo vo) {
+	public Map<String, Object> signUp(@RequestBody UserVo vo) {
 		System.out.println("sign in...");
 		System.out.println("User Info: " + vo.toString());
 		

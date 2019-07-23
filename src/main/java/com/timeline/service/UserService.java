@@ -48,8 +48,16 @@ public class UserService {
 		return dao.logIn(vo, response);
 	}
 	
-	public int signUp(UserVo vo) {
-		return dao.signUp(vo);
+	public Map<String, Object> signUp(UserVo vo) {
+		int status = dao.signUp(vo);
+		Map<String, Object> result = new HashMap<String, Object>();
+		
+		if(status == 0)
+			result.put("status", "success");
+		else 
+			result.put("status", "failed");
+		
+		return result;
 	}
 	
 	public int checkDupId(UserVo vo) {
