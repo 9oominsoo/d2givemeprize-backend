@@ -8,13 +8,12 @@
     	<typeAlias alias="UserVo" type="com.timeline.vo.UserVo" />
     	<typeAlias alias="PostVo" type="com.timeline.vo.PostVo"/>
     	<typeAlias alias="UserRelationVo" type="com.timeline.vo.UserRelationVo"/>
-    	<typeAlias alias="UserfileVo" type="com.timeline.vo.UserfileVo"/>
-    	<typeAlias alias="DatafileVo" type="com.timeline.vo.DatafileVo"/>
     	<typeAlias alias="ReplyVo" type="com.timeline.vo.ReplyVo"/>
     	<typeAlias alias="PostfileVo" type="com.timeline.vo.PostfileVo"/>
     	<typeAlias alias="PostlikedVo" type="com.timeline.vo.PostlikedVo"/>
     	<typeAlias alias="PosttagVo" type="com.timeline.vo.PosttagVo"/>
     	<typeAlias alias="ReplytagVo" type="com.timeline.vo.ReplytagVo"/>
+    	<typeAlias alias="ReplylikedVo" type="com.timeline.vo.ReplylikedVo" />
     </typeAliases>
  
     <mappers>

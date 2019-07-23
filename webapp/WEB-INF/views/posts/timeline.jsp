@@ -35,12 +35,14 @@
 </body>
 
 <script type="text/javascript">
+/*
 	$("document").ready(function() {
 		console.log("load all pheed...");
 
 		$.ajax({
-			url : "${pageContext.request.contextPath }/post/loadMyPheed",
+			url : "${pageContext.request.contextPath }/post",
 			contentType : "application/json",
+			type: "get",
 
 			dataType : "json",
 			success : function(result) {
@@ -51,20 +53,29 @@
 			}
 		});
 	})
+	*/
 	
 	$("#writePheed-button").on("click",function(){
+		
+		var multiParam = Array();
+		
+		var imgList = [];
+
 		postvo = {
-			postTitle: $("#PostTitle").val(),
 			postContent: $("#PostContent").val(),
-			postImg: $("#PostImg").val()
 		}
+		
+		multiParam.push(imgList);
+		multiParam.push(postvo);
+		console.log(multiParam)
+		
 		console.log(postvo);
 		
 		$.ajax({
 			url : "${pageContext.request.contextPath }/post",
 			type : "post",
 			contentType : "application/json",
-			data : JSON.stringify(postvo),
+			data : JSON.stringify(multiParam),
 
 			dataType : "json",
 			success : function(result) {

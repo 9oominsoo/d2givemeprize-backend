@@ -30,6 +30,14 @@ public class UserDao {
 	static final String TOKEN_PREFIX = "Bearer";
 	static final String HEADER_STRING = "Authorization";
 	
+	public int insertUserBatch(List<UserVo> list) {
+		if(list == null || list.size() == 0) {
+			System.out.println("no list");
+		}
+		
+		return sqlSession.insert("user.insertUserBatch", list);
+	}
+	
 	public UserVo logIn(UserVo vo, HttpServletResponse response) throws Exception {
 		response.setContentType("application/json");
 		response.setCharacterEncoding("UTF-8");
@@ -83,6 +91,10 @@ public class UserDao {
 		return sqlSession.selectOne("user.selectUserId", vo);
 	}
 	
+	public int signOut(UserVo vo) {
+		return sqlSession.delete("user.deleteUser", vo);
+	}
+	
 	public UserVo findUser(int userNo) {
 		return sqlSession.selectOne("user.selectUser", userNo);
 	}
@@ -101,5 +113,9 @@ public class UserDao {
 	
 	public int unfollow(UserRelationVo vo) {
 		return sqlSession.delete("user.deleteUserRelation", vo);
+	}
+	
+	public List<UserVo> loadUser(){
+		return sqlSession.selectList("user.selectAllUser");
 	}
 }

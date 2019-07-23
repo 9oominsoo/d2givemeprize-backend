@@ -15,6 +15,7 @@ import com.timeline.dao.PostDao;
 import com.timeline.dao.ReplyDao;
 import com.timeline.dao.UserDao;
 import com.timeline.vo.PostVo;
+import com.timeline.vo.PostfileVo;
 import com.timeline.vo.ReplyVo;
 import com.timeline.vo.UserVo;
 
@@ -30,11 +31,38 @@ public class PostService {
 	@Autowired
 	private UserDao uDao;
 	
-	public int writePheed(HttpServletRequest request, HttpServletResponse response, PostVo pVo) throws Exception{
+	@Transactional
+	public int writePheed(HttpServletRequest request, HttpServletResponse response, List<Object> multiParam) throws Exception{
 		int userNo = uDao.checkAuthUser(request, response);
+		int postFlag = 0;
+		HashMap<String, Object> map = (HashMap<String, Object>) multiParam.get(1);
+		List<String> imgList = (List<String>)(multiParam.get(0));
+		String postContent = (String)map.get("postContent");
 		
+		PostVo pVo = new PostVo();
+		pVo.setPostContent(postContent);
 		pVo.setUserNo(userNo);
-		return pDao.writePheed(pVo);
+		if(imgList.size() > 0)
+			pVo.setPostRepImg(imgList.get(0));
+
+		pDao.writePheed(pVo);
+		int postNo = pVo.getPostNo();
+		
+		for(int i=0; i<imgList.size(); i++) {
+			
+			PostfileVo vo = new PostfileVo();
+			vo.setPostNo(postNo);
+			
+			vo.setPostFilePath((String)imgList.get(i));
+			postFlag = pDao.storeImg(vo);
+			
+			if(postFlag == 0) {
+				System.out.println("error");
+				break;
+			}
+		}
+		
+		return postFlag;
 	}
 	
 	public List<PostVo> loadPheed(){
@@ -64,6 +92,10 @@ public class PostService {
 		pDao.hitPheed(pVo);
 		
 		return map;
+	}
+	
+	public List<PostfileVo> loadPheedImg(int postNo){
+		return pDao.loadPheedImg(postNo);
 	}
 	
 	@Transactional

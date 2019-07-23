@@ -1,5 +1,6 @@
 package com.timeline.service;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -9,6 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.timeline.dao.UserDao;
 import com.timeline.vo.PostVo;
@@ -20,6 +22,27 @@ public class UserService {
 	
 	@Autowired
 	private UserDao dao;
+	
+	@Transactional
+	public int insertUserBatch(List<UserVo> list) {
+		List<UserVo> dividelist = new ArrayList<UserVo>();
+		int insertCnt = 0;
+		
+		for(int i=0, totalSize = list.size(); i < totalSize; i++) {
+		    UserVo vo = list.get(i);
+		    dividelist.add(vo);
+		     
+		    if(insertCnt == 999 || totalSize==(i+1)) {
+		        dao.insertUserBatch(dividelist);
+		        dividelist = new ArrayList<>();
+		        insertCnt = 0;
+		    } else {
+		        insertCnt++;
+		    }
+		}
+		
+		return dao.insertUserBatch(list);
+	}
 	
 	public UserVo logIn(UserVo vo, HttpServletResponse response) throws Exception {
 		return dao.logIn(vo, response);
@@ -39,6 +62,10 @@ public class UserService {
 			// 중복되는 아이디가 없는 경우
 			return 1;
 		}
+	}
+	
+	public int signOut(UserVo vo) {
+		return dao.signOut(vo);
 	}
 	
 	public Map<String, Object> findUserInfo(HttpServletRequest request, HttpServletResponse response, int userNo) throws Exception {
@@ -97,5 +124,9 @@ public class UserService {
 		vo.setRelationFrom(authUserNo);
 		
 		return dao.unfollow(vo);
+	}
+	
+	public List<UserVo> loadUser(){
+		return dao.loadUser();
 	}
 }

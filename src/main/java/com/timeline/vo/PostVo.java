@@ -9,7 +9,7 @@ public class PostVo {
 	private String postContent;
 	private String postRegDate;
 	private int postHit;
-	private String postImg;
+	private String postRepImg;
 	
 	//Additional Field
 	private String userName;
@@ -22,7 +22,7 @@ public class PostVo {
 	}
 	
 	public PostVo(int postNo, int userNo, String postTitle, String postContent, String postRegDate, int postHit,
-			String postImg) {
+			String postRepImg) {
 		super();
 		this.postNo = postNo;
 		this.userNo = userNo;
@@ -30,7 +30,7 @@ public class PostVo {
 		this.postContent = postContent;
 		this.postRegDate = postRegDate;
 		this.postHit = postHit;
-		this.postImg = postImg;
+		this.postRepImg = postRepImg;
 	}
 
 	public int getPostNo() {
@@ -81,12 +81,12 @@ public class PostVo {
 		this.postHit = postHit;
 	}
 
-	public String getPostImg() {
-		return postImg;
+	public String getPostRepImg() {
+		return postRepImg;
 	}
 
-	public void setPostImg(String postImg) {
-		this.postImg = postImg;
+	public void setPostRepImg(String postRepImg) {
+		this.postRepImg = postRepImg;
 	}
 	
 	public String getUserName() {
@@ -116,7 +116,7 @@ public class PostVo {
 	@Override
 	public String toString() {
 		return "PostVo [postNo=" + postNo + ", userNo=" + userNo + ", postTitle=" + postTitle + ", postContent="
-				+ postContent + ", postRegDate=" + postRegDate + ", postHit=" + postHit + ", postImg=" + postImg
+				+ postContent + ", postRegDate=" + postRegDate + ", postHit=" + postHit + ", postRepImg=" + postRepImg
 				+ ", userName=" + userName + ", liked=" + liked + ", likedByAuth=" + likedByAuth + "]";
 	}
 

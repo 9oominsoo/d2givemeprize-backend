@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.timeline.vo.PostVo;
+import com.timeline.vo.PostfileVo;
 import com.timeline.vo.UserVo;
 
 @Repository
@@ -19,6 +20,10 @@ public class PostDao {
 	
 	public int writePheed(PostVo vo) {
 		return sqlSession.insert("post.insertPost", vo);
+	}
+	
+	public int storeImg(PostfileVo vo) {
+		return sqlSession.insert("post.insertFilepath", vo);
 	}
 	
 	public List<PostVo> loadPheed(){
@@ -33,6 +38,10 @@ public class PostDao {
 	
 	public PostVo detailPheed(PostVo vo) {
 		return sqlSession.selectOne("post.selectDistinctPost", vo);
+	}
+	
+	public List<PostfileVo> loadPheedImg(int postNo) {
+		return sqlSession.selectList("post.selectPostImg", postNo);
 	}
 	
 	public int hitPheed(PostVo vo) {

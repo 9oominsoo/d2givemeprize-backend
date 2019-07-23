@@ -6,6 +6,9 @@
 	
 	<!-- 새로운 피드 작성  -->
 	<insert id="insertPost" parameterType="PostVo">
+		<selectKey keyProperty="postNo" resultType="int" order="BEFORE">
+			select seq_post_no.nextval from dual
+		</selectKey>
 		<![CDATA[
 			INSERT INTO POSTS 
 						(postNo, 
@@ -13,13 +16,26 @@
 						 postRegDate, 
 						 postContent, 
 						 postHit, 
-						 postImg)
-			VALUES(seq_post_no.nextval, 
+						 postRepImg)
+			VALUES(#{postNo}, 
 					#{userNo}, 
 					SYSDATE, 
 					#{postContent}, 
 					0, 
-					#{postImg})
+					#{postRepImg})
+		]]>
+	</insert>
+	
+	<!-- 업로드된 사진 패스 저장 -->
+	<insert id="insertFilepath" parameterType="PostfileVo">
+		<![CDATA[
+			INSERT INTO postfile
+						(postFileNo,
+						 postNo,
+						 postFilePath) 
+			VALUES(seq_postfile_no.nextval,
+				   #{postNo},
+				   #{postFilePath})
 		]]>
 	</insert>
 	
@@ -31,7 +47,7 @@
 			   	   p.postContent,
 			   	   TO_CHAR(p.postRegDate, 'YYYY/MM/DD'),
 			   	   p.postHit,
-			   	   p.postImg,
+			   	   p.postRepImg,
 			   	   (SELECT count(postlikedNo)
 			   	    FROM postliked
 			   	    WHERE postNo = p.postNo) as liked
@@ -48,7 +64,7 @@
 			   	   p.postContent,
 			   	   TO_CHAR(p.postRegDate, 'YYYY/MM/DD HH24:MI:SS'),
 			   	   p.postHit,
-			   	   p.postImg,
+			   	   p.postRepImg,
 			   	   (SELECT count(postlikedNo) 
 			   	    FROM postliked 
 			   	    WHERE postNo = p.postNo) AS liked,
@@ -71,21 +87,33 @@
 				   p.userNo,
 				   u.userName,
 			   	   p.postContent,
-			   	   TO_CHAR(p.postRegDate, 'YYYY/MM/DD HH24:MI:SS') as p.postRegDate,
+			   	   TO_CHAR(p.postRegDate, 'YYYY/MM/DD HH24:MI:SS'),
 			   	   p.postHit,
-			   	   p.postImg,
-			   	   (SELECT count(postlikedNo) 
+			   	   p.postRepImg,
+			   	   (SELECT count(postlikedNo)  
 			   	    FROM postliked 
 			   	    WHERE postNo = p.postNo) AS liked,
-			   	   (SELECT count(postlikedNo) 
+			   	   (SELECT count(postlikedNo)  
 			   	    FROM postliked 
-			   	    WHERE postNo = p.postNo AND userNo=#{userNo}) AS likedByAuth
+			   	    WHERE postNo = p.postNo AND userNo=#{userNo}) AS likedByAuth 
 			FROM posts p join users u
 			ON p.userNo = u.userNo
 			WHERE p.postNo = #{postNo} 
 		]]>
 	</select>
 	
+	<!-- 게시글에 해당하는 이미지 로딩 -->
+	<select id="selectPostImg" parameterType="int" resultType="PostfileVo">
+		<![CDATA[
+			SELECT postFileNo,
+				   postNo,
+				   postFilePath
+			FROM postfile
+			WHERE postNo = #{postNo}
+		]]>
+	</select>
+	
+	<!-- 조회수 처리 -->
 	<update id="updateHit" parameterType="PostVo">
 		<![CDATA[
 			UPDATE posts 

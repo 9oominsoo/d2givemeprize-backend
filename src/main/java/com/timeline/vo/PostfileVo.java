@@ -5,7 +5,7 @@ public class PostfileVo {
 	//Database Column
 	private int postFileNo;
 	private int postNo;
-	private int fileNo;
+	private String postFilePath;
 	
 	//Additional Field
 	
@@ -14,11 +14,11 @@ public class PostfileVo {
 		
 	}
 	
-	public PostfileVo(int postFileNo, int postNo, int fileNo) {
+	public PostfileVo(int postFileNo, int postNo, String postFilePath) {
 		super();
 		this.postFileNo = postFileNo;
 		this.postNo = postNo;
-		this.fileNo = fileNo;
+		this.postFilePath = postFilePath;
 	}
 
 	public int getPostFileNo() {
@@ -37,17 +37,17 @@ public class PostfileVo {
 		this.postNo = postNo;
 	}
 
-	public int getFileNo() {
-		return fileNo;
+	public String getPostFilePath() {
+		return postFilePath;
 	}
 
-	public void setFileNo(int fileNo) {
-		this.fileNo = fileNo;
+	public void setPostFilePath(String postFilePath) {
+		this.postFilePath = postFilePath;
 	}
 
 	@Override
 	public String toString() {
-		return "PostfileVo [postFileNo=" + postFileNo + ", postNo=" + postNo + ", fileNo=" + fileNo + "]";
+		return "PostfileVo [postFileNo=" + postFileNo + ", postNo=" + postNo + ", postFilePath=" + postFilePath + "]";
 	}
 	
 	

@@ -50,13 +50,14 @@
 		uservo = {
 			userName: $("#UserName").val(),
 			userId: $("#ID").val(),
-			userPwd: $("#Password").val()
+			userPwd: $("#Password").val(),
+			userRepImg: ""
 		};
 		
 		console.log(uservo);
 		
 		$.ajax({
-			url : "${pageContext.request.contextPath }/user/signup",
+			url : "${pageContext.request.contextPath }/user",
 			type : "post",
 			contentType : "application/json",
 			data : JSON.stringify(uservo),

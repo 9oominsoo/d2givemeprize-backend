@@ -10,7 +10,8 @@
 			SELECT userNo,
 				   userId,
 				   userPwd,
-			   	   userName
+			   	   userName,
+			   	   userRepImg
 			FROM users
 			WHERE userId = #{userId} AND userPwd = #{userPwd}
 		]]>
@@ -23,12 +24,14 @@
 				(userNo,
                  userId,
                  userPwd,
-                 userName)		
+                 userName,
+                 userRepImg) 		
 			VALUES
 				(seq_user_no.nextval,
                  #{userId}, 
                  #{userPwd}, 
-                 #{userName})
+                 #{userName},
+                 #{userRepImg})
 		]]>
 	</insert>
 	
@@ -41,13 +44,31 @@
 		]]>
 	</select>
 	
+	<!-- 유저 삭제(회원 탈퇴) -->
+	<delete id="deleteUser">
+		<![CDATA[
+			DELETE FROM USERS
+		]]>
+	</delete>
+	
+	<!-- 전체 유저 검색  -->
+	<select id="selectAllUser" resultType="UserVo">
+		<![CDATA[
+			SELECT userNo,
+				   userName,
+				   userId,
+				   userRepImg
+			FROM users
+		]]>
+	</select>
+	
 	<!-- 유저 넘버로 유저 검색 -->
 	<select id="selectUser" parameterType="int" resultType="UserVo">
 		<![CDATA[
 			SELECT userNo,
 				   userName,
 				   userId,
-				   userImg,
+				   userRepImg,
 				   (SELECT COUNT(relationNo) 
 				    FROM userRelation 
 				    WHERE relationFrom = #{userNo}) AS followings,
@@ -66,7 +87,7 @@
 				   postContent,
 				   TO_CHAR(postRegDate, 'YYYY/MM/DD HH24:MI:SS'),
 				   postHit,
-				   postImg
+				   postRepImg
 			FROM posts
 			WHERE userNo = #{userNo}
 		]]>

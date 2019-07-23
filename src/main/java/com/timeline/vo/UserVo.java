@@ -7,7 +7,7 @@ public class UserVo {
 	private String userId;
 	private String userPwd;
 	private String userName;
-	private String userImg;
+	private String userRepImg;
 	
 	//Additional Field
 	private int followers;
@@ -17,14 +17,21 @@ public class UserVo {
 	public UserVo() {
 		
 	}
+	
+	public UserVo(String userId, String userPwd, String userName) {
+		super();
+		this.userId = userId;
+		this.userPwd = userPwd;
+		this.userName = userName;
+	}
 
-	public UserVo(int userNo, String userId, String userPwd, String userName, String userImg) {
+	public UserVo(int userNo, String userId, String userPwd, String userName, String userRepImg) {
 		super();
 		this.userNo = userNo;
 		this.userId = userId;
 		this.userPwd = userPwd;
 		this.userName = userName;
-		this.userImg = userImg;
+		this.userRepImg = userRepImg;
 	}
 
 	public int getUserNo() {
@@ -59,14 +66,14 @@ public class UserVo {
 		this.userName = userName;
 	}
 
-	public String getUserImg() {
-		return userImg;
+	public String getUserRepImg() {
+		return userRepImg;
 	}
 
-	public void setUserImg(String userImg) {
-		this.userImg = userImg;
+	public void setUserRepImg(String userRepImg) {
+		this.userRepImg = userRepImg;
 	}
-	
+
 	public int getFollowers() {
 		return followers;
 	}
@@ -86,7 +93,9 @@ public class UserVo {
 	@Override
 	public String toString() {
 		return "UserVo [userNo=" + userNo + ", userId=" + userId + ", userPwd=" + userPwd + ", userName=" + userName
-				+ ", userImg=" + userImg + ", followers=" + followers + ", followings=" + followings + "]";
+				+ ", userRepImg=" + userRepImg + ", followers=" + followers + ", followings=" + followings + "]";
 	}
+
+	
 
 }
