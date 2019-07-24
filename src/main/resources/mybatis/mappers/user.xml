@@ -155,7 +155,7 @@
 	</select>
 	
 	<!-- 팔로잉 검색  -->	
-	<select id="selectFollowings" parameterType="int" resultType="UserVo">
+	<select id="selectFollowings" parameterType="int" resultType="PostUserVo">
 		<![CDATA[
 			SELECT u.userNo as userNo,
 				   u.userName as userName,
