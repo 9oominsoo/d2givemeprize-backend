@@ -45,7 +45,7 @@
 			SELECT p.postNo,
 				   p.userNo,
 			   	   p.postContent,
-			   	   TO_CHAR(p.postRegDate, 'YYYY/MM/DD'),
+				   p.postRegDate,
 			   	   p.postHit,
 			   	   p.postRepImg,
 			   	   (SELECT count(postlikedNo)
@@ -62,7 +62,7 @@
 				   p.userNo,
 				   u.userName,
 			   	   p.postContent,
-			   	   TO_CHAR(p.postRegDate, 'YYYY/MM/DD HH24:MI:SS'),
+			   	   p.postRegDate,
 			   	   p.postHit,
 			   	   p.postRepImg,
 			   	   (SELECT count(postlikedNo) 
@@ -87,7 +87,7 @@
 				   p.userNo,
 				   u.userName,
 			   	   p.postContent,
-			   	   TO_CHAR(p.postRegDate, 'YYYY/MM/DD HH24:MI:SS'),
+			   	   p.postRegDate,
 			   	   p.postHit,
 			   	   p.postRepImg,
 			   	   (SELECT count(postlikedNo)  

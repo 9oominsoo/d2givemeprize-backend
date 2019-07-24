@@ -96,7 +96,7 @@
 		<![CDATA[
 			SELECT postNo,
 				   postContent,
-				   TO_CHAR(postRegDate, 'YYYY/MM/DD HH24:MI:SS'),
+				   postRegDate,
 				   postHit,
 				   postRepImg
 			FROM posts
