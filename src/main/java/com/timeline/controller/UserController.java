@@ -77,6 +77,12 @@ public class UserController {
 		return authUser;
 	}
 	
+	//로그인 된 유저 정보 로드
+	@RequestMapping(value="/authuserinfo", method=RequestMethod.GET)
+	public UserVo authUserInfo(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		return service.findAuthUserInfo(request, response);
+	}
+	
 	/*
 	//로그아웃 처리
 	@RequestMapping(value="/logout", method=RequestMethod.POST)
@@ -106,13 +112,13 @@ public class UserController {
 	}
 	
 	//회원정보수정 처리
-	@RequestMapping(value="/{userno}", method=RequestMethod.PUT)
-	public int userModify() {
-		return 0;
+	@RequestMapping(method=RequestMethod.PUT)
+	public int modifyInfo(@RequestBody UserVo vo) {
+		return service.modifyInfo(vo);
 	}
 	
 	//회원탈퇴 처리
-	@RequestMapping(value="/{userno}", method=RequestMethod.DELETE)
+	@RequestMapping(method=RequestMethod.DELETE)
 	public int signOut(@PathVariable("userno") int userNo, @RequestBody UserVo vo) {
 		vo.setUserNo(userNo);
 		return service.signOut(vo);

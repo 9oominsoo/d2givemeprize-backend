@@ -92,6 +92,10 @@ public class UserDao {
 		return sqlSession.selectOne("user.selectUserId", vo);
 	}
 	
+	public int modifyInfo(UserVo vo) {
+		return sqlSession.update("user.updateUser", vo);
+	}
+	
 	public int signOut(UserVo vo) {
 		return sqlSession.delete("user.deleteUser", vo);
 	}

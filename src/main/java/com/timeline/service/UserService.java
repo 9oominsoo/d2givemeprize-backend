@@ -72,8 +72,18 @@ public class UserService {
 		}
 	}
 	
+	public int modifyInfo(UserVo vo) {
+		return dao.modifyInfo(vo);
+	}
+	
 	public int signOut(UserVo vo) {
 		return dao.signOut(vo);
+	}
+	
+	public UserVo findAuthUserInfo(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		int authUserNo = dao.checkAuthUser(request, response);
+		
+		return dao.findUser(authUserNo);
 	}
 	
 	public Map<String, Object> findUserInfo(HttpServletRequest request, HttpServletResponse response, int userNo) throws Exception {

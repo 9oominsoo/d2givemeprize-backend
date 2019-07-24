@@ -44,6 +44,17 @@
 		]]>
 	</select>
 	
+	<!-- 유저 정보 수정  -->
+	<update id="updateUser" parameterType="UserVo">
+		<![CDATA[
+			UPDATE users
+			SET userId = #{userId},
+				userName = #{userName},
+				userRepImg = #{userRepImg}
+			WHERE userNo = #{userNo}
+		]]>
+	</update>
+	
 	<!-- 유저 삭제(회원 탈퇴) -->
 	<delete id="deleteUser">
 		<![CDATA[
