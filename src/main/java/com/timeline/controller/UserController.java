@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.timeline.service.UserService;
+import com.timeline.vo.PostUserVo;
 import com.timeline.vo.UserRelationVo;
 import com.timeline.vo.UserVo;
 
@@ -158,7 +159,7 @@ public class UserController {
 	
 	//팔로워 출력 
 	@RequestMapping(value="/{userno}/followers", method=RequestMethod.GET)
-	public Map<String, Object> followers(@PathVariable("userno") int userNo, HttpServletRequest request, HttpServletResponse response) throws Exception{
+	public List<PostUserVo> followers(@PathVariable("userno") int userNo, HttpServletRequest request, HttpServletResponse response) throws Exception{
 		return service.loadFollowers(request, response, userNo);
 	}
 	
