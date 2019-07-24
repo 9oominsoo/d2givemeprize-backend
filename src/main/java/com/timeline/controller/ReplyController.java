@@ -34,12 +34,12 @@ public class ReplyController {
 	}
 	
 	// 대댓 작성
-	@RequestMapping(value="/reReply", method=RequestMethod.POST)
-	public int reReply(@RequestBody List<Object> multiParam, HttpServletRequest request, HttpServletResponse response) throws Exception {
+	@RequestMapping(value="/{replyno}", method=RequestMethod.POST)
+	public int reReply(@PathVariable("replyno") int replyNo, @RequestBody List<Object> multiParam, HttpServletRequest request, HttpServletResponse response) throws Exception {
 		System.out.println("write reply on reply...");
 		System.out.println(multiParam);
 		
-		return service.reReply(request, response, multiParam);
+		return service.reReply(request, response, multiParam, replyNo);
 	}
 	
 	// 대댓글 불러오기
@@ -49,12 +49,14 @@ public class ReplyController {
 	}
 	
 	// 댓글 좋아요 
+	/*
 	@RequestMapping(value="/{replyno}", method=RequestMethod.POST)
 	public int likeTogglePheed(@PathVariable("replyno") int replyNo, HttpServletRequest request, HttpServletResponse response) throws Exception {
 		System.out.println("like/unlike pheed No " + replyNo + "...");
 		
 		return service.likeToggleReply(request, response, replyNo);
 	}
+	*/
 	
 	// 댓글 삭제 
 	@RequestMapping(value="/{replyno}", method=RequestMethod.DELETE)

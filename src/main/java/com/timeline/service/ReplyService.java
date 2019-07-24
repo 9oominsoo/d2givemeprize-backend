@@ -61,14 +61,14 @@ public class ReplyService {
 	}
 	
 	@Transactional
-	public int reReply(HttpServletRequest request, HttpServletResponse response, List<Object> multiParam) throws Exception {
+	public int reReply(HttpServletRequest request, HttpServletResponse response, List<Object> multiParam, int replyNo) throws Exception {
 		HashMap<String, Object> map = (HashMap<String, Object>) multiParam.get(1);
 		
 		List<Integer> tagList = (List<Integer>)(multiParam.get(0));	
 		
 		int tagFlag = 0;
 		int writerNo = uDao.checkAuthUser(request, response);
-		int parentReplyNo = Integer.parseInt((String)map.get("replyNo"));
+		int parentReplyNo = replyNo;
 		int groupNo = dao.findGroupNo(parentReplyNo);
 		int orderNo = dao.findOrderNo(groupNo) + 1;
 		
@@ -80,12 +80,12 @@ public class ReplyService {
 		rVo.setReplyOrderNo(orderNo);
 		
 		dao.reReply(rVo);
-		int replyNo = rVo.getReplyNo();
+		int rereplyNo = rVo.getReplyNo();
 		
 		for(int i=0; i<tagList.size(); i++) {
 			
 			ReplytagVo tVo = new ReplytagVo();
-			tVo.setReplyNo(replyNo);
+			tVo.setReplyNo(rereplyNo);
 			
 			tVo.setUserNo(Integer.parseInt(""+tagList.get(i)));
 			tagFlag = dao.shareReply(tVo);
