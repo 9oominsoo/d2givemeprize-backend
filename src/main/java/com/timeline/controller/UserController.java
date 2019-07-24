@@ -158,14 +158,14 @@ public class UserController {
 	
 	//팔로워 출력 
 	@RequestMapping(value="/{userno}/followers", method=RequestMethod.GET)
-	public List<UserVo> followers(@PathVariable("userno") int userNo){
-		return service.loadFollowers(userNo);
+	public Map<String, Object> followers(@PathVariable("userno") int userNo, HttpServletRequest request, HttpServletResponse response) throws Exception{
+		return service.loadFollowers(request, response, userNo);
 	}
 	
 	//팔로잉 출력
 	@RequestMapping(value="/{userno}/followings", method=RequestMethod.GET)
-	public List<UserVo> followings(@PathVariable("userno") int userNo){
-		return service.loadFollowings(userNo);
+	public Map<String, Object> followings(@PathVariable("userno") int userNo, HttpServletRequest request, HttpServletResponse response) throws Exception{
+		return service.loadFollowings(request, response, userNo);
 	}
 	
 	//유저 추천 

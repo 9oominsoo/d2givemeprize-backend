@@ -13,7 +13,6 @@ public class UserVo {
 	private int followers;
 	private int followings;
 	
-	
 	public UserVo() {
 		
 	}

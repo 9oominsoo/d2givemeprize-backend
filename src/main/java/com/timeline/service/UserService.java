@@ -144,12 +144,44 @@ public class UserService {
 		return dao.unfollow(vo);
 	}
 	
-	public List<UserVo> loadFollowers(int userNo){
-		return dao.loadFollowers(userNo);
+	public Map<String,Object> loadFollowers(HttpServletRequest request, HttpServletResponse response, int userNo) throws Exception{
+		int authUserNo = dao.checkAuthUser(request, response);
+		Map<String, Object> map = new HashMap<String,Object>();
+		List<UserRelationVo> relationList = new ArrayList<UserRelationVo>();
+		List<UserVo> followerList = dao.loadFollowers(userNo);
+		
+		for(int i=0; i<followerList.size(); i++) {
+			UserRelationVo rVo = new UserRelationVo();
+			rVo.setRelationFrom(authUserNo);
+			rVo.setRelationTo(followerList.get(i).getUserNo());
+			
+			relationList.add(i, dao.checkUserRelation(rVo));
+		}
+		
+		map.put("followerList", followerList);
+		map.put("relationList", relationList);
+		
+		return map;
 	}
 	
-	public List<UserVo> loadFollowings(int userNo){
-		return dao.loadFollowings(userNo);
+	public Map<String,Object> loadFollowings(HttpServletRequest request, HttpServletResponse response, int userNo) throws Exception{
+		int authUserNo = dao.checkAuthUser(request, response);
+		Map<String, Object> map = new HashMap<String,Object>();
+		List<UserRelationVo> relationList = new ArrayList<UserRelationVo>();
+		List<UserVo> followingList = dao.loadFollowings(userNo);
+		
+		for(int i=0; i<followingList.size(); i++) {
+			UserRelationVo rVo = new UserRelationVo();
+			rVo.setRelationFrom(authUserNo);
+			rVo.setRelationTo(followingList.get(i).getUserNo());
+			
+			relationList.add(i, dao.checkUserRelation(rVo));
+		}
+		
+		map.put("followerList", followingList);
+		map.put("relationList", relationList);
+		
+		return map;
 	}
 	
 	public List<UserVo> loadUser(){
