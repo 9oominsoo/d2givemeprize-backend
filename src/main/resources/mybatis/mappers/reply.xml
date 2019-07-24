@@ -111,7 +111,7 @@
 				   replyGroupNo,
 				   replyOrderNo
 			FROM reply
-			WHERE postNo = #{postNo} AND replyOrderNo == 1
+			WHERE postNo = #{postNo} AND replyOrderNo = 1
 		]]>	
 	</select>
 	
