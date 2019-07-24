@@ -43,7 +43,7 @@ public class ReplyController {
 	}
 	
 	// 대댓글 불러오기
-	@RequestMapping(value="{replyno}", method=RequestMethod.GET)
+	@RequestMapping(value="/{replyno}", method=RequestMethod.GET)
 	public List<ReplyVo> loadReReply(@PathVariable("replyno") int replyNo){
 		return service.loadReReply(replyNo);
 	}

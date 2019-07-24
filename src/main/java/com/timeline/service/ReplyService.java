@@ -99,7 +99,7 @@ public class ReplyService {
 	}
 	
 	public List<ReplyVo> loadReReply(int replyNo){
-		dao.loadReReply(replyNo);
+		return dao.loadReReply(replyNo);
 	}
 	
 	@Transactional
