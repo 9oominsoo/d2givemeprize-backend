@@ -5,11 +5,6 @@ public class PostUserVo {
 	private String userId;
 	private String userName;
 	private String userRepImg;
-	
-	//authRelation = 0 -> self
-	//authRelation = 1 -> both Following 
-	//authRelation = 2 -> auth is following 
-	//authRelation = 3 -> following auth 
 	private boolean isFollowed;
 	
 	public PostUserVo() {
