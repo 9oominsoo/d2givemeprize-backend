@@ -141,7 +141,7 @@ public class UserController {
 	}
 	
 	//팔로우 
-	@RequestMapping(value="/{userno}/follow", method=RequestMethod.POST)
+	@RequestMapping(value="/{userno}/follow", method=RequestMethod.GET)
 	public int follow(@PathVariable("userno") int userNo, HttpServletRequest request, HttpServletResponse response) throws Exception {
 		System.out.println("following " + userNo + " users...");
 		
@@ -149,7 +149,7 @@ public class UserController {
 	}
 	
 	//언팔로우
-	@RequestMapping(value="/{userno}/unfollow", method=RequestMethod.POST)
+	@RequestMapping(value="/{userno}/unfollow", method=RequestMethod.GET)
 	public int unfollow(@PathVariable("userno") int userNo, HttpServletRequest request, HttpServletResponse response) throws Exception {
 		System.out.println("unfollowing " + userNo + " users...");
 		
