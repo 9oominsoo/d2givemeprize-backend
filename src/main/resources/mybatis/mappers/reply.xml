@@ -55,6 +55,27 @@
 		]]>
 	</insert>
 	
+	<!-- 대댓글 찾기 -->
+	<select id="selectReReply" parameterType="int" resultType="ReplyVo">
+		<![CDATA[
+			SELECT replyNo,
+				   replyContent,
+				   replyRegDate,
+				   writerNo,
+				   (SELECT userName 
+					FROM users
+					WHERE userNo = writerNo) AS writerName,
+				   (SELECT userRepImg
+				    FROM users
+				    WHERE userNo = wirterNo) AS writerRepImg,
+				   postNo,
+				   replyGroupNo,
+				   replyOrderNo
+			FROM reply
+			WHERE replyNo = #{replyNo}
+		]]>
+	</select>
+	
 	<!-- 댓글 그룹 넘버 찾기 -->
 	<select id="selectGroupNo" parameterType="int" resultType="int">
 		<![CDATA[
@@ -83,6 +104,9 @@
 				   (SELECT userName 
 					FROM users
 					WHERE userNo = writerNo) AS writerName,
+				   (SELECT userRepImg
+				    FROM users
+				    WHERE userNo = wirterNo) AS writerRepImg,
 				   postNo,
 				   replyGroupNo,
 				   replyOrderNo

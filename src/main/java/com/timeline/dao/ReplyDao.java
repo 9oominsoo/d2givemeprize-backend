@@ -25,6 +25,10 @@ public class ReplyDao {
 		return sqlSession.insert("reply.insertReReply", vo);
 	}
 	
+	public List<ReplyVo> loadReReply(int replyNo) {
+		return sqlSession.selectList("reply.selectReReply", replyNo);
+	}
+	
 	public int shareReply(ReplytagVo vo) {
 		return sqlSession.insert("tag.insertReplytag", vo);
 	}

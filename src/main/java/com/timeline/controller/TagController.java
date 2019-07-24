@@ -35,9 +35,12 @@ public class TagController {
 	}
 	
 	@RequestMapping(value="/searchUsers", method=RequestMethod.POST)
-	public List<UserVo> searchUsers(@RequestBody String value) throws UnsupportedEncodingException {
+	public List<UserVo> searchUsers(@RequestBody String value, HttpServletRequest request, HttpServletResponse response) throws UnsupportedEncodingException {
 		List<UserVo> list = new ArrayList<UserVo>();
+		System.out.println("value: " + value);
 		String name = URLDecoder.decode(value, "UTF-8");
+		name = name.split("=")[0];
+		System.out.println("name: "+name);
 		
 		try {
 			list = service.searchUsers(name);
@@ -51,10 +54,11 @@ public class TagController {
 	//json.stringify 가 없으므로 @RequestBody로 받을 필요 없다.
 	@RequestMapping(value="/searchFriends", method=RequestMethod.POST)
 	public List<UserVo> searchFriends(@RequestBody String value, HttpServletRequest request, HttpServletResponse response) throws UnsupportedEncodingException {
-		System.out.println("search user...");
-		String name = URLDecoder.decode(value, "UTF-8");
-		
 		List<UserVo> list = new ArrayList<UserVo>();
+		System.out.println("value: " + value);
+		String name = URLDecoder.decode(value, "UTF-8");
+		name = name.split("=")[0];
+		System.out.println("name: "+name);
 		
 		try {
 			list = service.searchFriends(request, response, name);

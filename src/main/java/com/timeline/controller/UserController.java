@@ -171,7 +171,7 @@ public class UserController {
 	
 	//유저 추천 
 	//전체 유저 출력 
-	@RequestMapping(value="/allUser", method=RequestMethod.GET)
+	@RequestMapping(value="/alluser", method=RequestMethod.GET)
 	public List<UserVo> loadUser(){
 		return service.loadUser();
 	}

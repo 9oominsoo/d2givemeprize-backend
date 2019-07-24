@@ -13,6 +13,7 @@ public class ReplyVo {
 	
 	//Additional Field
 	private String writerName;
+	private String writerRepImg;
 	
 	public ReplyVo() {
 		
@@ -93,12 +94,21 @@ public class ReplyVo {
 	public void setWriterName(String writerName) {
 		this.writerName = writerName;
 	}
+	
+	public String getWriterRepImg() {
+		return writerRepImg;
+	}
+
+	public void setWriterRepImg(String writerRepImg) {
+		this.writerRepImg = writerRepImg;
+	}
 
 	@Override
 	public String toString() {
 		return "ReplyVo [replyNo=" + replyNo + ", replyContent=" + replyContent + ", replyRegDate=" + replyRegDate
 				+ ", writerNo=" + writerNo + ", postNo=" + postNo + ", replyGroupNo=" + replyGroupNo + ", replyOrderNo="
-				+ replyOrderNo + "]";
+				+ replyOrderNo + ", writerName=" + writerName + ", writerRepImg=" + writerRepImg + "]";
 	}
+	
 	
 }

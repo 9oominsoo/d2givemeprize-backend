@@ -98,6 +98,10 @@ public class ReplyService {
 		return tagFlag;
 	}
 	
+	public List<ReplyVo> loadReReply(int replyNo){
+		dao.loadReReply(replyNo);
+	}
+	
 	@Transactional
 	public int likeToggleReply(HttpServletRequest request, HttpServletResponse response, int replyNo) throws Exception {
 		Map<String, Object> liked = new HashMap<String, Object>();

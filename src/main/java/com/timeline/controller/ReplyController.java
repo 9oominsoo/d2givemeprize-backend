@@ -4,7 +4,6 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -15,7 +14,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.timeline.service.ReplyService;
-import com.timeline.vo.UserVo;
+import com.timeline.vo.ReplyVo;
 
 @RestController
 @CrossOrigin
@@ -41,6 +40,12 @@ public class ReplyController {
 		System.out.println(multiParam);
 		
 		return service.reReply(request, response, multiParam);
+	}
+	
+	// 대댓글 불러오기
+	@RequestMapping(value="{replyno}", method=RequestMethod.GET)
+	public List<ReplyVo> loadReReply(@PathVariable("replyno") int replyNo){
+		return service.loadReReply(replyNo);
 	}
 	
 	// 댓글 좋아요 
