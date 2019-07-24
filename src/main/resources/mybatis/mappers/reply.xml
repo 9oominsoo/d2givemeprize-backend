@@ -72,7 +72,7 @@
 				   replyGroupNo,
 				   replyOrderNo
 			FROM reply
-			WHERE replyNo = #{replyNo}
+			WHERE replyNo = #{replyNo} AND replyOrderNo != 1
 		]]>
 	</select>
 	
