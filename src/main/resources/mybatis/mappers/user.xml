@@ -142,7 +142,7 @@
 	</delete>
 	
 	<!-- 팔로워 검색 -->
-	<select id="selectFollowers" parameterType="int" resultType="UserVo">
+	<select id="selectFollowers" parameterType="int" resultType="PostUserVo">
 		<![CDATA[
 			SELECT u.userNo as userNo,
 				   u.userName as userName,

@@ -2,7 +2,6 @@ package com.timeline.dao;
 
 import java.util.Date;
 import java.util.List;
-import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -11,6 +10,7 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.timeline.vo.PostUserVo;
 import com.timeline.vo.PostVo;
 import com.timeline.vo.UserRelationVo;
 import com.timeline.vo.UserVo;
@@ -124,7 +124,7 @@ public class UserDao {
 		return sqlSession.selectList("user.selectAllUser");
 	}
 	
-	public List<UserVo> loadFollowers(int userNo){
+	public List<PostUserVo> loadFollowers(int userNo){
 		return sqlSession.selectList("user.selectFollowers", userNo);
 	}
 	

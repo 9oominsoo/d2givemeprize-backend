@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.timeline.dao.UserDao;
+import com.timeline.vo.PostUserVo;
 import com.timeline.vo.PostVo;
 import com.timeline.vo.UserRelationVo;
 import com.timeline.vo.UserVo;
@@ -22,6 +23,11 @@ public class UserService {
 	
 	@Autowired
 	private UserDao dao;
+	
+	private int SELF = 0;
+	private int BothFollowing= 1;
+	private int FollowingAUTH = 2;
+	private int FollowedByAUTH = 3;
 	
 	@Transactional
 	public int insertUserBatch(List<UserVo> list) {
@@ -144,24 +150,43 @@ public class UserService {
 		return dao.unfollow(vo);
 	}
 	
-	public Map<String,Object> loadFollowers(HttpServletRequest request, HttpServletResponse response, int userNo) throws Exception{
+	public List<PostUserVo> loadFollowers(HttpServletRequest request, HttpServletResponse response, int userNo) throws Exception{
 		int authUserNo = dao.checkAuthUser(request, response);
-		Map<String, Object> map = new HashMap<String,Object>();
-		List<UserRelationVo> relationList = new ArrayList<UserRelationVo>();
-		List<UserVo> followerList = dao.loadFollowers(userNo);
+		int checkFollowing;
+		int checkFollowed;
 		
-		for(int i=0; i<followerList.size(); i++) {
+		List<PostUserVo> list = dao.loadFollowers(userNo);
+		
+		for(int i=0; i<list.size(); i++) {
 			UserRelationVo rVo = new UserRelationVo();
 			rVo.setRelationFrom(authUserNo);
-			rVo.setRelationTo(followerList.get(i).getUserNo());
+			rVo.setRelationTo(list.get(i).getUserNo());
 			
-			relationList.add(i, dao.checkUserRelation(rVo));
+			if(dao.checkUserRelation(rVo) != null)
+				checkFollowing = 1;
+			else 
+				checkFollowing = 0;
+			
+			rVo.setRelationFrom(list.get(i).getUserNo());
+			rVo.setRelationTo(authUserNo);
+			
+			if(dao.checkUserRelation(rVo) != null)
+				checkFollowed = 1;
+			else 
+				checkFollowed = 0;
+			
+			if(checkFollowed == 1 && checkFollowing == 1)
+				list.get(i).setAuthRelation(BothFollowing);
+			else if(checkFollowed == 1 && checkFollowing == 0)
+				list.get(i).setAuthRelation(FollowingAUTH);
+			else if(checkFollowed == 0 && checkFollowing == 1)
+				list.get(i).setAuthRelation(FollowedByAUTH);
+			else 
+				list.get(i).setAuthRelation(SELF);
+			
 		}
 		
-		map.put("followerList", followerList);
-		map.put("relationList", relationList);
-		
-		return map;
+		return list;
 	}
 	
 	public Map<String,Object> loadFollowings(HttpServletRequest request, HttpServletResponse response, int userNo) throws Exception{
