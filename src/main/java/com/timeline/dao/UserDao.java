@@ -119,4 +119,12 @@ public class UserDao {
 	public List<UserVo> loadUser(){
 		return sqlSession.selectList("user.selectAllUser");
 	}
+	
+	public List<UserVo> loadFollowers(int userNo){
+		return sqlSession.selectList("user.selectFollowers", userNo);
+	}
+	
+	public List<UserVo> loadFollowings(int userNo){
+		return sqlSession.selectList("user.selectFollowings", userNo);
+	}
 }

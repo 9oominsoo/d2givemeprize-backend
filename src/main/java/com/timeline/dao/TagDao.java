@@ -19,7 +19,9 @@ public class TagDao {
 		return sqlSession.selectList("tag.selectFriends", userNo);
 	}
 	
+	/*
 	public int sharePost(PosttagVo vo) {
 		return sqlSession.insert("tag.insertPosttag", vo);
 	}
+	*/
 }

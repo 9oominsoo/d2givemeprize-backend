@@ -61,7 +61,7 @@ public class TagService {
 		return result;
 	}
 	
-
+	/*
 	public int sharePost(List<Object> multiParam) {
 		HashMap<String, Object> map = (HashMap<String, Object>) multiParam.get(1);
 		
@@ -85,4 +85,5 @@ public class TagService {
 		
 		return tagFlag;
 	}
+	*/
 }

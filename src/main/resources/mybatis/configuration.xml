@@ -14,6 +14,7 @@
     	<typeAlias alias="PosttagVo" type="com.timeline.vo.PosttagVo"/>
     	<typeAlias alias="ReplytagVo" type="com.timeline.vo.ReplytagVo"/>
     	<typeAlias alias="ReplylikedVo" type="com.timeline.vo.ReplylikedVo" />
+    	<typeAlias alias="AlarmPheedVo" type="com.timeline.vo.AlarmPheedVo" />
     </typeAliases>
  
     <mappers>

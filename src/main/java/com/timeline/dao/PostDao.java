@@ -8,8 +8,10 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.timeline.vo.AlarmPheedVo;
 import com.timeline.vo.PostVo;
 import com.timeline.vo.PostfileVo;
+import com.timeline.vo.PosttagVo;
 import com.timeline.vo.UserVo;
 
 @Repository
@@ -24,6 +26,14 @@ public class PostDao {
 	
 	public int storeImg(PostfileVo vo) {
 		return sqlSession.insert("post.insertFilepath", vo);
+	}
+	
+	public int sharePost(PosttagVo vo) {
+		return sqlSession.insert("tag.insertPosttag", vo);
+	}
+	
+	public int storeAlarmPheed(AlarmPheedVo vo) {
+		return sqlSession.insert("tag.insertAlarmPheed", vo);
 	}
 	
 	public List<PostVo> loadPheed(){

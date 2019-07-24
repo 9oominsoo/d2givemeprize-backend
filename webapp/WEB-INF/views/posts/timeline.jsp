@@ -10,6 +10,8 @@
     <title>TIMELINE page</title>
 
     <script type="text/javascript" src="${pageContext.request.contextPath }/assets/jquery/jquery-1.12.4.js"></script>  
+     <!-- sockjs -->
+	<script src="${pageContext.request.contextPath }/assets/sockjs/dist/sockjs.js"></script>
 </head>
 <body>
 	<div class="form">
@@ -32,6 +34,8 @@
 	<div class="hitTest">
 		<button class="btn btn-primary btn-lg btn-block" id="detailPost" data-postno="7">Detail</button>
 	</div>
+	
+	<div id="data"></div>
 </body>
 
 <script type="text/javascript">
@@ -55,18 +59,53 @@
 	})
 	*/
 	
+	$("document").ready(function(){
+		// 웹소켓을 지정한 url로 연결한다.
+		let sock = new SockJS("${pageContext.request.contextPath }/echo/");
+		
+		webSock = sock;
+
+		webSock.onmessage = onMessage;
+		webSock.onclose = onClose;
+	});
+	
+	// 메시지 전송
+    function sendMessage() {
+           sock.send("하이");
+    }
+
+    // 서버로부터 메시지를 받았을 때
+    function onMessage(msg) {
+           var data = msg.data;
+           $("#data").append(data + "<br/>");
+    }
+
+    // 서버와 연결을 끊었을 때
+    function onClose(evt) {
+           $("#data").append("연결 끊김");
+    }
+	
+
+	
 	$("#writePheed-button").on("click",function(){
 		
 		var multiParam = Array();
 		
 		var imgList = [];
 
+		var tagList = [];
+		
+		tagList.push(9);
+		tagList.push(16);
+		
 		postvo = {
 			postContent: $("#PostContent").val(),
 		}
 		
 		multiParam.push(imgList);
+		multiParam.push(tagList);
 		multiParam.push(postvo);
+		
 		console.log(multiParam)
 		
 		console.log(postvo);
@@ -79,8 +118,13 @@
 
 			dataType : "json",
 			success : function(result) {
-				if(result == 1)
+				if(result != ""){
+					console.log(result)
+					msg = {};
+					msg.msg = result.userName + result.PheedMessage;
+					webSock.send(JSON.stringify(msg));					
 					alert("success to write pheed");
+				}
 			},
 			error : function(XHR, status, error) {
 				console.error(status + " : " + error);

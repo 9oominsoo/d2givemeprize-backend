@@ -135,7 +135,7 @@ public class UserController {
 	}
 	
 	//팔로우 
-	@RequestMapping(value="/{userno}/follow", method=RequestMethod.GET)
+	@RequestMapping(value="/{userno}/follow", method=RequestMethod.POST)
 	public int follow(@PathVariable("userno") int userNo, HttpServletRequest request, HttpServletResponse response) throws Exception {
 		System.out.println("following " + userNo + " users...");
 		
@@ -143,15 +143,26 @@ public class UserController {
 	}
 	
 	//언팔로우
-	@RequestMapping(value="/{userno}/unfollow", method=RequestMethod.GET)
+	@RequestMapping(value="/{userno}/unfollow", method=RequestMethod.POST)
 	public int unfollow(@PathVariable("userno") int userNo, HttpServletRequest request, HttpServletResponse response) throws Exception {
 		System.out.println("unfollowing " + userNo + " users...");
 		
 		return service.unfollow(request, response, userNo);
 	}
 	
-	//유저 추천 
+	//팔로워 출력 
+	@RequestMapping(value="/{userno}/followers", method=RequestMethod.GET)
+	public List<UserVo> followers(@PathVariable("userno") int userNo){
+		return service.loadFollowers(userNo);
+	}
 	
+	//팔로잉 출력
+	@RequestMapping(value="/{userno}/followings", method=RequestMethod.GET)
+	public List<UserVo> followings(@PathVariable("userno") int userNo){
+		return service.loadFollowings(userNo);
+	}
+	
+	//유저 추천 
 	//전체 유저 출력 
 	@RequestMapping(value="/allUser", method=RequestMethod.GET)
 	public List<UserVo> loadUser(){

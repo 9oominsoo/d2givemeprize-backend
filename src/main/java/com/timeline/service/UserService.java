@@ -134,6 +134,14 @@ public class UserService {
 		return dao.unfollow(vo);
 	}
 	
+	public List<UserVo> loadFollowers(int userNo){
+		return dao.loadFollowers(userNo);
+	}
+	
+	public List<UserVo> loadFollowings(int userNo){
+		return dao.loadFollowings(userNo);
+	}
+	
 	public List<UserVo> loadUser(){
 		return dao.loadUser();
 	}

@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.timeline.service.PostService;
+import com.timeline.vo.AlarmPheedVo;
 import com.timeline.vo.PostVo;
 import com.timeline.vo.PostfileVo;
 
@@ -34,9 +35,9 @@ public class PostController {
 		return mav;
 	}
 	
-	//게시글 작성
+	//게시글 작성&공유
 	@RequestMapping(method=RequestMethod.POST)
-	public int writePheed(@RequestBody List<Object> multiParam, HttpServletRequest request, HttpServletResponse response) throws Exception {
+	public AlarmPheedVo writePheed(@RequestBody List<Object> multiParam, HttpServletRequest request, HttpServletResponse response) throws Exception {
 		System.out.println("write pheed...");
 		
 		return service.writePheed(request, response, multiParam);

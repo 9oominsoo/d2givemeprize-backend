@@ -35,11 +35,12 @@ public class TagController {
 	}
 	
 	@RequestMapping(value="/searchUsers", method=RequestMethod.POST)
-	public List<UserVo> searchUsers(String value) {
+	public List<UserVo> searchUsers(@RequestBody String value) throws UnsupportedEncodingException {
 		List<UserVo> list = new ArrayList<UserVo>();
+		String name = URLDecoder.decode(value, "UTF-8");
 		
 		try {
-			list = service.searchUsers(value);
+			list = service.searchUsers(name);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -49,7 +50,7 @@ public class TagController {
 	
 	//json.stringify 가 없으므로 @RequestBody로 받을 필요 없다.
 	@RequestMapping(value="/searchFriends", method=RequestMethod.POST)
-	public List<UserVo> searchFriends(String value, HttpServletRequest request, HttpServletResponse response) throws UnsupportedEncodingException {
+	public List<UserVo> searchFriends(@RequestBody String value, HttpServletRequest request, HttpServletResponse response) throws UnsupportedEncodingException {
 		System.out.println("search user...");
 		String name = URLDecoder.decode(value, "UTF-8");
 		
@@ -66,6 +67,7 @@ public class TagController {
 	
 	//게시글 공유  
 	//@RequestMapping(value="/sharePost", method=RequestMethod.POST)
+	/*
 	@RequestMapping(method=RequestMethod.POST)
 	public int sharePost(@RequestBody List<Object> multiParam) {
 		System.out.println("share post...");
@@ -73,5 +75,5 @@ public class TagController {
 		
 		return service.sharePost(multiParam);
 	}
-	
+	*/
 }

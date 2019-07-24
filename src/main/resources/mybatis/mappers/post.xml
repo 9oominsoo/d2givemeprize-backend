@@ -16,13 +16,13 @@
 						 postRegDate, 
 						 postContent, 
 						 postHit, 
-						 postRepImg)
+						 postRepImg) 
 			VALUES(#{postNo}, 
 					#{userNo}, 
 					SYSDATE, 
 					#{postContent}, 
 					0, 
-					#{postRepImg})
+					null)
 		]]>
 	</insert>
 	
