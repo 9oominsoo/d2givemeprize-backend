@@ -99,7 +99,8 @@ public class ReplyService {
 	}
 	
 	public List<ReplyVo> loadReReply(int replyNo){
-		return dao.loadReReply(replyNo);
+		int replyGroupNo = dao.findGroupNo(replyNo);
+		return dao.loadReReply(replyGroupNo);
 	}
 	
 	@Transactional
