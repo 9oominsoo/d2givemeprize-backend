@@ -165,7 +165,7 @@ public class UserController {
 	
 	//팔로잉 출력
 	@RequestMapping(value="/{userno}/followings", method=RequestMethod.GET)
-	public Map<String, Object> followings(@PathVariable("userno") int userNo, HttpServletRequest request, HttpServletResponse response) throws Exception{
+	public List<PostUserVo> followings(@PathVariable("userno") int userNo, HttpServletRequest request, HttpServletResponse response) throws Exception{
 		return service.loadFollowings(request, response, userNo);
 	}
 	

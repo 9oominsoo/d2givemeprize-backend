@@ -10,19 +10,19 @@ public class PostUserVo {
 	//authRelation = 1 -> both Following 
 	//authRelation = 2 -> auth is following 
 	//authRelation = 3 -> following auth 
-	private int authRelation;
+	private boolean isFollowed;
 	
 	public PostUserVo() {
 		
 	}
 	
-	public PostUserVo(int userNo, String userId, String userName, String userRepImg, int authRelation) {
+	public PostUserVo(int userNo, String userId, String userName, String userRepImg, boolean isFollowed) {
 		super();
 		this.userNo = userNo;
 		this.userId = userId;
 		this.userName = userName;
 		this.userRepImg = userRepImg;
-		this.authRelation = authRelation;
+		this.isFollowed = isFollowed;
 	}
 
 	public int getUserNo() {
@@ -57,18 +57,18 @@ public class PostUserVo {
 		this.userRepImg = userRepImg;
 	}
 
-	public int getAuthRelation() {
-		return authRelation;
+	public boolean isFollowed() {
+		return isFollowed;
 	}
 
-	public void setAuthRelation(int authRelation) {
-		this.authRelation = authRelation;
+	public void setFollowed(boolean isFollowed) {
+		this.isFollowed = isFollowed;
 	}
 
 	@Override
 	public String toString() {
 		return "PostUserVo [userNo=" + userNo + ", userId=" + userId + ", userName=" + userName + ", userRepImg="
-				+ userRepImg + ", authRelation=" + authRelation + "]";
+				+ userRepImg + ", isFollowed=" + isFollowed + "]";
 	}
-	
+
 }

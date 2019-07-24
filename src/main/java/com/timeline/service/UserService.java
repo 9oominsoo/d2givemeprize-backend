@@ -24,11 +24,6 @@ public class UserService {
 	@Autowired
 	private UserDao dao;
 	
-	private int SELF = 0;
-	private int BothFollowing= 1;
-	private int FollowingAUTH = 2;
-	private int FollowedByAUTH = 3;
-	
 	@Transactional
 	public int insertUserBatch(List<UserVo> list) {
 		List<UserVo> dividelist = new ArrayList<UserVo>();
@@ -152,9 +147,6 @@ public class UserService {
 	
 	public List<PostUserVo> loadFollowers(HttpServletRequest request, HttpServletResponse response, int userNo) throws Exception{
 		int authUserNo = dao.checkAuthUser(request, response);
-		int checkFollowing;
-		int checkFollowed;
-		
 		List<PostUserVo> list = dao.loadFollowers(userNo);
 		
 		for(int i=0; i<list.size(); i++) {
@@ -163,50 +155,30 @@ public class UserService {
 			rVo.setRelationTo(list.get(i).getUserNo());
 			
 			if(dao.checkUserRelation(rVo) != null)
-				checkFollowing = 1;
+				list.get(i).setFollowed(true);
 			else 
-				checkFollowing = 0;
-			
-			rVo.setRelationFrom(list.get(i).getUserNo());
-			rVo.setRelationTo(authUserNo);
-			
-			if(dao.checkUserRelation(rVo) != null)
-				checkFollowed = 1;
-			else 
-				checkFollowed = 0;
-			
-			if(checkFollowed == 1 && checkFollowing == 1)
-				list.get(i).setAuthRelation(BothFollowing);
-			else if(checkFollowed == 1 && checkFollowing == 0)
-				list.get(i).setAuthRelation(FollowingAUTH);
-			else if(checkFollowed == 0 && checkFollowing == 1)
-				list.get(i).setAuthRelation(FollowedByAUTH);
-			else 
-				list.get(i).setAuthRelation(SELF);
-			
+				list.get(i).setFollowed(false);
 		}
 		
 		return list;
 	}
 	
-	public Map<String,Object> loadFollowings(HttpServletRequest request, HttpServletResponse response, int userNo) throws Exception{
+	public List<PostUserVo> loadFollowings(HttpServletRequest request, HttpServletResponse response, int userNo) throws Exception{
 		int authUserNo = dao.checkAuthUser(request, response);
-		Map<String, Object> map = new HashMap<String,Object>();
-		List<UserRelationVo> relationList = new ArrayList<UserRelationVo>();
-		List<UserVo> followingList = dao.loadFollowings(userNo);
+		List<PostUserVo> list = dao.loadFollowings(userNo);
 		
-		for(int i=0; i<followingList.size(); i++) {
+		for(int i=0; i<list.size(); i++) {
 			UserRelationVo rVo = new UserRelationVo();
 			rVo.setRelationFrom(authUserNo);
-			rVo.setRelationTo(followingList.get(i).getUserNo());
+			rVo.setRelationTo(list.get(i).getUserNo());
 			
-			relationList.add(i, dao.checkUserRelation(rVo));
+			if(dao.checkUserRelation(rVo) != null)
+				list.get(i).setFollowed(true);
+			else 
+				list.get(i).setFollowed(false);
 		}
 		
-		map.put("followerList", followingList);
-		map.put("relationList", relationList);
-		
-		return map;
+		return list;
 	}
 	
 	public List<UserVo> loadUser(){
