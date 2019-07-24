@@ -133,10 +133,10 @@
 	<!-- 팔로워 검색 -->
 	<select id="selectFollowers" parameterType="int" resultType="UserVo">
 		<![CDATA[
-			SELECT u.userNo,
-				   u.userName,
-				   u.userId,
-				   u.userRepImg
+			SELECT u.userNo as userNo,
+				   u.userName as userName,
+				   u.userId as userID,
+				   u.userRepImg as userRepImg
 			FROM users u join userRelation r
 			ON u.userNo = r.relationFrom
 			WHERE r.relationTo = #{userNo} 
@@ -146,10 +146,10 @@
 	<!-- 팔로잉 검색  -->	
 	<select id="selectFollowings" parameterType="int" resultType="UserVo">
 		<![CDATA[
-			SELECT u.userNo,
-				   u.userName,
-				   u.userId,
-				   u.userRepImg
+			SELECT u.userNo as userNo,
+				   u.userName as userName,
+				   u.userId as userID,
+				   u.userRepImg as userRepImg
 			FROM users u join userRelation r
 			ON u.userNo = r.relationTo
 			WHERE r.relationFrom = #{userNo} 
