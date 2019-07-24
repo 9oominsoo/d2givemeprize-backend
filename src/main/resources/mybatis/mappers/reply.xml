@@ -67,7 +67,7 @@
 					WHERE userNo = writerNo) AS writerName,
 				   (SELECT userRepImg
 				    FROM users
-				    WHERE userNo = wirterNo) AS writerRepImg,
+				    WHERE userNo = writerNo) AS writerRepImg,
 				   postNo,
 				   replyGroupNo,
 				   replyOrderNo
