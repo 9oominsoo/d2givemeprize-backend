@@ -36,8 +36,7 @@ public class PostService {
 	@Transactional
 	public AlarmPheedVo writePheed(HttpServletRequest request, HttpServletResponse response, List<Object> multiParam) throws Exception{
 		System.out.println("start wirte pheed... ");
-		//int userNo = uDao.checkAuthUser(request, response);
-		int userNo = 7;
+		int userNo = uDao.checkAuthUser(request, response);
 		int postFlag = 0;
 		HashMap<String, Object> map = (HashMap<String, Object>) multiParam.get(2);
 		List<String> imgList = (List<String>)(multiParam.get(0));

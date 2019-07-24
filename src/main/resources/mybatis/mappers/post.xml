@@ -22,7 +22,7 @@
 					SYSDATE, 
 					#{postContent}, 
 					0, 
-					null)
+					#{postRepImg})
 		]]>
 	</insert>
 	
