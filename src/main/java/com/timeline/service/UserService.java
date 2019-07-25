@@ -53,10 +53,10 @@ public class UserService {
 		int status = dao.signUp(vo);
 		Map<String, Object> result = new HashMap<String, Object>();
 		
-		if(status == 0)
-			result.put("status", "failed");
-		else 
+		if(status == 1)
 			result.put("status", "success");
+		else 
+			result.put("status", "failed");
 		
 		return result;
 	}
@@ -80,10 +80,10 @@ public class UserService {
 		int status = dao.modifyInfo(vo);
 		Map<String, Object> result = new HashMap<String, Object>();
 		
-		if(status == 0)
-			result.put("status", "failed");
-		else 
+		if(status == 1)
 			result.put("status", "success");
+		else 
+			result.put("status", "failed");
 		
 		return result;
 	}
@@ -146,7 +146,7 @@ public class UserService {
 		
 		int status = dao.follow(vo);
 		
-		if(status != 0) {
+		if(status == 1) {
 			result.put("status", "success");
 		}else {
 			result.put("status", "failed");
@@ -165,7 +165,7 @@ public class UserService {
 		
 		int status = dao.unfollow(vo);
 
-		if(status != 0) {
+		if(status == 1) {
 			result.put("status", "success");
 		}else {
 			result.put("status", "failed");

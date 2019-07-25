@@ -72,7 +72,7 @@ public class TagService {
 		Map<String, Object> result = new HashMap<String, Object>();
 		int status = dao.readAlarm(vo);
 		
-		if(status != 0) {
+		if(status == 1) {
 			// 중복되는 아이디가 있는 경우
 			result.put("status", "success");
 		}else {
