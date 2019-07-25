@@ -35,7 +35,7 @@ public class ReplyDao {
 	}
 	
 	public int storeAlarmPheed(AlarmPheedVo vo) {
-		return sqlSession.insert("tag.insertAlarmPheed", vo);
+		return sqlSession.insert("tag.insertReplyAlarmPheed", vo);
 	}
 	
 	public int findGroupNo(int parentReplyNo) {

@@ -43,8 +43,34 @@
 		]]>
 	</insert>
 	
-	<!-- 알림 피드 저장 -->
-	<insert id="insertAlarmPheed" parameterType="AlarmPheedVo">
+	<!-- 게시글 알림 피드 저장 -->
+	<insert id="insertPostAlarmPheed" parameterType="AlarmPheedVo">
+		<![CDATA[
+			INSERT into alarmPheed
+				(alarmPheedNo,
+				 userFrom,
+				 userTo,
+				 pheedType,
+				 alarmRegDate,
+				 postNo,
+				 replyNo,
+				 userFromName,
+				 userToName) 
+			VALUES
+				(seq_alarmpheed_no.nextval,
+				 #{userFrom},
+				 #{userTo},
+				 #{pheedType},
+				 SYSDATE,
+				 #{postNo},
+				 null,
+				 #{userFromName},
+				 #{userToName})
+		]]>
+	</insert>
+	
+	<!-- 댓글 알림 피드 저장 -->
+	<insert id="insertReplyAlarmPheed" parameterType="AlarmPheedVo">
 		<![CDATA[
 			INSERT into alarmPheed
 				(alarmPheedNo,
@@ -68,5 +94,6 @@
 				 #{userToName})
 		]]>
 	</insert>
+	
 	
 </mapper>

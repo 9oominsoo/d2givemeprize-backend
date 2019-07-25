@@ -33,7 +33,7 @@ public class PostDao {
 	}
 	
 	public int storeAlarmPheed(AlarmPheedVo vo) {
-		return sqlSession.insert("tag.insertAlarmPheed", vo);
+		return sqlSession.insert("tag.insertPostAlarmPheed", vo);
 	}
 	
 	public List<PostVo> loadPheed(){
