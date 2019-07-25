@@ -38,7 +38,7 @@
                          p.postRepImg as postRepImg
                   FROM alarmPheed a join posts p 
                   ON a.postNo = p.postNo
-                  WHERE userTo = 6
+                  WHERE userTo = #{userNo}
                   ORDER BY alarmRegDate DESC)
 			WHERE rownum <= 10 
 		]]>
