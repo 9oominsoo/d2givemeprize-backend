@@ -15,6 +15,39 @@
 		]]>
 	</select>
 	
+	<!-- 알람 피드 로드 -->
+	<select id="checkAlarm" parameterType="int" resultType="AlarmPheedVo">
+		<![CDATA[
+			SELECT alarmPheedNo,
+				   pheedType,
+				   alarmRegDate,
+				   postNo,
+				   replyNo,
+				   userFromName,
+				   userToName
+			FROM (SELECT alarmPheedNo,
+				   		 pheedType,
+				   		 alarmRegDate,
+				   		 postNo,
+				   		 replyNo,
+				   		 userFromName,
+				   		 userToName
+                  FROM alarmPheed
+                  WHERE checked = 0
+                  ORDER BY alarmRegDate DESC)
+			WHERE rownum <= 10 
+		]]>
+	</select>
+	
+	<!-- 알람 확인 시 업데이트 -->
+	<update id="updateAlarm" parameterType="AlarmPheedVo">
+		<![CDATA[
+			UPDATE alarmPheed
+			SET checked = 1
+			WHERE alarmPheedNo = #{alarmPheedNo}
+		]]>
+	</update>
+	
 	<!-- 게시글 공유 태그 저장 -->
 	<insert id="insertPosttag" parameterType="PosttagVo">
 		<![CDATA[
@@ -54,6 +87,7 @@
 				 alarmRegDate,
 				 postNo,
 				 replyNo,
+				 checked,
 				 userFromName,
 				 userToName) 
 			VALUES
@@ -64,6 +98,7 @@
 				 SYSDATE,
 				 #{postNo},
 				 null,
+				 0,
 				 #{userFromName},
 				 #{userToName})
 		]]>
@@ -80,6 +115,7 @@
 				 alarmRegDate,
 				 postNo,
 				 replyNo,
+				 checked,
 				 userFromName,
 				 userToName) 
 			VALUES
@@ -90,6 +126,7 @@
 				 SYSDATE,
 				 #{postNo},
 				 #{replyNo},
+				 0,
 				 #{userFromName},
 				 #{userToName})
 		]]>

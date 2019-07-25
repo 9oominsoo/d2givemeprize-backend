@@ -3,6 +3,7 @@ package com.timeline.service;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -12,7 +13,7 @@ import org.springframework.stereotype.Service;
 
 import com.timeline.dao.TagDao;
 import com.timeline.dao.UserDao;
-import com.timeline.vo.PosttagVo;
+import com.timeline.vo.AlarmPheedVo;
 import com.timeline.vo.UserVo;
 
 
@@ -42,9 +43,9 @@ public class TagService {
 	}
 	
 	public List<UserVo> searchFriends(HttpServletRequest request, HttpServletResponse response, String name) throws Exception{
-		int userNo = uDao.checkAuthUser(request, response);
+		int authUserNo = uDao.checkAuthUser(request, response);
 		List<UserVo> result = new ArrayList<UserVo>();
-		List<UserVo> list = dao.searchFriends(userNo);
+		List<UserVo> list = dao.searchFriends(authUserNo);
 		
 		for(UserVo vo : list) {
 			String userName = vo.getUserName();
@@ -61,29 +62,24 @@ public class TagService {
 		return result;
 	}
 	
-	/*
-	public int sharePost(List<Object> multiParam) {
-		HashMap<String, Object> map = (HashMap<String, Object>) multiParam.get(1);
+	public List<AlarmPheedVo> checkAlarm(HttpServletRequest request, HttpServletResponse response) throws Exception{
+		int authUserNo = uDao.checkAuthUser(request, response);
 		
-		List<Integer> tagList = (List<Integer>)(multiParam.get(0));
+		return dao.checkAlarm(authUserNo);
+	}
+	
+	public Map<String, Object> readAlarm(AlarmPheedVo vo){
+		Map<String, Object> result = new HashMap<String, Object>();
+		int status = dao.readAlarm(vo);
 		
-		int tagFlag = 0;
-		int postNo = Integer.parseInt((String)map.get("postNo"));
-		
-		for(int i=0; i<tagList.size(); i++) {
-			
-			PosttagVo vo = new PosttagVo();
-			vo.setPostNo(postNo);
-			
-			vo.setUserNo(Integer.parseInt(""+tagList.get(i)));
-			tagFlag = dao.sharePost(vo);
-			if(tagFlag == 0) {
-				System.out.println("error");
-				break;
-			}
+		if(status != 0) {
+			// 중복되는 아이디가 있는 경우
+			result.put("status", "success");
+		}else {
+			// 중복되는 아이디가 없는 경우
+			result.put("status", "failed");
 		}
 		
-		return tagFlag;
+		return result;
 	}
-	*/
 }

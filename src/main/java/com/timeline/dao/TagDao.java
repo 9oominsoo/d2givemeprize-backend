@@ -6,7 +6,7 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import com.timeline.vo.PosttagVo;
+import com.timeline.vo.AlarmPheedVo;
 import com.timeline.vo.UserVo;
 
 @Repository
@@ -19,9 +19,11 @@ public class TagDao {
 		return sqlSession.selectList("tag.selectFriends", userNo);
 	}
 	
-	/*
-	public int sharePost(PosttagVo vo) {
-		return sqlSession.insert("tag.insertPosttag", vo);
+	public List<AlarmPheedVo> checkAlarm(int userNo){
+		return sqlSession.selectList("tag.selectAlarm", userNo);
 	}
-	*/
+	
+	public int readAlarm(AlarmPheedVo vo) {
+		return sqlSession.update("tag.updateAlarm", vo);
+	}
 }

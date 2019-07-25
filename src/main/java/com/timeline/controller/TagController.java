@@ -4,6 +4,7 @@ import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.timeline.service.TagService;
+import com.timeline.vo.AlarmPheedVo;
 import com.timeline.vo.UserVo;
 
 @RestController
@@ -55,6 +57,16 @@ public class TagController {
 		}
 		
 		return list;
+	}
+	
+	@RequestMapping(value="/checkAlarm", method=RequestMethod.GET)
+	public List<AlarmPheedVo> checkAlarm(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		return service.checkAlarm(request,response);
+	}
+	
+	@RequestMapping(value="/readAlarm", method=RequestMethod.PUT)
+	public Map<String,Object> readAlarm(@RequestBody AlarmPheedVo vo){
+		return service.readAlarm(vo);
 	}
 	
 }
