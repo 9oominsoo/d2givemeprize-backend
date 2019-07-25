@@ -74,7 +74,7 @@
 	</select>
 	
 	<!-- 유저 넘버로 유저 검색 -->
-	<select id="selectUser" parameterType="int" resultType="UserVo">
+	<select id="selectUser" parameterType="int" resultType="PostUserVo">
 		<![CDATA[
 			SELECT userNo,
 				   userName,

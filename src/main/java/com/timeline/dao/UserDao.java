@@ -100,7 +100,7 @@ public class UserDao {
 		return sqlSession.delete("user.deleteUser", vo);
 	}
 	
-	public UserVo findUser(int userNo) {
+	public PostUserVo findUser(int userNo) {
 		return sqlSession.selectOne("user.selectUser", userNo);
 	}
 	

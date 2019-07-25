@@ -1,5 +1,6 @@
 package com.timeline.service;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -13,9 +14,9 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.timeline.dao.ReplyDao;
 import com.timeline.dao.UserDao;
+import com.timeline.vo.AlarmPheedVo;
 import com.timeline.vo.ReplyVo;
 import com.timeline.vo.ReplytagVo;
-import com.timeline.vo.UserVo;
 
 
 @Service
@@ -28,10 +29,9 @@ public class ReplyService {
 	private UserDao uDao;
 	
 	@Transactional
-	public int writeReply(HttpServletRequest request, HttpServletResponse response, List<Object> multiParam) throws Exception {
-		HashMap<String, Object> map = (HashMap<String, Object>) multiParam.get(1);
-		
+	public List<AlarmPheedVo> writeReply(HttpServletRequest request, HttpServletResponse response, List<Object> multiParam) throws Exception {
 		List<Integer> tagList = (List<Integer>)(multiParam.get(0));
+		HashMap<String, Object> map = (HashMap<String, Object>) multiParam.get(1);
 		
 		int tagFlag = 0;
 		int writerNo = uDao.checkAuthUser(request, response);
@@ -52,16 +52,37 @@ public class ReplyService {
 			tVo.setUserNo(Integer.parseInt(""+tagList.get(i)));
 			tagFlag = dao.shareReply(tVo);
 			if(tagFlag == 0) {
-				System.out.println("error");
 				break;
 			}
 		}
 		
-		return tagFlag;
+		List<AlarmPheedVo> alarmList = new ArrayList<AlarmPheedVo>();
+		AlarmPheedVo aVo = new AlarmPheedVo();
+		
+		aVo.setUserFrom(writerNo);
+		aVo.setUserFromName((uDao.findUser(aVo.getUserFrom())).getUserName());
+		aVo.setPostNo(rVo.getPostNo());
+		aVo.setReplyNo(replyNo);
+		aVo.setPheedType(1);
+		aVo.setPheedMessage("님이 댓글에 회원님을 언급하였습니다.");
+		if(tagList.size() > 0) {
+			for(int i=0; i<tagList.size(); i++) {
+				aVo.setUserTo(Integer.parseInt(""+tagList.get(i)));
+				aVo.setUserToName((uDao.findUser(aVo.getUserTo())).getUserName());
+				
+				tagFlag = dao.storeAlarmPheed(aVo);
+				if(tagFlag == 0) {
+					break;
+				}
+				alarmList.add(aVo);
+			}
+		}
+		
+		return alarmList;
 	}
 	
 	@Transactional
-	public int reReply(HttpServletRequest request, HttpServletResponse response, List<Object> multiParam, int replyNo) throws Exception {
+	public List<AlarmPheedVo> reReply(HttpServletRequest request, HttpServletResponse response, List<Object> multiParam, int replyNo) throws Exception {
 		HashMap<String, Object> map = (HashMap<String, Object>) multiParam.get(1);
 		
 		List<Integer> tagList = (List<Integer>)(multiParam.get(0));	
@@ -95,7 +116,29 @@ public class ReplyService {
 			}
 		}
 		
-		return tagFlag;
+		List<AlarmPheedVo> alarmList = new ArrayList<AlarmPheedVo>();
+		AlarmPheedVo aVo = new AlarmPheedVo();
+		
+		aVo.setUserFrom(writerNo);
+		aVo.setUserFromName((uDao.findUser(aVo.getUserFrom())).getUserName());
+		aVo.setPostNo(rVo.getPostNo());
+		aVo.setReplyNo(replyNo);
+		aVo.setPheedType(1);
+		aVo.setPheedMessage("님이 댓글에 회원님을 언급하였습니다.");
+		if(tagList.size() > 0) {
+			for(int i=0; i<tagList.size(); i++) {
+				aVo.setUserTo(Integer.parseInt(""+tagList.get(i)));
+				aVo.setUserToName((uDao.findUser(aVo.getUserTo())).getUserName());
+				
+				tagFlag = dao.storeAlarmPheed(aVo);
+				if(tagFlag == 0) {
+					break;
+				}
+				alarmList.add(aVo);
+			}
+		}
+		
+		return alarmList;
 	}
 	
 	public List<ReplyVo> loadReReply(int replyNo){

@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.timeline.service.ReplyService;
+import com.timeline.vo.AlarmPheedVo;
 import com.timeline.vo.ReplyVo;
 
 @RestController
@@ -26,19 +27,13 @@ public class ReplyController {
 
 	// 댓글 작성&공유
 	@RequestMapping(method=RequestMethod.POST)
-	public int writeReply(@RequestBody List<Object> multiParam, HttpServletRequest request, HttpServletResponse response) throws Exception {
-		System.out.println("write reply...");
-		System.out.println(multiParam);
-		
+	public List<AlarmPheedVo> writeReply(@RequestBody List<Object> multiParam, HttpServletRequest request, HttpServletResponse response) throws Exception {
 		return service.writeReply(request, response, multiParam);
 	}
 	
 	// 대댓 작성
 	@RequestMapping(value="/{replyno}", method=RequestMethod.POST)
-	public int reReply(@PathVariable("replyno") int replyNo, @RequestBody List<Object> multiParam, HttpServletRequest request, HttpServletResponse response) throws Exception {
-		System.out.println("write reply on reply...");
-		System.out.println(multiParam);
-		
+	public List<AlarmPheedVo> reReply(@PathVariable("replyno") int replyNo, @RequestBody List<Object> multiParam, HttpServletRequest request, HttpServletResponse response) throws Exception {
 		return service.reReply(request, response, multiParam, replyNo);
 	}
 	
@@ -52,8 +47,6 @@ public class ReplyController {
 	/*
 	@RequestMapping(value="/{replyno}", method=RequestMethod.POST)
 	public int likeTogglePheed(@PathVariable("replyno") int replyNo, HttpServletRequest request, HttpServletResponse response) throws Exception {
-		System.out.println("like/unlike pheed No " + replyNo + "...");
-		
 		return service.likeToggleReply(request, response, replyNo);
 	}
 	*/

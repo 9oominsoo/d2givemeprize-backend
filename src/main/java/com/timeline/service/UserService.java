@@ -61,27 +61,38 @@ public class UserService {
 		return result;
 	}
 	
-	public int checkDupId(UserVo vo) {
+	public Map<String, Object> checkDupId(UserVo vo) {
 		UserVo temp = dao.checkDupId(vo);
+		Map<String, Object> result = new HashMap<String, Object>();
 		
 		if(temp != null) {
 			// 중복되는 아이디가 있는 경우
-			return 0;
+			result.put("status", "failed");
 		}else {
 			// 중복되는 아이디가 없는 경우
-			return 1;
+			result.put("status", "success");
 		}
+		
+		return result;
 	}
 	
-	public int modifyInfo(UserVo vo) {
-		return dao.modifyInfo(vo);
+	public Map<String, Object> modifyInfo(UserVo vo) {
+		int status = dao.modifyInfo(vo);
+		Map<String, Object> result = new HashMap<String, Object>();
+		
+		if(status == 0)
+			result.put("status", "failed");
+		else 
+			result.put("status", "success");
+		
+		return result;
 	}
 	
 	public int signOut(UserVo vo) {
 		return dao.signOut(vo);
 	}
 	
-	public UserVo findAuthUserInfo(HttpServletRequest request, HttpServletResponse response) throws Exception {
+	public PostUserVo findAuthUserInfo(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		int authUserNo = dao.checkAuthUser(request, response);
 		
 		return dao.findUser(authUserNo);
@@ -91,7 +102,7 @@ public class UserService {
 		Map<String, Object> map = new HashMap<String, Object>();
 		
 		// find userInfo
-		UserVo uVo = dao.findUser(userNo);
+		PostUserVo uVo = dao.findUser(userNo);
 		map.put("selectedUser", uVo);
 		
 		// find userPosts
@@ -125,24 +136,46 @@ public class UserService {
 		return result;
 	}
 	
-	public int follow(HttpServletRequest request, HttpServletResponse response, int userNo) throws Exception {
+	public Map<String, Object> follow(HttpServletRequest request, HttpServletResponse response, int userNo) throws Exception {
 		UserRelationVo vo = new UserRelationVo();
+		Map<String, Object> result = new HashMap<String, Object>();
 		int authUserNo = dao.checkAuthUser(request, response);
 		
 		vo.setRelationTo(userNo);
 		vo.setRelationFrom(authUserNo);
 		
-		return dao.follow(vo);
+		int status = dao.follow(vo);
+		
+		if(status != 0) {
+			result.put("status", "success");
+		}else {
+			result.put("status", "failed");
+		}
+		
+		return result;
 	}
 	
-	public int unfollow(HttpServletRequest request, HttpServletResponse response, int userNo) throws Exception {
+	public Map<String, Object> unfollow(HttpServletRequest request, HttpServletResponse response, int userNo) throws Exception {
 		UserRelationVo vo = new UserRelationVo();
+		Map<String, Object> result = new HashMap<String, Object>();
 		int authUserNo = dao.checkAuthUser(request, response);
 		
 		vo.setRelationTo(userNo);
 		vo.setRelationFrom(authUserNo);
 		
-		return dao.unfollow(vo);
+		int status = dao.unfollow(vo);
+
+		if(status != 0) {
+			result.put("status", "success");
+		}else {
+			result.put("status", "failed");
+		}
+		
+		return result;
+	}
+	
+	public List<UserVo> loadUser(){
+		return dao.loadUser();
 	}
 	
 	public List<PostUserVo> loadFollowers(HttpServletRequest request, HttpServletResponse response, int userNo) throws Exception{
@@ -181,7 +214,4 @@ public class UserService {
 		return list;
 	}
 	
-	public List<UserVo> loadUser(){
-		return dao.loadUser();
-	}
 }

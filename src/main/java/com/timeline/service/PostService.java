@@ -1,5 +1,6 @@
 package com.timeline.service;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -34,15 +35,15 @@ public class PostService {
 	private UserDao uDao;
 	
 	@Transactional
-	public AlarmPheedVo writePheed(HttpServletRequest request, HttpServletResponse response, List<Object> multiParam) throws Exception{
-		System.out.println("start wirte pheed... ");
+	public List<AlarmPheedVo> writePheed(HttpServletRequest request, HttpServletResponse response, List<Object> multiParam) throws Exception{
 		int userNo = uDao.checkAuthUser(request, response);
 		int postFlag = 0;
-		HashMap<String, Object> map = (HashMap<String, Object>) multiParam.get(2);
 		List<String> imgList = (List<String>)(multiParam.get(0));
 		List<Integer> tagList = (List<Integer>)(multiParam.get(1));
+		HashMap<String, Object> map = (HashMap<String, Object>) multiParam.get(2);
 		String postContent = (String)map.get("postContent");
 		
+		// 글 작성
 		PostVo pVo = new PostVo();
 		pVo.setPostContent(postContent);
 		pVo.setUserNo(userNo);
@@ -51,7 +52,6 @@ public class PostService {
 
 		pDao.writePheed(pVo);
 		int postNo = pVo.getPostNo();
-		System.out.println(postNo);
 
 		if (imgList.size() > 0) {
 			for (int i = 0; i < imgList.size(); i++) {
@@ -63,12 +63,10 @@ public class PostService {
 				postFlag = pDao.storeImg(vo);
 
 				if (postFlag == 0) {
-					System.out.println("error");
 					break;
 				}
 			}
 		}
-		System.out.println("done with imgLIst...");
 		
 		for(int i=0; i<tagList.size(); i++) {
 			
@@ -78,36 +76,33 @@ public class PostService {
 			vo.setUserNo(Integer.parseInt(""+tagList.get(i)));
 			postFlag = pDao.sharePost(vo);
 			if(postFlag == 0) {
-				System.out.println("error");
 				break;
 			}
 		}
-		System.out.println("done with tagLIst...");
 		
+		List<AlarmPheedVo> alarmList = new ArrayList<AlarmPheedVo>();
 		AlarmPheedVo aVo = new AlarmPheedVo();
-		
+		aVo.setUserFrom(userNo);
+		aVo.setUserFromName((uDao.findUser(aVo.getUserFrom())).getUserName());
+		aVo.setPostNo(postNo);
+		aVo.setPheedType(0);
+		aVo.setPheedMessage("님이 게시글을 공유하였습니다.");
 		if(tagList.size() > 0) {
 			for(int i=0; i<tagList.size(); i++) {
 				
-				aVo.setUserFrom(userNo);
-				aVo.setPostNo(postNo);
-				aVo.setPheedType(0);
-				aVo.setPheedMessage("님이 게시글을 공유하였습니다.");
 				aVo.setUserTo(Integer.parseInt(""+tagList.get(i)));
-				aVo.setUserFromName((uDao.findUser(aVo.getUserFrom())).getUserName());
 				aVo.setUserToName((uDao.findUser(aVo.getUserTo())).getUserName());
 				
-				System.out.println("avo : " + aVo);
 				postFlag = pDao.storeAlarmPheed(aVo);
 				if(postFlag == 0) {
-					System.out.println("error");
 					break;
 				}
+				alarmList.add(aVo);
+				
 			}
 		}
-		System.out.println("done with alarmPheed...");
 		
-		return aVo;
+		return alarmList;
 	}
 	
 	public List<PostVo> loadPheed(){

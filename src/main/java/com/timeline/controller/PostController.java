@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.servlet.ModelAndView;
 
 import com.timeline.service.PostService;
 import com.timeline.vo.AlarmPheedVo;
@@ -28,42 +27,27 @@ public class PostController {
 	@Autowired
 	private PostService service;
 	
-	@RequestMapping(value="/writeform", method=RequestMethod.GET)
-	public ModelAndView loginTestPage() {
-		ModelAndView mav = new ModelAndView("/WEB-INF/views/posts/timeline.jsp");
-		
-		return mav;
-	}
-	
 	//게시글 작성&공유
 	@RequestMapping(method=RequestMethod.POST)
-	public AlarmPheedVo writePheed(@RequestBody List<Object> multiParam, HttpServletRequest request, HttpServletResponse response) throws Exception {
-		System.out.println("write pheed...");
-		
+	public List<AlarmPheedVo> writePheed(@RequestBody List<Object> multiParam, HttpServletRequest request, HttpServletResponse response) throws Exception {
 		return service.writePheed(request, response, multiParam);
 	}
 	
 	//모든 게시글 로드
 	@RequestMapping(value="/allPheed", method=RequestMethod.GET)
 	public List<PostVo> loadPheed(){
-		System.out.println("load pheed...");
-		
 		return service.loadPheed();
 	}
 	
 	//유저별 게시글 로드(following 중인 친구 게시글 로드)
 	@RequestMapping(method=RequestMethod.GET)
 	public List<PostVo> loadMyPheed(HttpServletRequest request, HttpServletResponse response) throws Exception{
-		System.out.println("load my pheed...");
-		
 		return service.loadMyPheed(request, response);
 	}
 
 	//게시글 상세보기
 	@RequestMapping(value="/{postno}", method=RequestMethod.GET)
 	public Map<String, Object> detailPheed(@PathVariable("postno") int postNo, HttpServletRequest request, HttpServletResponse response) throws Exception {
-		System.out.println("load distinct pheed No " + postNo + "...");
-		
 		return service.detailPheed(request, response, postNo);
 	}
 	

@@ -37,9 +37,7 @@ public class PostDao {
 	}
 	
 	public List<PostVo> loadPheed(){
-		List<PostVo> list = new ArrayList<PostVo>();
-		list = sqlSession.selectList("post.selectPost");
-		return list;
+		return sqlSession.selectList("post.selectPost");
 	}
 	
 	public List<PostVo> loadMyPheed(UserVo vo){

@@ -7,6 +7,7 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.timeline.vo.AlarmPheedVo;
 import com.timeline.vo.PostVo;
 import com.timeline.vo.ReplyVo;
 import com.timeline.vo.ReplytagVo;
@@ -31,6 +32,10 @@ public class ReplyDao {
 	
 	public int shareReply(ReplytagVo vo) {
 		return sqlSession.insert("tag.insertReplytag", vo);
+	}
+	
+	public int storeAlarmPheed(AlarmPheedVo vo) {
+		return sqlSession.insert("tag.insertAlarmPheed", vo);
 	}
 	
 	public int findGroupNo(int parentReplyNo) {

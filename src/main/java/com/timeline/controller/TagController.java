@@ -25,22 +25,12 @@ public class TagController {
 
 	@Autowired
 	private TagService service;
-
-	// 태그 페이지 로드
-	@RequestMapping(value = "/tagform")
-	public String loginForm() {
-		System.out.println("load tag page");
-
-		return "/WEB-INF/views/tag/tag.jsp";
-	}
 	
 	@RequestMapping(value="/searchUsers", method=RequestMethod.POST)
 	public List<UserVo> searchUsers(@RequestBody String value, HttpServletRequest request, HttpServletResponse response) throws UnsupportedEncodingException {
 		List<UserVo> list = new ArrayList<UserVo>();
-		System.out.println("value: " + value);
 		String name = URLDecoder.decode(value, "UTF-8");
 		name = name.split("=")[0];
-		System.out.println("name: "+name);
 		
 		try {
 			list = service.searchUsers(name);
@@ -55,10 +45,8 @@ public class TagController {
 	@RequestMapping(value="/searchFriends", method=RequestMethod.POST)
 	public List<UserVo> searchFriends(@RequestBody String value, HttpServletRequest request, HttpServletResponse response) throws UnsupportedEncodingException {
 		List<UserVo> list = new ArrayList<UserVo>();
-		System.out.println("value: " + value);
 		String name = URLDecoder.decode(value, "UTF-8");
 		name = name.split("=")[0];
-		System.out.println("name: "+name);
 		
 		try {
 			list = service.searchFriends(request, response, name);
@@ -69,15 +57,4 @@ public class TagController {
 		return list;
 	}
 	
-	//게시글 공유  
-	//@RequestMapping(value="/sharePost", method=RequestMethod.POST)
-	/*
-	@RequestMapping(method=RequestMethod.POST)
-	public int sharePost(@RequestBody List<Object> multiParam) {
-		System.out.println("share post...");
-		System.out.println(multiParam);
-		
-		return service.sharePost(multiParam);
-	}
-	*/
 }
