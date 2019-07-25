@@ -16,7 +16,7 @@
 	</select>
 	
 	<!-- 알람 피드 로드 -->
-	<select id="checkAlarm" parameterType="int" resultType="AlarmPheedVo">
+	<select id="selectAlarm" parameterType="int" resultType="AlarmPheedVo">
 		<![CDATA[
 			SELECT alarmPheedNo,
 				   pheedType,
@@ -24,16 +24,21 @@
 				   postNo,
 				   replyNo,
 				   userFromName,
-				   userToName
-			FROM (SELECT alarmPheedNo,
-				   		 pheedType,
-				   		 alarmRegDate,
-				   		 postNo,
-				   		 replyNo,
-				   		 userFromName,
-				   		 userToName
-                  FROM alarmPheed
-                  WHERE checked = 0
+				   userToName,
+				   checked,
+                   postRepImg
+			FROM (SELECT a.alarmPheedNo as alarmPheedNo,
+				   		 a.pheedType as pheedType,
+				   		 a.alarmRegDate as alarmRegDate,
+				   		 a.postNo as postNo,
+				   		 a.replyNo as replyNo,
+				   		 a.userFromName as userFromName,
+				   		 a.userToName as userToName,
+				   		 a.checked as checked,
+                         p.postRepImg as postRepImg
+                  FROM alarmPheed a join posts p 
+                  ON a.postNo = p.postNo
+                  WHERE userTo = 6
                   ORDER BY alarmRegDate DESC)
 			WHERE rownum <= 10 
 		]]>

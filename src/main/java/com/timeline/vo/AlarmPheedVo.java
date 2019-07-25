@@ -17,6 +17,7 @@ public class AlarmPheedVo {
 	// Additional Field
 	private String pheedMessage;
 	private String postAlias;
+	private String postRepImg;
 	
 	public AlarmPheedVo() {
 		
@@ -32,7 +33,7 @@ public class AlarmPheedVo {
 	}
 	
 	public AlarmPheedVo(int alarmPheedNo, int userFrom, int userTo, int pheedType, int postNo, int replyNo, int checked,
-			String alarmRegDate, String userFromName, String userToName, String pheedMessage, String postAlias) {
+			String alarmRegDate, String userFromName, String userToName, String pheedMessage, String postAlias, String postRepImg) {
 		super();
 		this.alarmPheedNo = alarmPheedNo;
 		this.userFrom = userFrom;
@@ -46,6 +47,7 @@ public class AlarmPheedVo {
 		this.userToName = userToName;
 		this.pheedMessage = pheedMessage;
 		this.postAlias = postAlias;
+		this.postRepImg = postRepImg;
 	}
 
 	public int getAlarmPheedNo() {
@@ -143,13 +145,21 @@ public class AlarmPheedVo {
 	public void setChecked(int checked) {
 		this.checked = checked;
 	}
+	
+	public String getPostRepImg() {
+		return postRepImg;
+	}
+
+	public void setPostRepImg(String postRepImg) {
+		this.postRepImg = postRepImg;
+	}
 
 	@Override
 	public String toString() {
 		return "AlarmPheedVo [alarmPheedNo=" + alarmPheedNo + ", userFrom=" + userFrom + ", userTo=" + userTo
 				+ ", pheedType=" + pheedType + ", postNo=" + postNo + ", replyNo=" + replyNo + ", checked=" + checked
 				+ ", alarmRegDate=" + alarmRegDate + ", userFromName=" + userFromName + ", userToName=" + userToName
-				+ ", pheedMessage=" + pheedMessage + ", postAlias=" + postAlias + "]";
+				+ ", pheedMessage=" + pheedMessage + ", postAlias=" + postAlias + ", postRepImg=" + postRepImg + "]";
 	}
 
 }
