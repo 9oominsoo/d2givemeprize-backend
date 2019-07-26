@@ -124,4 +124,8 @@ public class UserController {
 	}
 	
 	//유저 추천 
+	@RequestMapping(value="/recommend", method=RequestMethod.GET)
+	public List<PostUserVo> userRecommend(HttpServletRequest request, HttpServletResponse response) throws Exception{
+		return service.userRecommend(request, response);
+	}
 }

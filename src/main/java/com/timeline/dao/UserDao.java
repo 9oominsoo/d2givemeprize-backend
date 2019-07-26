@@ -131,4 +131,8 @@ public class UserDao {
 	public List<PostUserVo> loadFollowings(int userNo){
 		return sqlSession.selectList("user.selectFollowings", userNo);
 	}
+	
+	public int userRecommend(int userNo) {
+		return sqlSession.selectOne("user.selectRecommendedUser", userNo);
+	}
 }

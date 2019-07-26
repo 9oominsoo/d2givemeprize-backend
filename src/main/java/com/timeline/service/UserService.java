@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.timeline.dao.TagDao;
 import com.timeline.dao.UserDao;
 import com.timeline.vo.PostUserVo;
 import com.timeline.vo.PostVo;
@@ -23,6 +24,9 @@ public class UserService {
 	
 	@Autowired
 	private UserDao dao;
+	
+	@Autowired
+	private TagDao tDao;
 	
 	@Transactional
 	public int insertUserBatch(List<UserVo> list) {
@@ -212,6 +216,28 @@ public class UserService {
 		}
 		
 		return list;
+	}
+	
+	public List<PostUserVo> userRecommend(HttpServletRequest request, HttpServletResponse response) throws Exception{
+		int authUserNo = dao.checkAuthUser(request, response);
+		List<PostUserVo> recommandList = new ArrayList<PostUserVo>();
+		List<UserVo> friendList = tDao.searchFriends(authUserNo);
+		int count = 0;
+		
+		for(UserVo vo : friendList) {
+			PostUserVo pVo = new PostUserVo();
+			pVo = dao.findUser((dao.userRecommend(vo.getUserNo())));
+			
+			if(pVo != null) {
+				recommandList.add(pVo);
+				count++;
+			}
+			if(count == 11) {
+				break;
+			}
+		}
+		
+		return recommandList;
 	}
 	
 }

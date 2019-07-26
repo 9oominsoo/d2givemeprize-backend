@@ -167,4 +167,14 @@
 		]]>
 	</select>
 	
+	<select id="selectRecommendedUser" parameterType="int" resultType="PostUserVo">
+		<![CDATA[
+            SELECT userNo
+            FROM (select RelationTo as UserNo
+                  FROM userRelation 
+                  WHERE RelationFrom = 6)
+            where RowNum=1
+		]]>
+	</select>
+	
 </mapper>
