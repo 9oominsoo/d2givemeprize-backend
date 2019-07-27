@@ -10,6 +10,7 @@ public class PostVo {
 	private String postRegDate;
 	private int postHit;
 	private String postRepImg;
+	private int postImgCount;
 	
 	//Additional Field
 	private String userName;
@@ -89,6 +90,14 @@ public class PostVo {
 		this.postRepImg = postRepImg;
 	}
 	
+	public int getPostImgCount() {
+		return postImgCount;
+	}
+
+	public void setPostImgCount(int postImgCount) {
+		this.postImgCount = postImgCount;
+	}
+
 	public String getUserName() {
 		return userName;
 	}
@@ -117,7 +126,8 @@ public class PostVo {
 	public String toString() {
 		return "PostVo [postNo=" + postNo + ", userNo=" + userNo + ", postTitle=" + postTitle + ", postContent="
 				+ postContent + ", postRegDate=" + postRegDate + ", postHit=" + postHit + ", postRepImg=" + postRepImg
-				+ ", userName=" + userName + ", liked=" + liked + ", likedByAuth=" + likedByAuth + "]";
+				+ ", postImgCount=" + postImgCount + ", userName=" + userName + ", liked=" + liked + ", likedByAuth="
+				+ likedByAuth + "]";
 	}
-
+	
 }
