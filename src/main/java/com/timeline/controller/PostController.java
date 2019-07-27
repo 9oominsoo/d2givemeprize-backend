@@ -53,7 +53,7 @@ public class PostController {
 	
 	//게시글 전체 사진 로딩 
 	@RequestMapping(value="/{postno}/loadPheedImg", method=RequestMethod.GET)
-	public List<PostfileVo> loadPheedImg(@PathVariable("postno") int postNo){
+	public List<String> loadPheedImg(@PathVariable("postno") int postNo){
 		return service.loadPheedImg(postNo);
 	}
 		

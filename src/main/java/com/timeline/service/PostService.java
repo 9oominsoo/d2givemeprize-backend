@@ -134,8 +134,15 @@ public class PostService {
 		return map;
 	}
 	
-	public List<PostfileVo> loadPheedImg(int postNo){
-		return pDao.loadPheedImg(postNo);
+	public List<String> loadPheedImg(int postNo){
+		List<PostfileVo> list = pDao.loadPheedImg(postNo);
+		List<String> resultList = new ArrayList<String>();
+		
+		for(PostfileVo vo : list) {
+			resultList.add(vo.getPostFilePath());
+		}
+		
+		return resultList;
 	}
 	
 	@Transactional
