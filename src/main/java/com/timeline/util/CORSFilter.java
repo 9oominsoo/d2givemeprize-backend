@@ -14,7 +14,7 @@ public class CORSFilter implements Filter {
 	public void doFilter(ServletRequest req, ServletResponse res, FilterChain chain)
 			throws IOException, ServletException {
 		HttpServletResponse response = (HttpServletResponse) res;
-		response.setHeader("Access-Control-Allow-Origin", "http://d2sns-dev.ap-northeast-2.elasticbeanstalk.com");
+		response.setHeader("Access-Control-Allow-Origin", "http://d2snsfront.ap-northeast-2.elasticbeanstalk.com");
 		response.setHeader("Access-Control-Allow-Methods", "POST, GET, DELETE, PUT, OPTIONS");
 		response.setHeader("Access-Control-Max-Age", "3600");
 		response.setHeader("Access-Control-Allow-Headers", "x-requested-with, origin, content-type, accept, Authorization");

@@ -167,7 +167,7 @@
 		]]>
 	</select>
 	
-	<select id="selectRecommendedUser" parameterType="int" resultType="PostUserVo">
+	<select id="selectRecommendedUser" parameterType="int" resultType="int">
 		<![CDATA[
             SELECT userNo
             FROM (select RelationTo as UserNo

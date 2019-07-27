@@ -128,4 +128,5 @@ public class UserController {
 	public List<PostUserVo> userRecommend(HttpServletRequest request, HttpServletResponse response) throws Exception{
 		return service.userRecommend(request, response);
 	}
+	
 }

@@ -221,7 +221,7 @@ public class UserService {
 	public List<PostUserVo> userRecommend(HttpServletRequest request, HttpServletResponse response) throws Exception{
 		int authUserNo = dao.checkAuthUser(request, response);
 		List<PostUserVo> recommandList = new ArrayList<PostUserVo>();
-		List<UserVo> friendList = tDao.searchFriends(authUserNo);
+		List<UserVo> friendList = tDao.searchFriends(authUserNo); 
 		int count = 0;
 		
 		for(UserVo vo : friendList) {
@@ -229,8 +229,23 @@ public class UserService {
 			pVo = dao.findUser((dao.userRecommend(vo.getUserNo())));
 			
 			if(pVo != null) {
-				recommandList.add(pVo);
-				count++;
+				
+				UserRelationVo urVo  = new UserRelationVo();
+				urVo.setRelationFrom(authUserNo);
+				urVo.setRelationTo(pVo.getUserNo());
+				UserRelationVo userRelation = dao.checkUserRelation(urVo);
+				
+				if (userRelation == null) {
+					int flag = 0;
+					for (PostUserVo rVo : recommandList) {
+						if (rVo.getUserNo() == pVo.getUserNo() || rVo.getUserNo() == authUserNo)
+							flag = 1;
+					}
+					if (flag != 1) {
+						recommandList.add(pVo);
+						count++;
+					}
+				}
 			}
 			if(count == 11) {
 				break;
