@@ -6,18 +6,23 @@ public class PostUserVo {
 	private String userName;
 	private String userRepImg;
 	private boolean isFollowed;
+	private int followings;
+	private int followers;
 	
 	public PostUserVo() {
 		
 	}
 	
-	public PostUserVo(int userNo, String userId, String userName, String userRepImg, boolean isFollowed) {
+	public PostUserVo(int userNo, String userId, String userName, String userRepImg, boolean isFollowed, int followings,
+			int followers) {
 		super();
 		this.userNo = userNo;
 		this.userId = userId;
 		this.userName = userName;
 		this.userRepImg = userRepImg;
 		this.isFollowed = isFollowed;
+		this.followings = followings;
+		this.followers = followers;
 	}
 
 	public int getUserNo() {
@@ -59,11 +64,28 @@ public class PostUserVo {
 	public void setFollowed(boolean isFollowed) {
 		this.isFollowed = isFollowed;
 	}
+	
+	public int getFollowings() {
+		return followings;
+	}
+
+	public void setFollowings(int followings) {
+		this.followings = followings;
+	}
+
+	public int getFollowers() {
+		return followers;
+	}
+
+	public void setFollowers(int followers) {
+		this.followers = followers;
+	}
 
 	@Override
 	public String toString() {
 		return "PostUserVo [userNo=" + userNo + ", userId=" + userId + ", userName=" + userName + ", userRepImg="
-				+ userRepImg + ", isFollowed=" + isFollowed + "]";
+				+ userRepImg + ", isFollowed=" + isFollowed + ", followings=" + followings + ", followers=" + followers
+				+ "]";
 	}
 
 }

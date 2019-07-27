@@ -108,6 +108,10 @@ public class UserDao {
 		return sqlSession.selectList("user.selectUserPost", userNo);
 	}
 	
+	public List<PostVo> findUserTaggedPost(int userNo){
+		return sqlSession.selectList("user.selectUserTaggedPost", userNo);
+	}
+	
 	public UserRelationVo checkUserRelation(UserRelationVo vo) {
 		return sqlSession.selectOne("user.selectUserRelation", vo);
 	}

@@ -23,7 +23,7 @@ public class PostVo {
 	}
 	
 	public PostVo(int postNo, int userNo, String postTitle, String postContent, String postRegDate, int postHit,
-			String postRepImg) {
+			String postRepImg, int postImgCount, String userName, int liked, int likedByAuth) {
 		super();
 		this.postNo = postNo;
 		this.userNo = userNo;
@@ -32,6 +32,10 @@ public class PostVo {
 		this.postRegDate = postRegDate;
 		this.postHit = postHit;
 		this.postRepImg = postRepImg;
+		this.postImgCount = postImgCount;
+		this.userName = userName;
+		this.liked = liked;
+		this.likedByAuth = likedByAuth;
 	}
 
 	public int getPostNo() {

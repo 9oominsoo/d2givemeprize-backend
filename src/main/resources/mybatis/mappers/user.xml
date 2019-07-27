@@ -104,6 +104,22 @@
 		]]>
 	</select>
 	
+	<!-- 유저 넘버로 유저가 태그된 게시글 검색 -->
+	<select id="selectUserTaggedPost" parameterType="int" resultType="PostVo">
+		<![CDATA[
+            SELECT postNo, 
+				   postContent,
+				   postRegDate,
+				   postHit,
+				   postRepImg
+			FROM posts
+			WHERE postNo 
+			IN (SELECT postno 
+                FROM postTag 
+                WHERE userNo = #{userNo})
+		]]>
+	</select>
+	
 	<!-- 유저 사이의 관계 확인 -->
 	<select id="selectUserRelation" parameterType="UserRelationVo" resultType="UserRelationVo">
 		<![CDATA[

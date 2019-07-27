@@ -50,7 +50,6 @@ public class PostService {
 		pVo.setPostImgCount(imgList.size());
 		if(imgList.size() > 0)
 			pVo.setPostRepImg(imgList.get(0));
-		
 
 		pDao.writePheed(pVo);
 		int postNo = pVo.getPostNo();

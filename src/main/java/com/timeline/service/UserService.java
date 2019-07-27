@@ -114,6 +114,11 @@ public class UserService {
 		
 		map.put("postList", postList);
 		
+		// find userTaggedPosts
+		List<PostVo> taggedPostList = dao.findUserTaggedPost(userNo);
+		
+		map.put("taggedPostList", taggedPostList);
+		
 		// find relation
 		int authUserNo = dao.checkAuthUser(request, response);
 		UserRelationVo rVo = new UserRelationVo();
