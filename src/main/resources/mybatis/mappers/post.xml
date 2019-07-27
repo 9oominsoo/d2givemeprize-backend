@@ -50,6 +50,7 @@
 				   p.postRegDate,
 			   	   p.postHit,
 			   	   p.postRepImg,
+			   	   p.postImgCount,
 			   	   (SELECT count(postlikedNo)
 			   	    FROM postliked
 			   	    WHERE postNo = p.postNo) as liked
@@ -67,6 +68,7 @@
 			   	   p.postRegDate,
 			   	   p.postHit,
 			   	   p.postRepImg,
+			   	   p.postImgCount,
 			   	   (SELECT count(postlikedNo) 
 			   	    FROM postliked 
 			   	    WHERE postNo = p.postNo) AS liked,
@@ -92,6 +94,7 @@
 			   	   p.postRegDate,
 			   	   p.postHit,
 			   	   p.postRepImg,
+			   	   p.postImgCount,
 			   	   (SELECT count(postlikedNo)  
 			   	    FROM postliked 
 			   	    WHERE postNo = p.postNo) AS liked,
