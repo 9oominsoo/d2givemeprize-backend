@@ -111,7 +111,13 @@ public class UserController {
 		return service.loadUser();
 	}
 	
-	//팔로워 출력 
+	//팔로워, 팔로잉 출력 
+	@RequestMapping(value="/{userno}/relation", method=RequestMethod.GET)
+	public Map<String, Object> loadRelation(@PathVariable("userno") int userNo, HttpServletRequest request, HttpServletResponse response){
+		return service.loadRelation(request, response, userNo);
+	}
+	
+	/*
 	@RequestMapping(value="/{userno}/followers", method=RequestMethod.GET)
 	public List<PostUserVo> followers(@PathVariable("userno") int userNo, HttpServletRequest request, HttpServletResponse response) throws Exception{
 		return service.loadFollowers(request, response, userNo);
@@ -122,6 +128,7 @@ public class UserController {
 	public List<PostUserVo> followings(@PathVariable("userno") int userNo, HttpServletRequest request, HttpServletResponse response) throws Exception{
 		return service.loadFollowings(request, response, userNo);
 	}
+	*/
 	
 	//유저 추천 
 	@RequestMapping(value="/recommend", method=RequestMethod.GET)

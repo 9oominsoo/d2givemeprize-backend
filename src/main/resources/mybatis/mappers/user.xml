@@ -188,7 +188,7 @@
             SELECT userNo
             FROM (select RelationTo as UserNo
                   FROM userRelation 
-                  WHERE RelationFrom = 6)
+                  WHERE RelationFrom = #{userNo})
             where RowNum=1
 		]]>
 	</select>

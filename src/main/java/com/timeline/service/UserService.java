@@ -187,6 +187,42 @@ public class UserService {
 		return dao.loadUser();
 	}
 	
+	@Transactional
+	public Map<String, Object> loadRelation(HttpServletRequest request, HttpServletResponse response, int userNo) throws Exception{
+		int authUserNo = dao.checkAuthUser(request, response);
+		Map<String, Object> resultMap = new HashMap<String, Object>();
+		List<PostUserVo> followerList = dao.loadFollowers(userNo);
+		List<PostUserVo> followingList = dao.loadFollowings(userNo);
+		
+		for(int i=0; i<followerList.size(); i++) {
+			UserRelationVo rVo = new UserRelationVo();
+			rVo.setRelationFrom(authUserNo);
+			rVo.setRelationTo(followerList.get(i).getUserNo());
+			
+			if(dao.checkUserRelation(rVo) != null)
+				followerList.get(i).setFollowed(true);
+			else 
+				followerList.get(i).setFollowed(false);
+		}
+		
+		for(int i=0; i<followingList.size(); i++) {
+			UserRelationVo rVo = new UserRelationVo();
+			rVo.setRelationFrom(authUserNo);
+			rVo.setRelationTo(followingList.get(i).getUserNo());
+			
+			if(dao.checkUserRelation(rVo) != null)
+				followingList.get(i).setFollowed(true);
+			else 
+				followingList.get(i).setFollowed(false);
+		}
+		
+		resultMap.put("followerList", followerList);
+		resultMap.put("followingList", followingList);
+		
+		return resultMap;
+	}
+	
+	/*
 	public List<PostUserVo> loadFollowers(HttpServletRequest request, HttpServletResponse response, int userNo) throws Exception{
 		int authUserNo = dao.checkAuthUser(request, response);
 		List<PostUserVo> list = dao.loadFollowers(userNo);
@@ -222,6 +258,7 @@ public class UserService {
 		
 		return list;
 	}
+	*/
 	
 	public List<PostUserVo> userRecommend(HttpServletRequest request, HttpServletResponse response) throws Exception{
 		int authUserNo = dao.checkAuthUser(request, response);
