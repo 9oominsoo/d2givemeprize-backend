@@ -252,7 +252,7 @@ public class UserService {
 					}
 				}
 			}
-			if(count == 11) {
+			if(count == 4) {
 				break;
 			}
 		}
