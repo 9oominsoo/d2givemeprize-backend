@@ -56,8 +56,8 @@ public class UserService {
 	public Map<String, Object> signUp(UserVo vo) {
 		int status = dao.signUp(vo);
 		Map<String, Object> result = new HashMap<String, Object>();
-		
-		if(status == 1)
+	
+		if(status != 0)
 			result.put("status", "success");
 		else 
 			result.put("status", "failed");
@@ -84,7 +84,7 @@ public class UserService {
 		int status = dao.modifyInfo(vo);
 		Map<String, Object> result = new HashMap<String, Object>();
 		
-		if(status == 1)
+		if(status != 0)
 			result.put("status", "success");
 		else 
 			result.put("status", "failed");

@@ -51,6 +51,7 @@
 			SET userId = #{userId},
 				userName = #{userName},
 				userRepImg = #{userRepImg}
+				userPwd = #{userPwd}
 			WHERE userNo = #{userNo}
 		]]>
 	</update>

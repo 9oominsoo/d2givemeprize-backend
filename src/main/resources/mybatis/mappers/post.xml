@@ -80,7 +80,7 @@
 			 WHERE p.userno IN (SELECT relationTo
 							  FROM userrelation
 							  WHERE relationFrom=#{userNo} AND relationType=0)
-			 ORDER BY p.postRegDate DESC
+			 ORDER BY p.postRegDate, p.userNo DESC
 		]]>
 	</select>
 	
@@ -212,7 +212,7 @@
 				   WHERE p.userno IN (SELECT relationTo
 			 			 		     FROM userrelation
 								     WHERE relationFrom=#{authUserNo} AND relationType=0)
-		      	   ORDER BY p.postRegDate DESC) A
+		      	   ORDER BY p.postRegDate, p.userNo DESC) A
 		  	 WHERE rownum <= #{endPheedNo} ) B
 		 WHERE B.rnum >= #{startPheedNo}
 	   ]]>
