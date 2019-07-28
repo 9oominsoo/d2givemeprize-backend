@@ -14,6 +14,7 @@ public class PostVo {
 	
 	//Additional Field
 	private String userName;
+	private String userRepImg;
 	private int liked;
 	private int likedByAuth;
 	private int rnum;
@@ -37,7 +38,8 @@ public class PostVo {
 	}
 
 	public PostVo(int postNo, int userNo, String postTitle, String postContent, String postRegDate, int postHit,
-			String postRepImg, int postImgCount, String userName, int liked, int likedByAuth, int rnum) {
+			String postRepImg, int postImgCount, String userName, String userRepImg, int liked, int likedByAuth,
+			int rnum) {
 		super();
 		this.postNo = postNo;
 		this.userNo = userNo;
@@ -48,6 +50,7 @@ public class PostVo {
 		this.postRepImg = postRepImg;
 		this.postImgCount = postImgCount;
 		this.userName = userName;
+		this.userRepImg = userRepImg;
 		this.liked = liked;
 		this.likedByAuth = likedByAuth;
 		this.rnum = rnum;
@@ -124,6 +127,14 @@ public class PostVo {
 	public void setUserName(String userName) {
 		this.userName = userName;
 	}
+	
+	public String getUserRepImg() {
+		return userRepImg;
+	}
+
+	public void setUserRepImg(String userRepImg) {
+		this.userRepImg = userRepImg;
+	}
 
 	public int getLiked() {
 		return liked;
@@ -153,8 +164,8 @@ public class PostVo {
 	public String toString() {
 		return "PostVo [postNo=" + postNo + ", userNo=" + userNo + ", postTitle=" + postTitle + ", postContent="
 				+ postContent + ", postRegDate=" + postRegDate + ", postHit=" + postHit + ", postRepImg=" + postRepImg
-				+ ", postImgCount=" + postImgCount + ", userName=" + userName + ", liked=" + liked + ", likedByAuth="
-				+ likedByAuth + ", rnum=" + rnum + "]";
+				+ ", postImgCount=" + postImgCount + ", userName=" + userName + ", userRepImg=" + userRepImg
+				+ ", liked=" + liked + ", likedByAuth=" + likedByAuth + ", rnum=" + rnum + "]";
 	}
 
 }

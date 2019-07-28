@@ -101,7 +101,7 @@
 				   postRepImg
 			FROM posts
 			WHERE userNo = #{userNo}
-			ORDER BY postRegDate
+			ORDER BY postRegDate DESC
 		]]>
 	</select>
 	
@@ -118,7 +118,7 @@
 			IN (SELECT postno 
                 FROM postTag 
                 WHERE userNo = #{userNo})
-            ORDER BY postRegDate
+            ORDER BY postRegDate DESC
 		]]>
 	</select>
 	
