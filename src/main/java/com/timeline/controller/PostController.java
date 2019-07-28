@@ -42,10 +42,10 @@ public class PostController {
 	
 	//유저별 게시글 로드(following 중인 친구 게시글 로드)
 	@RequestMapping(method=RequestMethod.GET)
-	public List<PostVo> loadMyPheed(HttpServletRequest request, HttpServletResponse response) throws Exception{
-		return service.loadMyPheed(request, response);
+	public Map<String,Object> loadMyPheed(@RequestParam("pageNumber") int pageNumber, HttpServletRequest request, HttpServletResponse response) throws Exception{
+		return service.loadMyPheed(request, response, pageNumber);
 	}
-
+	
 	//게시글 상세보기
 	@RequestMapping(value="/{postno}", method=RequestMethod.GET)
 	public Map<String, Object> detailPheed(@PathVariable("postno") int postNo, HttpServletRequest request, HttpServletResponse response) throws Exception {
@@ -66,9 +66,4 @@ public class PostController {
 		return service.likeTogglePheed(request, response, postNo);
 	}
 	
-	//페이징 
-	@RequestMapping(value="/test", method=RequestMethod.GET)
-	public Map<String,Object> test(@RequestParam("pageNumber") int pageNumber, HttpServletRequest request, HttpServletResponse response) throws Exception{
-		return service.test(request, response, pageNumber);
-	}
 }

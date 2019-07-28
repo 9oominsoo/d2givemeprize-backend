@@ -268,10 +268,11 @@ public class UserService {
 		
 		for(UserVo vo : friendList) {
 			PostUserVo pVo = new PostUserVo();
-			pVo = dao.findUser((dao.userRecommend(vo.getUserNo())));
 			
-			if(pVo != null) {
-				
+			if(dao.userRecommend(vo.getUserNo()) != null)
+				pVo = dao.findUser(dao.userRecommend(vo.getUserNo()).getUserNo());
+
+			if(pVo.getUserNo() != 0) {
 				UserRelationVo urVo  = new UserRelationVo();
 				urVo.setRelationFrom(authUserNo);
 				urVo.setRelationTo(pVo.getUserNo());

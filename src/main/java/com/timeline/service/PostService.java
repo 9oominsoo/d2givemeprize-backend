@@ -112,12 +112,23 @@ public class PostService {
 		return pDao.loadPheed();
 	}
 	
-	public List<PostVo> loadMyPheed(HttpServletRequest request, HttpServletResponse response) throws Exception{
-		UserVo uVo = new UserVo();
-		int userNo = uDao.checkAuthUser(request, response);
+	public Map<String,Object> loadMyPheed(HttpServletRequest request, HttpServletResponse response, int pageNumber) throws Exception{
+		int authUserNo = uDao.checkAuthUser(request, response);
+		int listSize = 10 ;
+		int startPheedNo = 1+listSize*(pageNumber-1); //시작 피드 번호 
+		int endPheedNo = listSize*pageNumber; //마지막 피드 번호 
+		int countPheed = pDao.countPheed(authUserNo); //전체 피드 개수 
+		int maxPage = (int)Math.ceil((double)countPheed/listSize); //최대 페이지 번호 
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("authUserNo", authUserNo);
+		map.put("startPheedNo", startPheedNo);
+		map.put("endPheedNo", endPheedNo);
+		List<PostVo> list = pDao.pagingPheed(map);
 		
-		uVo.setUserNo(userNo);
-		return pDao.loadMyPheed(uVo);
+		Map<String, Object> resultMap = new HashMap<String, Object>();
+		resultMap.put("list", list);
+		resultMap.put("maxPage", maxPage);
+		return resultMap;
 	}
 	
 	public Map<String,Object> detailPheed(HttpServletRequest request, HttpServletResponse response, int postNo) throws Exception{
@@ -169,23 +180,4 @@ public class PostService {
 		return result;
 	}
 	
-	
-	public Map<String,Object> test(HttpServletRequest request, HttpServletResponse response, int pageNumber) throws Exception{
-		int authUserNo = uDao.checkAuthUser(request, response);
-		int listSize = 10 ;
-		int startPheedNo = 1+listSize*(pageNumber-1); //시작 피드 번호 
-		int endPheedNo = listSize*pageNumber; //마지막 피드 번호 
-		int countPheed = pDao.countPheed(authUserNo); //전체 피드 개수 
-		int maxPage = (int)Math.ceil((double)countPheed/listSize); //최대 페이지 번호 
-		Map<String, Object> map = new HashMap<String, Object>();
-		map.put("authUserNo", authUserNo);
-		map.put("startPheedNo", startPheedNo);
-		map.put("endPheedNo", endPheedNo);
-		List<PostVo> list = pDao.pagingPheed(map);
-		
-		Map<String, Object> resultMap = new HashMap<String, Object>();
-		resultMap.put("list", list);
-		resultMap.put("maxPage", maxPage);
-		return resultMap;
-	}
 }

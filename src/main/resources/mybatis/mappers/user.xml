@@ -185,7 +185,7 @@
 		]]>
 	</select>
 	
-	<select id="selectRecommendedUser" parameterType="int" resultType="int">
+	<select id="selectRecommendedUser" parameterType="int" resultType="UserVo">
 		<![CDATA[
             SELECT userNo
             FROM (select RelationTo as UserNo
@@ -194,5 +194,4 @@
             where RowNum=1
 		]]>
 	</select>
-	
 </mapper>

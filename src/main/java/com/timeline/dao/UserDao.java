@@ -136,7 +136,7 @@ public class UserDao {
 		return sqlSession.selectList("user.selectFollowings", userNo);
 	}
 	
-	public int userRecommend(int userNo) {
+	public UserVo userRecommend(int userNo) {
 		return sqlSession.selectOne("user.selectRecommendedUser", userNo);
 	}
 }
