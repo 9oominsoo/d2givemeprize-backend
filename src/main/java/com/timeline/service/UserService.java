@@ -296,5 +296,5 @@ public class UserService {
 		
 		return recommandList;
 	}
-	
+
 }

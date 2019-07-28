@@ -16,6 +16,7 @@ public class PostVo {
 	private String userName;
 	private int liked;
 	private int likedByAuth;
+	private int rnum;
 	
 	
 	public PostVo() {
@@ -23,7 +24,20 @@ public class PostVo {
 	}
 	
 	public PostVo(int postNo, int userNo, String postTitle, String postContent, String postRegDate, int postHit,
-			String postRepImg, int postImgCount, String userName, int liked, int likedByAuth) {
+			String postRepImg, int postImgCount) {
+		super();
+		this.postNo = postNo;
+		this.userNo = userNo;
+		this.postTitle = postTitle;
+		this.postContent = postContent;
+		this.postRegDate = postRegDate;
+		this.postHit = postHit;
+		this.postRepImg = postRepImg;
+		this.postImgCount = postImgCount;
+	}
+
+	public PostVo(int postNo, int userNo, String postTitle, String postContent, String postRegDate, int postHit,
+			String postRepImg, int postImgCount, String userName, int liked, int likedByAuth, int rnum) {
 		super();
 		this.postNo = postNo;
 		this.userNo = userNo;
@@ -36,6 +50,7 @@ public class PostVo {
 		this.userName = userName;
 		this.liked = liked;
 		this.likedByAuth = likedByAuth;
+		this.rnum = rnum;
 	}
 
 	public int getPostNo() {
@@ -125,13 +140,21 @@ public class PostVo {
 	public void setLikedByAuth(int likedByAuth) {
 		this.likedByAuth = likedByAuth;
 	}
+	
+	public int getRnum() {
+		return rnum;
+	}
+
+	public void setRnum(int rnum) {
+		this.rnum = rnum;
+	}
 
 	@Override
 	public String toString() {
 		return "PostVo [postNo=" + postNo + ", userNo=" + userNo + ", postTitle=" + postTitle + ", postContent="
 				+ postContent + ", postRegDate=" + postRegDate + ", postHit=" + postHit + ", postRepImg=" + postRepImg
 				+ ", postImgCount=" + postImgCount + ", userName=" + userName + ", liked=" + liked + ", likedByAuth="
-				+ likedByAuth + "]";
+				+ likedByAuth + ", rnum=" + rnum + "]";
 	}
-	
+
 }

@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.timeline.service.PostService;
@@ -65,4 +66,9 @@ public class PostController {
 		return service.likeTogglePheed(request, response, postNo);
 	}
 	
+	//페이징 
+	@RequestMapping(value="/test", method=RequestMethod.GET)
+	public Map<String,Object> test(@RequestParam("pageNumber") int pageNumber, HttpServletRequest request, HttpServletResponse response) throws Exception{
+		return service.test(request, response, pageNumber);
+	}
 }

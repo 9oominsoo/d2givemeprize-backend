@@ -153,4 +153,66 @@
 			WHERE postNo = #{postNo} AND userNo = #{userNo}
 		]]>
 	</delete>
+	
+	<select id="selectPheedCount" parameterType="int" resultType="int">
+		<![CDATA[
+			 SELECT count(p.postNo)
+			 FROM posts p join users u
+			 ON p.userNo = u.userNo
+			 WHERE p.userno 
+			 IN (SELECT relationTo
+				 FROM userrelation
+				 WHERE relationFrom=#{userNo} AND relationType=0)
+		]]>
+	</select>
+	
+	<select id="selectPagingPheed" parameterType="map" resultType="PostVo">
+	   <![CDATA[
+		SELECT B.rnum as rnum,
+			   B.postNo as postNo,
+			   B.userNo as userNo,
+			   B.userName as userName,
+			   B.postContent as postContent,
+			   B.postRegDate as postRegDate,
+			   B.postHit as postHit,
+			   B.postRepImg as postRepImg,
+			   B.postImgCount as postImgCount,
+			   B.liked as liked,
+			   B.likedByAuth as likedByAuth
+		FROM (SELECT rownum as rnum,
+		 		     A.postNo,
+				     A.userNo,
+				     A.userName,
+				     A.postContent,
+				     A.postRegDate,
+				     A.postHit,
+				     A.postRepImg,
+				     A.postImgCount,
+				     A.liked,
+				     A.likedByAuth
+	 	 	  FROM (SELECT p.postNo AS postNo,
+		 			      p.userNo AS userNo,
+	 				      u.userName AS userName,
+				   	      p.postContent AS postContent,
+				   	      p.postRegDate AS postRegDate,
+				   	      p.postHit AS postHit,
+				   	      p.postRepImg AS postRepImg,
+			   		      p.postImgCount AS postImgCount,
+			   		      (SELECT count(postlikedNo) 
+			   		       FROM postliked 
+			   		       WHERE postNo = p.postNo) AS liked,
+			   		      (SELECT count(postlikedNo) 
+			   		       FROM postliked 
+			   		       WHERE postNo = p.postNo AND userNo=#{authUserNo}) AS likedByAuth 
+			  	   FROM posts p join users u
+			 	   ON p.userNo = u.userNo
+				   WHERE p.userno IN (SELECT relationTo
+			 			 		     FROM userrelation
+								     WHERE relationFrom=#{authUserNo} AND relationType=0)
+		      	   ORDER BY p.postRegDate DESC) A
+		  	 WHERE rownum <= #{endPheedNo} ) B
+		 WHERE B.rnum >= #{startPheedNo}
+	   ]]>
+	</select>
+	
 </mapper>

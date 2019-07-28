@@ -66,4 +66,12 @@ public class PostDao {
 	public int unlikePheed(Map<String, Object> map) {
 		return sqlSession.delete("post.deleteLike", map);
 	}
+	
+	public int countPheed(int userNo) {
+		return sqlSession.selectOne("post.selectPheedCount", userNo);
+	}
+	
+	public List<PostVo> pagingPheed(Map<String, Object> map){
+		return sqlSession.selectList("post.selectPagingPheed", map);
+	}
 }
