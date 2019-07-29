@@ -39,7 +39,7 @@
                   FROM alarmPheed a join posts p 
                   ON a.postNo = p.postNo
                   WHERE userTo = #{userNo}
-                  ORDER BY alarmRegDate DESC)
+                  ORDER BY alarmRegDate, alarmPheedNo DESC)
 			WHERE rownum <= 10 
 		]]>
 	</select>

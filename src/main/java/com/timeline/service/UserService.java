@@ -28,27 +28,6 @@ public class UserService {
 	@Autowired
 	private TagDao tDao;
 	
-	@Transactional
-	public int insertUserBatch(List<UserVo> list) {
-		List<UserVo> dividelist = new ArrayList<UserVo>();
-		int insertCnt = 0;
-		
-		for(int i=0, totalSize = list.size(); i < totalSize; i++) {
-		    UserVo vo = list.get(i);
-		    dividelist.add(vo);
-		     
-		    if(insertCnt == 999 || totalSize==(i+1)) {
-		        dao.insertUserBatch(dividelist);
-		        dividelist = new ArrayList<>();
-		        insertCnt = 0;
-		    } else {
-		        insertCnt++;
-		    }
-		}
-		
-		return dao.insertUserBatch(list);
-	}
-	
 	public UserVo logIn(UserVo vo, HttpServletResponse response) throws Exception {
 		return dao.logIn(vo, response);
 	}

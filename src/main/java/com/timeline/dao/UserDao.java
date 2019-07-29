@@ -31,20 +31,12 @@ public class UserDao {
 	static final String TOKEN_PREFIX = "Bearer";
 	static final String HEADER_STRING = "Authorization";
 	
-	public int insertUserBatch(List<UserVo> list) {
-		if(list == null || list.size() == 0) {
-			System.out.println("no list");
-		}
-		
-		return sqlSession.insert("user.insertUserBatch", list);
-	}
-	
 	public UserVo logIn(UserVo vo, HttpServletResponse response) throws Exception {
 		response.setContentType("application/json");
 		response.setCharacterEncoding("UTF-8");
 
 		UserVo user = sqlSession.selectOne("user.selectLoginUser", vo);
-
+		
 		String jwt = Jwts.builder().setSubject("jwtauthtoken")
 				.claim("userNo", user.getUserNo())
 				.claim("userId", user.getUserId())
