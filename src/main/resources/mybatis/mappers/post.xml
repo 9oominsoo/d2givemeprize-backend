@@ -90,6 +90,7 @@
 			SELECT p.postNo,
 				   p.userNo,
 				   u.userName,
+				   u.userRepImg,
 			   	   p.postContent,
 			   	   p.postRegDate,
 			   	   p.postHit,

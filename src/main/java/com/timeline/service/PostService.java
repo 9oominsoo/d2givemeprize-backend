@@ -20,7 +20,6 @@ import com.timeline.vo.PostVo;
 import com.timeline.vo.PostfileVo;
 import com.timeline.vo.PosttagVo;
 import com.timeline.vo.ReplyVo;
-import com.timeline.vo.UserVo;
 
 @Service
 public class PostService {
@@ -160,24 +159,27 @@ public class PostService {
 	}
 	
 	@Transactional
-	public int likeTogglePheed(HttpServletRequest request, HttpServletResponse response, int postNo) throws Exception {
+	public Map<String, Object> likeTogglePheed(HttpServletRequest request, HttpServletResponse response, int postNo) throws Exception {
 		int userNo = uDao.checkAuthUser(request, response);
+		Map<String, Object> map = new HashMap<String, Object>();
 		
 		Map<String, Object> liked = new HashMap<String, Object>();
 		liked.put("userNo", userNo);
 		liked.put("postNo", postNo);
 		
-		int result;
 		int exist = pDao.findLiked(liked);
 		
 		if(exist == 0) {
 			// like function
-			 result = pDao.likePheed(liked);
+			pDao.likePheed(liked);
+			map.put("status", "liked");
 		}else {
 			// unlike function
-			result = pDao.unlikePheed(liked);
+			pDao.unlikePheed(liked);
+			map.put("status", "unlike");
 		}
-		return result;
+		
+		return map;
 	}
 	
 }

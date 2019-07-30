@@ -60,7 +60,7 @@ public class PostController {
 		
 	//게시글 좋아요
 	@RequestMapping(value="/{postno}", method=RequestMethod.PUT)
-	public int likeTogglePheed(@PathVariable("postno") int postNo, HttpServletRequest request, HttpServletResponse response) throws Exception {
+	public Map<String, Object> likeTogglePheed(@PathVariable("postno") int postNo, HttpServletRequest request, HttpServletResponse response) throws Exception {
 		System.out.println("like/unlike pheed No " + postNo + "...");
 		
 		return service.likeTogglePheed(request, response, postNo);
