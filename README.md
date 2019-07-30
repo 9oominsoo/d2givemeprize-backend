@@ -4,16 +4,6 @@ social network service with Spring MVC
 
 Frontend Server -> https://github.com/veatoriche/d2givemeprize-frontend
 
-<Introduction>
-This repository is for example for spring MVC with Oracle Backend for SNS
-
-<project setup>
-install Tomcat on http://tomcat.apache.org/ -> Tomcat8 (64-bit Windows.zip)
-Eclipse tab Window->show view->other->servers->Create new server->choose Apache>Tomcat v8.5 Server->browse directory->add downloaded Tomcat->run Server
-Encoding type Window->Preference->Encoding->General-<Content Types->Text->UTF-8
-
-<License>
-This project is licensed under the MIT license -> check out the LICENSE
 
 # D2givemePrize
 
@@ -51,11 +41,11 @@ Browse directory and add downloaded Tomcat
 run Server
 ```
 
-### 🖥 Directory
+### 🖥 Encoding Type 
 ```
-Clone and import projects 
+ Window -> Preference -> Encoding -> General>Content Types -> Text -> UTF-8
 ```
 
 
 ## License
-This project is licensed under the MIT License -> check out the [LICENSE](https://github.com/veatoriche/d2givemeprize-frontend/blob/master/LICENSE)
+This project is licensed under the MIT License -> check out the [LICENSE](https://github.com/9oominsoo/d2givemeprize-backend/blob/master/LICENSE)
