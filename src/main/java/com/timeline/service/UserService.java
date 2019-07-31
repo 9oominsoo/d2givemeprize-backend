@@ -238,6 +238,7 @@ public class UserService {
 					}
 				}
 			}
+			// 4명을 추천
 			if(count == 4) {
 				break;
 			}
