@@ -50,7 +50,7 @@
 			UPDATE users
 			SET userId = #{userId},
 				userName = #{userName},
-				userRepImg = #{userRepImg}
+				userRepImg = #{userRepImg},
 				userPwd = #{userPwd}
 			WHERE userNo = #{userNo}
 		]]>

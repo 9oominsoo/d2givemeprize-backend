@@ -12,12 +12,10 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.timeline.service.UserService;
 import com.timeline.vo.PostUserVo;
-import com.timeline.vo.PostVo;
 import com.timeline.vo.UserRelationVo;
 import com.timeline.vo.UserVo;
 
@@ -42,17 +40,6 @@ public class UserController {
 	public PostUserVo authUserInfo(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		return service.findAuthUserInfo(request, response);
 	}
-	
-	/*
-	//로그아웃 처리
-	@RequestMapping(value="/logout", method=RequestMethod.POST)
-	public void logOut(HttpSession session) {
-		System.out.println("log out...");
-		
-		session.removeAttribute("authUser");
-		session.invalidate();
-	}
-	*/
 	
 	//회원가입 처리
 	@RequestMapping(method=RequestMethod.POST)
@@ -118,19 +105,6 @@ public class UserController {
 	public Map<String, Object> loadRelation(@PathVariable("userno") int userNo, HttpServletRequest request, HttpServletResponse response) throws Exception{
 		return service.loadRelation(request, response, userNo);
 	}
-	
-	/*
-	@RequestMapping(value="/{userno}/followers", method=RequestMethod.GET)
-	public List<PostUserVo> followers(@PathVariable("userno") int userNo, HttpServletRequest request, HttpServletResponse response) throws Exception{
-		return service.loadFollowers(request, response, userNo);
-	}
-	
-	//팔로잉 출력
-	@RequestMapping(value="/{userno}/followings", method=RequestMethod.GET)
-	public List<PostUserVo> followings(@PathVariable("userno") int userNo, HttpServletRequest request, HttpServletResponse response) throws Exception{
-		return service.loadFollowings(request, response, userNo);
-	}
-	*/
 	
 	//유저 추천 
 	@RequestMapping(value="/recommend", method=RequestMethod.GET)

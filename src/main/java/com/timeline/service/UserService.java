@@ -134,7 +134,7 @@ public class UserService {
 		
 		int status = dao.follow(vo);
 		
-		if(status == 1) {
+		if(status != 0) {
 			result.put("status", "success");
 		}else {
 			result.put("status", "failed");
@@ -153,7 +153,7 @@ public class UserService {
 		
 		int status = dao.unfollow(vo);
 
-		if(status == 1) {
+		if(status != 0) {
 			result.put("status", "success");
 		}else {
 			result.put("status", "failed");
@@ -201,44 +201,6 @@ public class UserService {
 		return resultMap;
 	}
 	
-	/*
-	public List<PostUserVo> loadFollowers(HttpServletRequest request, HttpServletResponse response, int userNo) throws Exception{
-		int authUserNo = dao.checkAuthUser(request, response);
-		List<PostUserVo> list = dao.loadFollowers(userNo);
-		
-		for(int i=0; i<list.size(); i++) {
-			UserRelationVo rVo = new UserRelationVo();
-			rVo.setRelationFrom(authUserNo);
-			rVo.setRelationTo(list.get(i).getUserNo());
-			
-			if(dao.checkUserRelation(rVo) != null)
-				list.get(i).setFollowed(true);
-			else 
-				list.get(i).setFollowed(false);
-		}
-		
-		return list;
-	}
-	
-	public List<PostUserVo> loadFollowings(HttpServletRequest request, HttpServletResponse response, int userNo) throws Exception{
-		int authUserNo = dao.checkAuthUser(request, response);
-		List<PostUserVo> list = dao.loadFollowings(userNo);
-		
-		for(int i=0; i<list.size(); i++) {
-			UserRelationVo rVo = new UserRelationVo();
-			rVo.setRelationFrom(authUserNo);
-			rVo.setRelationTo(list.get(i).getUserNo());
-			
-			if(dao.checkUserRelation(rVo) != null)
-				list.get(i).setFollowed(true);
-			else 
-				list.get(i).setFollowed(false);
-		}
-		
-		return list;
-	}
-	*/
-	
 	public List<PostUserVo> userRecommend(HttpServletRequest request, HttpServletResponse response) throws Exception{
 		int authUserNo = dao.checkAuthUser(request, response);
 		List<PostUserVo> recommandList = new ArrayList<PostUserVo>();
@@ -260,7 +222,7 @@ public class UserService {
 				if (userRelation == null) {
 					int flag = 0;
 					for (PostUserVo rVo : recommandList) {
-						if (rVo.getUserNo() == pVo.getUserNo() || rVo.getUserNo() == authUserNo)
+						if (rVo.getUserNo() == pVo.getUserNo() || pVo.getUserNo() == authUserNo)
 							flag = 1;
 					}
 					if (flag != 1) {

@@ -13,7 +13,6 @@
     	<typeAlias alias="PostlikedVo" type="com.timeline.vo.PostlikedVo"/>
     	<typeAlias alias="PosttagVo" type="com.timeline.vo.PosttagVo"/>
     	<typeAlias alias="ReplytagVo" type="com.timeline.vo.ReplytagVo"/>
-    	<typeAlias alias="ReplylikedVo" type="com.timeline.vo.ReplylikedVo" />
     	<typeAlias alias="AlarmPheedVo" type="com.timeline.vo.AlarmPheedVo" />
     	<typeAlias alias="PostUserVo" type="com.timeline.vo.PostUserVo" />
     </typeAliases>

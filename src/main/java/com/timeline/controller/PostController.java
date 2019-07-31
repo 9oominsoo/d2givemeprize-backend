@@ -18,7 +18,6 @@ import org.springframework.web.bind.annotation.RestController;
 import com.timeline.service.PostService;
 import com.timeline.vo.AlarmPheedVo;
 import com.timeline.vo.PostVo;
-import com.timeline.vo.PostfileVo;
 
 @RestController
 @CrossOrigin
@@ -34,7 +33,7 @@ public class PostController {
 		return service.writePheed(request, response, multiParam);
 	}
 	
-	//모든 게시글 로드
+	//모든 게시글 로드 & 데이터 테스팅 용도
 	@RequestMapping(value="/allPheed", method=RequestMethod.GET)
 	public List<PostVo> loadPheed(){
 		return service.loadPheed();
@@ -58,7 +57,7 @@ public class PostController {
 		return service.loadPheedImg(postNo);
 	}
 		
-	//게시글 좋아요
+	//게시글 좋아요&좋아요 취소
 	@RequestMapping(value="/{postno}", method=RequestMethod.PUT)
 	public Map<String, Object> likeTogglePheed(@PathVariable("postno") int postNo, HttpServletRequest request, HttpServletResponse response) throws Exception {
 		System.out.println("like/unlike pheed No " + postNo + "...");
