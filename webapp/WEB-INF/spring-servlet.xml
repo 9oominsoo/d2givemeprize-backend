@@ -40,13 +40,6 @@
 		<constructor-arg ref="sqlSessionFactory" />
 	</bean>
 	
-	<!-- Spring WebSocket -->
-	<bean id="echoHandler" class="com.timeline.util.EchoHandler" />
-	<websocket:handlers>
-		<websocket:mapping handler="echoHandler" path="/echo" />
-		<websocket:sockjs />
-	</websocket:handlers>
-
 	<mvc:annotation-driven>
 		<mvc:message-converters>
 			<bean
