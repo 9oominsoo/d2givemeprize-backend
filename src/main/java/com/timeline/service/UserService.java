@@ -221,10 +221,17 @@ public class UserService {
 				
 				if (userRelation == null) {
 					int flag = 0;
+						
+					// 로그인 한 유저인지 확인  
+					if(pVo.getUserNo() == authUserNo)
+						flag=1;
+					
+					// 이미 추천 명단에 등록되어 있는지 확인 
 					for (PostUserVo rVo : recommandList) {
-						if (rVo.getUserNo() == pVo.getUserNo() || pVo.getUserNo() == authUserNo)
+						if (rVo.getUserNo() == pVo.getUserNo())
 							flag = 1;
 					}
+					
 					if (flag != 1) {
 						recommandList.add(pVo);
 						count++;
