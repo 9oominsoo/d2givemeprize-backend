@@ -63,6 +63,17 @@ run Server
 
 ### Database
 you have to insert your database infromation on Pom.xml > datasource dependency
+```
+<!-- oracle datasource -->
+	<bean id="oracleDatasource"
+		class="oracle.jdbc.pool.OracleDataSource" destroy-method="close">
+		<property name="URL" value="..." />
+		<property name="user" value="..." />
+		<property name="password" value="..." />
+		<property name="connectionCachingEnabled" value="true" />
+		<qualifier value="main-db" />
+	</bean>
+```
 
 
 ## License
