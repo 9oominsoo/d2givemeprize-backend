@@ -21,10 +21,25 @@ This repository is for example for spring MVC with Oracle Backend for SNS
 
 This instructions will get you a copy of the project up and running on your local machine for development and testing purposes.
 
+### 🔨 install JDK
+intall JDK on http://www.oracle.com (Downloads>JAVA SE>Downloads)
+```
+JDK 1.8.0_131(64-bit Windows)
+```
+
 ### 🔨 Install Tomcat
 install Tomcat on http://tomcat.apache.org/  
 ```
 Tomcat8 (64-bit Windows.zip)
+```
+
+### 🔧 Set JDK version
+```
+system -> environment variable -> System variabel -> PATH
+```
+add downloaded jdk and check on cmd by enter 'javac', 'java'
+```
+JDK documents: https://docs.oracle.com/javase/8/docs/api/index.html
 ```
 
 ### 🔧 Set Server
@@ -46,6 +61,20 @@ run Server
  Window -> Preference -> Encoding -> General>Content Types -> Text -> UTF-8
 ```
 
+### Database
+you have to insert your database infromation on Pom.xml > datasource dependency
+```
+<!-- oracle datasource -->
+	<bean id="oracleDatasource"
+		class="oracle.jdbc.pool.OracleDataSource" destroy-method="close">
+		<property name="URL" value="..." />
+		<property name="user" value="..." />
+		<property name="password" value="..." />
+		<property name="connectionCachingEnabled" value="true" />
+		<qualifier value="main-db" />
+	</bean>
+```
+
 
 ## License
-This project is licensed under the MIT License -> check out the [LICENSE](https://github.com/9oominsoo/d2givemeprize-backend/blob/master/LICENSE)
+This project is licensed under the Apache License -> check out the [LICENSE](https://github.com/9oominsoo/d2givemeprize-backend/blob/master/LICENSE)
